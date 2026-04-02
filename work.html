@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -29,6 +30,7 @@
     }
 
     a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
     /* ── Nav ── */
     nav {
@@ -43,19 +45,22 @@
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
+
     .nav-logo {
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 0.38em;
-      color: rgba(255,255,255,0.88);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.45em;
+      color: rgba(255,255,255,0.95);
       text-transform: uppercase;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
+
     .nav-links {
       display: flex;
       gap: 60px;
       list-style: none;
     }
+
     .nav-links a {
       font-size: 10px;
       font-weight: 300;
@@ -64,86 +69,145 @@
       text-transform: uppercase;
       transition: color 0.2s;
     }
+
     .nav-links a:hover,
     .nav-links a.active { color: rgba(255,255,255,0.9); }
 
-    /* ── Grid ── */
+    /* ── Page ── */
     main { padding-top: 118px; }
 
-    .projects-grid {
+    /* ── Project rows — editorial layout ── */
+    .project-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 2fr 1fr;
+      gap: 2px;
+      margin-bottom: 2px;
+      height: clamp(320px, 38vw, 580px);
+    }
+
+    /* Alternate: small stack left, feature right */
+    .project-row.reverse {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    .project-row.reverse .project-support-stack { order: 1; }
+    .project-row.reverse .project-feature        { order: 2; }
+
+    /* ── Feature card (large) ── */
+    .project-feature {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--bg-3);
+    }
+
+    .project-feature img {
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-feature:hover img { transform: scale(1.04); }
+
+    /* Always-visible label at bottom */
+    .feature-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 48px 28px 24px;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+      z-index: 2;
+      transition: opacity 0.3s;
+    }
+
+    .feature-label-type {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 7px;
+    }
+
+    .feature-label-name {
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    /* Hover: show "View project" cue */
+    .feature-cue {
+      position: absolute;
+      top: 24px; right: 24px;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 2;
+    }
+
+    .project-feature:hover .feature-cue { opacity: 1; }
+
+    /* ── Support stack (2 small) ── */
+    .project-support-stack {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
       gap: 2px;
     }
 
-    .project-card {
+    .project-support {
       position: relative;
-      aspect-ratio: 4/3;
       overflow: hidden;
-      background: var(--bg-3);
       cursor: pointer;
+      background: var(--bg-3);
     }
 
-    .project-card img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
+    .project-support img {
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .project-card:hover img { transform: scale(1.04); }
+    .project-support:hover img { transform: scale(1.05); }
 
+    /* Support hover overlay */
+    .support-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-support:hover .support-overlay { opacity: 1; }
+
+    .support-overlay span {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* ── Placeholder ── */
     .project-placeholder {
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-3);
-      transition: background 0.3s;
     }
-
-    .project-card:hover .project-placeholder { background: #1c1c1c; }
 
     .project-placeholder span {
       font-size: 9px;
       letter-spacing: 0.2em;
-      color: #2c2c2c;
-    }
-
-    .project-card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 55%);
-      opacity: 0;
-      transition: opacity 0.35s;
-      display: flex;
-      align-items: flex-end;
-      padding: 22px 24px;
-    }
-
-    .project-card:hover .project-card-overlay { opacity: 1; }
-
-    .project-card-label {
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 5px;
-    }
-
-    .project-card-name {
-      font-size: 16px;
-      font-weight: 300;
-      color: #fff;
+      color: #252525;
     }
 
     /* ── Modal ── */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.92);
+      background: rgba(0,0,0,0.94);
       z-index: 200;
       display: flex;
       align-items: center;
@@ -152,7 +216,7 @@
       pointer-events: none;
       transition: opacity 0.3s;
       padding: 20px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
     .modal-backdrop.open {
@@ -163,30 +227,21 @@
     .modal {
       background: var(--bg-2);
       width: 100%;
-      max-width: 900px;
+      max-width: 960px;
       max-height: 90vh;
       overflow-y: auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      transform: translateY(20px);
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      grid-template-columns: 1.2fr 1fr;
+      transform: translateY(24px);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .modal-backdrop.open .modal { transform: translateY(0); }
 
-    /* Modal image side */
     .modal-image {
       aspect-ratio: 4/3;
       background: var(--bg-3);
-      position: relative;
       overflow: hidden;
-    }
-
-    .modal-image img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
 
     .modal-img-placeholder {
@@ -203,9 +258,8 @@
       color: #2c2c2c;
     }
 
-    /* Modal info side */
     .modal-info {
-      padding: 44px 40px;
+      padding: 48px 44px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -220,7 +274,7 @@
     }
 
     .modal-name {
-      font-size: clamp(20px, 3vw, 30px);
+      font-size: clamp(22px, 3vw, 32px);
       font-weight: 300;
       letter-spacing: -0.01em;
       line-height: 1.2;
@@ -230,54 +284,53 @@
     .modal-about {
       font-size: 13px;
       font-weight: 300;
-      line-height: 1.85;
+      line-height: 1.9;
       color: var(--text-muted);
       flex: 1;
-      margin-bottom: 36px;
+      margin-bottom: 40px;
     }
 
     .modal-meta {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       border-top: 1px solid var(--border);
-      padding-top: 24px;
+      padding-top: 28px;
     }
 
     .modal-meta-row {
       display: flex;
       justify-content: space-between;
-      font-size: 11px;
-      font-weight: 300;
+      align-items: baseline;
     }
 
     .modal-meta-key {
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
 
     .modal-meta-val {
+      font-size: 12px;
+      font-weight: 300;
       color: var(--text);
     }
 
     .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
+      position: fixed;
+      top: 24px; right: 24px;
+      width: 42px; height: 42px;
       background: rgba(255,255,255,0.06);
-      border: none;
-      color: rgba(255,255,255,0.6);
-      font-size: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.55);
+      font-size: 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: background 0.2s, color 0.2s;
-      z-index: 10;
+      z-index: 201;
     }
 
     .modal-close:hover {
@@ -287,18 +340,25 @@
 
     /* ── Mobile ── */
     @media (max-width: 860px) {
-      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .project-row,
+      .project-row.reverse { grid-template-columns: 1fr; height: auto; }
+      .project-feature { aspect-ratio: 16/10; }
+      .project-support-stack { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+      .project-support { aspect-ratio: 4/3; }
+      .project-row.reverse .project-support-stack { order: unset; }
+      .project-row.reverse .project-feature { order: unset; }
       .modal { grid-template-columns: 1fr; }
       .modal-image { aspect-ratio: 16/9; }
     }
 
     @media (max-width: 520px) {
-      .projects-grid { grid-template-columns: 1fr; }
       .nav-links { gap: 32px; }
+      .project-support-stack { grid-template-columns: 1fr 1fr; }
       .modal-info { padding: 28px 24px; }
     }
   </style>
 </head>
+
 <body>
 
   <nav>
@@ -310,21 +370,19 @@
     </ul>
   </nav>
 
-  <main>
-    <div class="projects-grid" id="projects-grid"></div>
-  </main>
+  <main id="work-grid"></main>
 
   <!-- Modal -->
   <div class="modal-backdrop" id="modal-backdrop">
     <div class="modal" id="modal">
       <div class="modal-image" id="modal-image">
-        <div class="modal-img-placeholder"><span>image</span></div>
+        <div class="modal-img-placeholder"><span>—</span></div>
       </div>
       <div class="modal-info">
         <div>
-          <div class="modal-type" id="modal-type"></div>
-          <div class="modal-name" id="modal-name"></div>
-          <p class="modal-about" id="modal-about"></p>
+          <div class="modal-type"  id="modal-type"></div>
+          <div class="modal-name"  id="modal-name"></div>
+          <p   class="modal-about" id="modal-about"></p>
         </div>
         <div class="modal-meta" id="modal-meta"></div>
       </div>
@@ -334,7 +392,9 @@
 
   <script>
     // ── Project data ──────────────────────────────────────────────────────────
-    // Replace src with real paths. Add real names, about, date, location.
+    // hero  = feature image (large left/right card)
+    // img2  = top support image
+    // img3  = bottom support image
     const projects = [
       {
         name:     'Tiny Home',
@@ -343,6 +403,8 @@
         date:     '2023',
         about:    'Prefab modular home visualisation. Exterior renders, floor plan graphics, and a full marketing catalogue delivered as a complete sales package.',
         hero:     'images/tiny-home/01.jpg',
+        img2:     'images/tiny-home/02.jpg',
+        img3:     'images/tiny-home/03.jpg',
       },
       {
         name:     'Taren Point',
@@ -351,14 +413,18 @@
         date:     '2024',
         about:    'Full exterior visualisation for a residential development on the Taren Point waterfront. Day shot, golden hour, and sunset treatments to support the sales campaign.',
         hero:     'images/taren-point/01.jpg',
+        img2:     'images/taren-point/02.jpg',
+        img3:     'images/taren-point/03.jpg',
       },
       {
         name:     'Beacons',
         type:     'Exterior · Interior',
         location: 'Melbourne, VIC',
         date:     '2024',
-        about:    'Comprehensive render package covering exterior, pool, and interior suites. Delivered for marketing collateral ahead of project launch.',
+        about:    'Comprehensive render package covering exterior, bathroom, and pool. Delivered for marketing collateral ahead of project launch.',
         hero:     'images/beacons/01.jpg',
+        img2:     'images/beacons/02.jpg',   // copper bathroom — showstopper
+        img3:     'images/beacons/03.jpg',
       },
       {
         name:     'The Church',
@@ -367,6 +433,8 @@
         date:     '2023',
         about:    'Adaptive reuse visualisation for a heritage church conversion. Multiple exterior angles to communicate the scale and material palette of the proposed development.',
         hero:     'images/the-church/01.jpg',
+        img2:     'images/the-church/02.jpg',
+        img3:     'images/the-church/03.jpg',
       },
       {
         name:     'Seaforth Residence',
@@ -375,6 +443,8 @@
         date:     '2023',
         about:    'Full interior render suite for a high-end residential project. Living, kitchen, and bedroom spaces delivered with mood-accurate lighting and material detail.',
         hero:     'images/seaforth/01.jpg',
+        img2:     'images/seaforth/02.jpg',
+        img3:     'images/seaforth/03.jpg',
       },
       {
         name:     'Dugs Project',
@@ -383,6 +453,8 @@
         date:     '2023',
         about:    'Interior visualisation across living, kitchen, and detail spaces. Timber materiality and natural light were the design drivers.',
         hero:     'images/dugs/01.jpg',
+        img2:     'images/dugs/02.jpg',
+        img3:     'images/dugs/03.jpg',
       },
       {
         name:     'Crescent Street',
@@ -391,6 +463,8 @@
         date:     '2022',
         about:    'Residential exterior package. Full shot, left and right elevation views for DA submission and marketing use.',
         hero:     'images/crescent-street/01.jpg',
+        img2:     'images/crescent-street/02.jpg',
+        img3:     'images/crescent-street/03.jpg',
       },
       {
         name:     'Sansouci',
@@ -399,29 +473,55 @@
         date:     '2022',
         about:    'Day and night exterior renders for a residential project. Dusk lighting treatment to support premium positioning.',
         hero:     'images/sansouci/01.jpg',
+        img2:     'images/sansouci/02.jpg',
+        img3:     'images/sansouci/03.jpg',
       },
     ];
 
-    // ── Build grid ────────────────────────────────────────────────────────────
-    const grid = document.getElementById('projects-grid');
+    // ── Build editorial grid ──────────────────────────────────────────────────
+    const workGrid = document.getElementById('work-grid');
 
-    projects.forEach((p, i) => {
-      const card = document.createElement('div');
-      card.className = 'project-card';
-      card.innerHTML = `
+    projects.forEach((p, pi) => {
+      const row = document.createElement('div');
+      row.className = `project-row${pi % 2 === 1 ? ' reverse' : ''}`;
+
+      // Feature card
+      const feature = document.createElement('div');
+      feature.className = 'project-feature';
+      feature.innerHTML = `
         ${p.hero
-          ? `<img src="${p.hero}" alt="${p.name}" loading="lazy" />`
-          : `<div class="project-placeholder"><span>${String(i+1).padStart(2,'0')}</span></div>`
+          ? `<img src="${p.hero}" alt="${p.name}" loading="${pi < 2 ? 'eager' : 'lazy'}" />`
+          : `<div class="project-placeholder"><span>${String(pi+1).padStart(2,'0')}</span></div>`
         }
-        <div class="project-card-overlay">
-          <div>
-            <div class="project-card-label">${p.type}</div>
-            <div class="project-card-name">${p.name}</div>
-          </div>
+        <div class="feature-label">
+          <div class="feature-label-type">${p.type}</div>
+          <div class="feature-label-name">${p.name}</div>
         </div>
+        <span class="feature-cue">View project</span>
       `;
-      card.addEventListener('click', () => openModal(p));
-      grid.appendChild(card);
+      feature.addEventListener('click', () => openModal(p, p.hero));
+
+      // Support stack
+      const stack = document.createElement('div');
+      stack.className = 'project-support-stack';
+
+      [p.img2, p.img3].forEach((src, ii) => {
+        const card = document.createElement('div');
+        card.className = 'project-support';
+        card.innerHTML = `
+          ${src
+            ? `<img src="${src}" alt="${p.name} — detail ${ii + 2}" loading="lazy" />`
+            : `<div class="project-placeholder"><span>${String(pi+1).padStart(2,'0')} · ${ii+2}</span></div>`
+          }
+          <div class="support-overlay"><span>${p.type}</span></div>
+        `;
+        card.addEventListener('click', () => openModal(p, src));
+        stack.appendChild(card);
+      });
+
+      row.appendChild(feature);
+      row.appendChild(stack);
+      workGrid.appendChild(row);
     });
 
     // ── Modal ─────────────────────────────────────────────────────────────────
@@ -433,9 +533,9 @@
     const metaEl   = document.getElementById('modal-meta');
     const closeBtn = document.getElementById('modal-close');
 
-    function openModal(p) {
-      imgEl.innerHTML = p.hero
-        ? `<img src="${p.hero}" alt="${p.name}" />`
+    function openModal(p, imgSrc) {
+      imgEl.innerHTML = imgSrc
+        ? `<img src="${imgSrc}" alt="${p.name}" />`
         : `<div class="modal-img-placeholder"><span>${p.type.toLowerCase()}</span></div>`;
 
       typeEl.textContent  = p.type;

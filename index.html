@@ -37,13 +37,13 @@
     }
 
     .nav-logo {
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 0.38em;
-      color: rgba(255,255,255,0.88);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.45em;
+      color: rgba(255,255,255,0.95);
       text-transform: uppercase;
       text-decoration: none;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .nav-links {
@@ -68,24 +68,36 @@
     #hero {
       position: fixed;
       inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
       background-image: url('images/_hero/hero-dugs.jpg');
       background-size: cover;
       background-position: center;
+      animation: heroZoom 9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
-    /* Bottom-edge fade to prevent hard cut if needed later */
+    @keyframes heroZoom {
+      from { transform: scale(1.08); opacity: 0.85; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
     #hero::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(0,0,0,0.18) 0%,
-        transparent      35%,
-        transparent      65%,
-        rgba(0,0,0,0.35) 100%
+        rgba(0,0,0,0.22) 0%,
+        transparent      30%,
+        transparent      60%,
+        rgba(0,0,0,0.4)  100%
       );
       pointer-events: none;
+      z-index: 1;
     }
 
     /* ── Mobile ── */
@@ -107,7 +119,9 @@
     </ul>
   </nav>
 
-  <div id="hero"></div>
+  <div id="hero">
+    <div class="hero-img"></div>
+  </div>
 
 </body>
 </html>
