@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — DIXIPIX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d0d0d;
+      --bg-2:       #111;
+      --border:     #1e1e1e;
+      --border-2:   #282828;
+      --text:       #e0e0e0;
+      --text-muted: #555;
+      --accent:     #c8a96e;
+      --font:       'Inter', system-ui, sans-serif;
+      --pad:        clamp(28px, 6vw, 96px);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 40px 18px;
+      background: rgba(13,13,13,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.38em;
+      color: rgba(255,255,255,0.88);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 60px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: rgba(255,255,255,0.9); }
+
+    /* ── Layout ── */
+    main {
+      flex: 1;
+      padding-top: 118px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── Left — info ── */
+    .contact-info {
+      padding: clamp(52px, 8vw, 100px) var(--pad);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .page-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .contact-title {
+      font-size: clamp(26px, 3.5vw, 44px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      margin-bottom: 28px;
+    }
+
+    .contact-brief {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      max-width: 380px;
+    }
+
+    .contact-checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 52px;
+    }
+
+    .contact-checklist li {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-muted);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .contact-checklist li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+
+    /* Details */
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 36px;
+    }
+
+    .contact-detail-group {}
+
+    .contact-detail-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .contact-detail-value {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .contact-detail-value a {
+      transition: color 0.2s;
+    }
+
+    .contact-detail-value a:hover { color: var(--accent); }
+
+    /* ── Right — form ── */
+    .contact-form-wrap {
+      padding: clamp(52px, 8vw, 100px) var(--pad);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    input, textarea {
+      background: var(--bg-2);
+      border: 1px solid var(--border-2);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 300;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      resize: none;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #333;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea { min-height: 140px; }
+
+    .form-submit {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .form-note {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .btn-submit {
+      background: var(--accent);
+      color: #0d0d0d;
+      border: none;
+      padding: 14px 32px;
+      font-family: var(--font);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover { background: #d9ba7e; }
+
+    /* success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .form-success-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .form-success-title {
+      font-size: 20px;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .form-success-sub {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 22px clamp(28px, 6vw, 96px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 800px) {
+      main { grid-template-columns: 1fr; }
+      .contact-info { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    @media (max-width: 520px) {
+      .nav-links { gap: 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">DIXIPIX</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="what-we-do.html">What We Do</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- Left -->
+    <div class="contact-info">
+      <div>
+        <p class="page-label">Get in Touch</p>
+        <h1 class="contact-title">Tell us about<br />your project.</h1>
+        <p class="contact-brief">
+          Send us an overview and we'll come back with a pricing quote within 24 hours. The more detail the better.
+        </p>
+        <ul class="contact-checklist">
+          <li>Deadline for the project</li>
+          <li>Quantity and type of images</li>
+          <li>Purpose of the imagery</li>
+          <li>Drawings or screenshots of the project</li>
+        </ul>
+      </div>
+      <div class="contact-details">
+        <div class="contact-detail-group">
+          <div class="contact-detail-label">Phone</div>
+          <div class="contact-detail-value"><a href="tel:+61421081668">021 081 66813</a></div>
+        </div>
+        <div class="contact-detail-group">
+          <div class="contact-detail-label">Email</div>
+          <div class="contact-detail-value"><a href="mailto:will@dixipix.nz">will@dixipix.nz</a></div>
+        </div>
+        <div class="contact-detail-group">
+          <div class="contact-detail-label">Studio</div>
+          <div class="contact-detail-value">Melbourne, Australia · Online</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="contact-form-wrap">
+
+      <form id="contact-form" action="https://formspree.io/f/will@dixipix.nz" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input id="first-name" name="first_name" type="text" placeholder="James" required />
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input id="last-name" name="last_name" type="text" placeholder="Anderson" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" placeholder="james@studio.com.au" required />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Project Overview *</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project — deadline, type of imagery, location, and any drawings or references you can share." required></textarea>
+        </div>
+
+        <div class="form-submit">
+          <p class="form-note">We respond within 24 hours.<br />AU + NZ projects.</p>
+          <button type="submit" class="btn-submit">Send Brief</button>
+        </div>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">✓</div>
+        <div class="form-success-title">Brief received.</div>
+        <div class="form-success-sub">We'll be in touch within 24 hours.</div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-logo">DIXIPIX</span>
+    <span class="footer-copy">© 2025 DIXIPIX. Melbourne, Australia.</span>
+  </footer>
+
+  <script>
+    // Basic form success swap — works if using Formspree with AJAX
+    // Replace Formspree action URL with your real endpoint once set up
+    const form    = document.getElementById('contact-form');
+    const success = document.getElementById('form-success');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          // Fallback — open email client
+          window.location.href = `mailto:will@dixipix.nz?subject=Project Brief&body=${encodeURIComponent(
+            `Name: ${data.get('first_name')} ${data.get('last_name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`
+          )}`;
+        }
+      } catch {
+        window.location.href = 'mailto:will@dixipix.nz';
+      }
+    });
+  </script>
+
+</body>
+</html>

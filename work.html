@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work — DIXIPIX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d0d0d;
+      --bg-2:       #111;
+      --bg-3:       #161616;
+      --border:     #1e1e1e;
+      --text:       #e0e0e0;
+      --text-muted: #555;
+      --accent:     #c8a96e;
+      --font:       'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 40px 18px;
+      background: rgba(13,13,13,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.38em;
+      color: rgba(255,255,255,0.88);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 60px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: rgba(255,255,255,0.9); }
+
+    /* ── Grid ── */
+    main { padding-top: 118px; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .project-card {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--bg-3);
+      cursor: pointer;
+    }
+
+    .project-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .project-card:hover img { transform: scale(1.04); }
+
+    .project-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-3);
+      transition: background 0.3s;
+    }
+
+    .project-card:hover .project-placeholder { background: #1c1c1c; }
+
+    .project-placeholder span {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #2c2c2c;
+    }
+
+    .project-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      display: flex;
+      align-items: flex-end;
+      padding: 22px 24px;
+    }
+
+    .project-card:hover .project-card-overlay { opacity: 1; }
+
+    .project-card-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+
+    .project-card-name {
+      font-size: 16px;
+      font-weight: 300;
+      color: #fff;
+    }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      padding: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--bg-2);
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      transform: translateY(20px);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .modal-backdrop.open .modal { transform: translateY(0); }
+
+    /* Modal image side */
+    .modal-image {
+      aspect-ratio: 4/3;
+      background: var(--bg-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-img-placeholder span {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #2c2c2c;
+    }
+
+    /* Modal info side */
+    .modal-info {
+      padding: 44px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .modal-type {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .modal-name {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .modal-about {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      flex: 1;
+      margin-bottom: 36px;
+    }
+
+    .modal-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .modal-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 300;
+    }
+
+    .modal-meta-key {
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 9px;
+    }
+
+    .modal-meta-val {
+      color: var(--text);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.06);
+      border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 860px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .modal { grid-template-columns: 1fr; }
+      .modal-image { aspect-ratio: 16/9; }
+    }
+
+    @media (max-width: 520px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 32px; }
+      .modal-info { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">DIXIPIX</a>
+    <ul class="nav-links">
+      <li><a href="work.html" class="active">Work</a></li>
+      <li><a href="what-we-do.html">What We Do</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="projects-grid" id="projects-grid"></div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" id="modal">
+      <div class="modal-image" id="modal-image">
+        <div class="modal-img-placeholder"><span>image</span></div>
+      </div>
+      <div class="modal-info">
+        <div>
+          <div class="modal-type" id="modal-type"></div>
+          <div class="modal-name" id="modal-name"></div>
+          <p class="modal-about" id="modal-about"></p>
+        </div>
+        <div class="modal-meta" id="modal-meta"></div>
+      </div>
+    </div>
+    <button class="modal-close" id="modal-close">&#x2715;</button>
+  </div>
+
+  <script>
+    // ── Project data ──────────────────────────────────────────────────────────
+    // Replace src with real paths. Add real names, about, date, location.
+    const projects = [
+      {
+        name:     'Taren Point',
+        type:     'Exterior',
+        location: 'Taren Point, NSW',
+        date:     '2024',
+        about:    'Full exterior visualisation for a residential development on the Taren Point waterfront. Day shot, golden hour, and sunset treatments to support the sales campaign.',
+        hero:     'images/taren-point/01.jpg',
+      },
+      {
+        name:     'Beacons',
+        type:     'Exterior · Interior',
+        location: 'Melbourne, VIC',
+        date:     '2024',
+        about:    'Comprehensive render package covering exterior, pool, and interior suites. Delivered for marketing collateral ahead of project launch.',
+        hero:     'images/beacons/01.jpg',
+      },
+      {
+        name:     'The Church',
+        type:     'Exterior',
+        location: 'Sydney, NSW',
+        date:     '2023',
+        about:    'Adaptive reuse visualisation for a heritage church conversion. Multiple exterior angles to communicate the scale and material palette of the proposed development.',
+        hero:     'images/the-church/01.jpg',
+      },
+      {
+        name:     'Seaforth Residence',
+        type:     'Interior',
+        location: 'Seaforth, NSW',
+        date:     '2023',
+        about:    'Full interior render suite for a high-end residential project. Living, kitchen, and bedroom spaces delivered with mood-accurate lighting and material detail.',
+        hero:     'images/seaforth/01.jpg',
+      },
+      {
+        name:     'Dugs Project',
+        type:     'Interior',
+        location: 'Melbourne, VIC',
+        date:     '2023',
+        about:    'Interior visualisation across living, kitchen, and detail spaces. Timber materiality and natural light were the design drivers.',
+        hero:     'images/dugs/01.jpg',
+      },
+      {
+        name:     'Crescent Street',
+        type:     'Exterior',
+        location: 'Melbourne, VIC',
+        date:     '2022',
+        about:    'Residential exterior package. Full shot, left and right elevation views for DA submission and marketing use.',
+        hero:     'images/crescent-street/01.jpg',
+      },
+      {
+        name:     'Tiny Home',
+        type:     'Exterior · Floor Plans',
+        location: 'Australia',
+        date:     '2023',
+        about:    'Prefab modular home visualisation. Exterior renders, floor plan graphics, and a full marketing catalogue delivered as a complete sales package.',
+        hero:     'images/tiny-home/01.jpg',
+      },
+      {
+        name:     'Sansouci',
+        type:     'Exterior',
+        location: 'Sydney, NSW',
+        date:     '2022',
+        about:    'Day and night exterior renders for a residential project. Dusk lighting treatment to support premium positioning.',
+        hero:     'images/sansouci/01.jpg',
+      },
+    ];
+
+    // ── Build grid ────────────────────────────────────────────────────────────
+    const grid = document.getElementById('projects-grid');
+
+    projects.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.innerHTML = `
+        ${p.hero
+          ? `<img src="${p.hero}" alt="${p.name}" loading="lazy" />`
+          : `<div class="project-placeholder"><span>${String(i+1).padStart(2,'0')}</span></div>`
+        }
+        <div class="project-card-overlay">
+          <div>
+            <div class="project-card-label">${p.type}</div>
+            <div class="project-card-name">${p.name}</div>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(p));
+      grid.appendChild(card);
+    });
+
+    // ── Modal ─────────────────────────────────────────────────────────────────
+    const backdrop = document.getElementById('modal-backdrop');
+    const imgEl    = document.getElementById('modal-image');
+    const typeEl   = document.getElementById('modal-type');
+    const nameEl   = document.getElementById('modal-name');
+    const aboutEl  = document.getElementById('modal-about');
+    const metaEl   = document.getElementById('modal-meta');
+    const closeBtn = document.getElementById('modal-close');
+
+    function openModal(p) {
+      imgEl.innerHTML = p.hero
+        ? `<img src="${p.hero}" alt="${p.name}" />`
+        : `<div class="modal-img-placeholder"><span>${p.type.toLowerCase()}</span></div>`;
+
+      typeEl.textContent  = p.type;
+      nameEl.textContent  = p.name;
+      aboutEl.textContent = p.about;
+      metaEl.innerHTML    = `
+        <div class="modal-meta-row">
+          <span class="modal-meta-key">Location</span>
+          <span class="modal-meta-val">${p.location}</span>
+        </div>
+        <div class="modal-meta-row">
+          <span class="modal-meta-key">Year</span>
+          <span class="modal-meta-val">${p.date}</span>
+        </div>
+        <div class="modal-meta-row">
+          <span class="modal-meta-key">Type</span>
+          <span class="modal-meta-val">${p.type}</span>
+        </div>
+      `;
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      backdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+</body>
+</html>

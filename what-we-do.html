@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What We Do — DIXIPIX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:         #0d0d0d;
+      --bg-2:       #111;
+      --bg-3:       #161616;
+      --border:     #1e1e1e;
+      --text:       #e0e0e0;
+      --text-muted: #555;
+      --accent:     #c8a96e;
+      --font:       'Inter', system-ui, sans-serif;
+      --pad:        clamp(28px, 6vw, 96px);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 40px 18px;
+      background: rgba(13,13,13,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.38em;
+      color: rgba(255,255,255,0.88);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 60px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: rgba(255,255,255,0.9); }
+
+    /* ── Page shell ── */
+    main { padding-top: 118px; }
+
+    /* ── Section shared ── */
+    .section {
+      padding: clamp(64px, 10vw, 120px) var(--pad);
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: clamp(36px, 6vw, 60px);
+      color: var(--text);
+    }
+
+    /* ── Testimonials ── */
+    #testimonials {
+      border-top: none;
+      padding-top: clamp(64px, 10vw, 110px);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .testimonial {
+      padding: 44px 36px;
+      background: var(--bg-2);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .testimonial-mark {
+      font-size: 28px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.5;
+    }
+
+    .testimonial-quote {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.7);
+      flex: 1;
+    }
+
+    .testimonial-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .testimonial-role {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    /* ── Carousel ── */
+    .carousel-wrap {
+      position: relative;
+    }
+
+    .carousel-track-outer {
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      aspect-ratio: 4/3;
+      background: var(--bg-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-placeholder span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: #2a2a2a;
+    }
+
+    /* Prev / Next */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s, color 0.2s;
+      backdrop-filter: blur(6px);
+    }
+
+    .carousel-btn:hover {
+      background: rgba(200,169,110,0.25);
+      color: var(--accent);
+    }
+
+    .carousel-btn.prev { left: 16px; }
+    .carousel-btn.next { right: 16px; }
+
+    /* Dots */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .carousel-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #333;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .carousel-dot.active { background: var(--accent); }
+
+    /* Service section layout */
+    .service-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: center;
+    }
+
+    .service-section.reverse { direction: rtl; }
+    .service-section.reverse > * { direction: ltr; }
+
+    .service-text {}
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 420px;
+    }
+
+    /* ── Other services ── */
+    #other-services {
+      padding-top: clamp(48px, 8vw, 80px);
+    }
+
+    .other-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 680px;
+    }
+
+    .other-item {
+      padding: 32px 28px;
+      background: var(--bg-2);
+    }
+
+    .other-num {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    .other-name {
+      font-size: 15px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .other-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Pricing ── */
+    .pricing-bar {
+      margin-top: clamp(64px, 10vw, 110px);
+      padding: clamp(28px, 4vw, 44px) var(--pad);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      gap: clamp(32px, 6vw, 80px);
+      flex-wrap: wrap;
+    }
+
+    .pricing-item {
+      text-align: center;
+    }
+
+    .pricing-value {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 860px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .service-section { grid-template-columns: 1fr; }
+      .service-section.reverse { direction: ltr; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { gap: 32px; }
+      .other-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">DIXIPIX</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="what-we-do.html" class="active">What We Do</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ── TESTIMONIALS ── -->
+    <section id="testimonials" class="section">
+      <div class="testimonials-grid">
+
+        <div class="testimonial">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">Been working with dixipix team for about 3 years now, their 3D stuff is next level. Helped us generate clients and they're just a breeze to work with. If you're looking for quality, these guys are great.</p>
+          <div>
+            <div class="testimonial-name">Chris Austin</div>
+            <div class="testimonial-role">Couvaras Architects</div>
+          </div>
+        </div>
+
+        <div class="testimonial">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">Working with Dixipix was very easy. It was really exciting to see our CAD model and a brief description of our vision turned into a realistic rendering! Very quick and efficient turn around. Would definitely do more work with them in the future.</p>
+          <div>
+            <div class="testimonial-name">Chris Freeburn</div>
+            <div class="testimonial-role">Ironbark Architects</div>
+          </div>
+        </div>
+
+        <div class="testimonial">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">I was looking for someone to cater for my style. I found dixipix and worked with the team back and forth to achieve my desired outcome. Been very happy using them since.</p>
+          <div>
+            <div class="testimonial-name">Sargiz Morad</div>
+            <div class="testimonial-role">Morad Design</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── EXTERIOR RENDERS ── -->
+    <section class="section">
+      <div class="service-section">
+        <div class="service-text">
+          <p class="section-label">01</p>
+          <h2 class="section-title">Exterior<br />Renders</h2>
+          <p class="service-desc">Photorealistic facades, landscaping, and context. Day, dusk, or golden hour. Built to sell the project before a brick is laid.</p>
+        </div>
+        <div class="carousel-wrap" data-carousel="exterior">
+          <div class="carousel-track-outer">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/_exterior/01.jpg" alt="Exterior render — Crescent Street" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_exterior/02.jpg" alt="Exterior render — Taren Point" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_exterior/03.jpg" alt="Exterior render — Beacons" loading="lazy" /></div>
+            </div>
+          </div>
+          <button class="carousel-btn prev">&#8592;</button>
+          <button class="carousel-btn next">&#8594;</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── INTERIOR IMAGERY ── -->
+    <section class="section">
+      <div class="service-section reverse">
+        <div class="service-text">
+          <p class="section-label">02</p>
+          <h2 class="section-title">Interior<br />Imagery</h2>
+          <p class="service-desc">Mood-accurate lighting, materials, and furniture. Every render calibrated to the atmosphere the project demands — residential through commercial.</p>
+        </div>
+        <div class="carousel-wrap" data-carousel="interior">
+          <div class="carousel-track-outer">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/_interior/01.jpg" alt="Interior render — Seaforth" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_interior/02.jpg" alt="Interior render — Dugs" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_interior/03.jpg" alt="Interior render — Beacons" loading="lazy" /></div>
+            </div>
+          </div>
+          <button class="carousel-btn prev">&#8592;</button>
+          <button class="carousel-btn next">&#8594;</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ELEVATIONS & FLOOR PLANS ── -->
+    <section class="section">
+      <div class="service-section">
+        <div class="service-text">
+          <p class="section-label">03</p>
+          <h2 class="section-title">Elevations &<br />Floor Plans</h2>
+          <p class="service-desc">Exploded axos, elevations, and clean 2D floor plans. DA submissions, marketing packs, and print-ready collateral.</p>
+        </div>
+        <div class="carousel-wrap" data-carousel="elevations">
+          <div class="carousel-track-outer">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/_elevations/01.jpg" alt="Floor plan — Tiny Home" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_elevations/02.jpg" alt="Axonometric — Tiny Home" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_elevations/03.jpg" alt="Floor plan — Tiny Home" loading="lazy" /></div>
+            </div>
+          </div>
+          <button class="carousel-btn prev">&#8592;</button>
+          <button class="carousel-btn next">&#8594;</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── OTHER SERVICES ── -->
+    <section class="section" id="other-services">
+      <p class="section-label">Also</p>
+      <div class="other-grid">
+        <div class="other-item">
+          <div class="other-num">04</div>
+          <div class="other-name">Animations</div>
+          <div class="other-desc">Walkthrough and flythrough animations for launch campaigns and EOI.</div>
+        </div>
+        <div class="other-item">
+          <div class="other-num">05</div>
+          <div class="other-name">Catalogues</div>
+          <div class="other-desc">Full marketing collateral — renders, plans, and copy-ready layout in one package.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PRICING BAR ── -->
+    <div class="pricing-bar">
+      <div class="pricing-item">
+        <div class="pricing-value">$1k – $1.96k</div>
+        <div class="pricing-label">Per deliverable · AUD</div>
+      </div>
+      <div class="pricing-item">
+        <div class="pricing-value">4 days</div>
+        <div class="pricing-label">Standard turnaround</div>
+      </div>
+      <div class="pricing-item">
+        <div class="pricing-value">AU + NZ</div>
+        <div class="pricing-label">Market</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Carousel — works for any number of .carousel-wrap on the page
+    document.querySelectorAll('.carousel-wrap').forEach(wrap => {
+      const track  = wrap.querySelector('.carousel-track');
+      const slides = wrap.querySelectorAll('.carousel-slide');
+      const dots   = wrap.querySelectorAll('.carousel-dot');
+      const prev   = wrap.querySelector('.carousel-btn.prev');
+      const next   = wrap.querySelector('.carousel-btn.next');
+      let current  = 0;
+      const total  = slides.length;
+
+      function goTo(n) {
+        current = (n + total) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      prev.addEventListener('click', () => goTo(current - 1));
+      next.addEventListener('click', () => goTo(current + 1));
+      dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+      // Touch swipe
+      let startX = 0;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend',   e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+      });
+    });
+  </script>
+
+</body>
+</html>

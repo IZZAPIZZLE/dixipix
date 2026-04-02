@@ -5,707 +5,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DIXIPIX — Architectural Visualisation</title>
   <meta name="description" content="High-end 3D architectural visualisation. Exteriors, interiors, animations. Melbourne, AU." />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─── Reset ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
 
-    /* ─── Tokens ─── */
     :root {
-      --bg:        #0d0d0d;
-      --bg-2:      #141414;
-      --bg-3:      #1a1a1a;
-      --border:    #2a2a2a;
-      --text:      #e8e8e8;
-      --text-muted:#888;
-      --accent:    #c8a96e;   /* warm gold — suits arch viz */
-      --accent-dim:#9a7d4e;
-      --font-sans: 'Inter', system-ui, sans-serif;
-      --font-mono: 'DM Mono', 'JetBrains Mono', monospace;
-      --max-w:     1200px;
-      --pad-x:     clamp(24px, 5vw, 80px);
-      --section-gap: clamp(80px, 12vw, 140px);
+      --text:    #e8e8e8;
+      --accent:  #c8a96e;
+      --font:    'Inter', system-ui, sans-serif;
     }
 
-    /* ─── Base ─── */
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.6;
+      background: #111;
+      font-family: var(--font);
       -webkit-font-smoothing: antialiased;
+      overflow: hidden; /* hero only — no scroll */
     }
 
-    img { display: block; width: 100%; height: 100%; object-fit: cover; }
-    a { color: inherit; text-decoration: none; }
-
-    /* ─── Nav ─── */
+    /* ── Nav ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 10;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 20px var(--pad-x);
-      background: rgba(13, 13, 13, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      padding: 36px 40px 0;
     }
 
     .nav-logo {
-      font-family: var(--font-mono);
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      color: var(--accent);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.38em;
+      color: rgba(255,255,255,0.88);
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 16px;
     }
 
     .nav-links {
       display: flex;
-      gap: 32px;
+      gap: 64px;
       list-style: none;
     }
 
     .nav-links a {
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.5);
       text-transform: uppercase;
+      text-decoration: none;
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover { color: rgba(255,255,255,0.9); }
 
-    /* ─── Hero ─── */
+    /* ── Hero ── */
     #hero {
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: var(--pad-x);
-      padding-top: 120px;
-      padding-bottom: clamp(60px, 8vw, 100px);
-      position: relative;
-      overflow: hidden;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Placeholder grid — replace with real image later */
-    .hero-bg {
-      position: absolute;
+      position: fixed;
       inset: 0;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 2px;
-      opacity: 0.18;
-      pointer-events: none;
+      background-image: url('images/_hero/hero.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
-    .hero-bg-cell {
-      background: var(--bg-3);
-    }
-
-    .hero-bg-cell:nth-child(1) { background: #1e1e1e; }
-    .hero-bg-cell:nth-child(4) { background: #1c1c1c; }
-
-    .hero-overlay {
+    /* Bottom-edge fade to prevent hard cut if needed later */
+    #hero::after {
+      content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        to top,
-        var(--bg) 0%,
-        rgba(13,13,13,0.6) 50%,
-        rgba(13,13,13,0.2) 100%
+        to bottom,
+        rgba(0,0,0,0.18) 0%,
+        transparent      35%,
+        transparent      65%,
+        rgba(0,0,0,0.35) 100%
       );
       pointer-events: none;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: var(--max-w);
-    }
-
-    .hero-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-size: clamp(48px, 8vw, 110px);
-      font-weight: 300;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      margin-bottom: 32px;
-    }
-
-    .hero-title em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      font-size: clamp(15px, 1.8vw, 18px);
-      font-weight: 300;
-      color: var(--text-muted);
-      max-width: 480px;
-      line-height: 1.7;
-      margin-bottom: 48px;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 28px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .hero-cta:hover {
-      background: var(--accent);
-      color: var(--bg);
-    }
-
-    .hero-stats {
-      position: absolute;
-      bottom: clamp(40px, 6vw, 80px);
-      right: var(--pad-x);
-      display: flex;
-      gap: 40px;
-      z-index: 1;
-    }
-
-    .hero-stat {
-      text-align: right;
-    }
-
-    .hero-stat-num {
-      font-family: var(--font-mono);
-      font-size: clamp(28px, 3vw, 40px);
-      font-weight: 300;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .hero-stat-label {
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    /* ─── Section Base ─── */
-    section {
-      padding: var(--section-gap) var(--pad-x);
-      max-width: calc(var(--max-w) + var(--pad-x) * 2);
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 300;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: clamp(40px, 6vw, 64px);
-    }
-
-    /* ─── What We Do ─── */
-    #services {
-      border-top: 1px solid var(--border);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1px;
-      border: 1px solid var(--border);
-    }
-
-    .service-item {
-      padding: 36px 28px;
-      background: var(--bg-2);
-      border: none;
-      transition: background 0.2s;
-    }
-
-    .service-item:hover { background: var(--bg-3); }
-
-    .service-icon {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: var(--accent-dim);
-      margin-bottom: 16px;
-    }
-
-    .service-name {
-      font-size: 16px;
-      font-weight: 500;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-
-    .service-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ─── Work ─── */
-    #work {
-      border-top: 1px solid var(--border);
-      max-width: none;
-      padding-left: 0;
-      padding-right: 0;
-      padding-top: var(--section-gap);
-      padding-bottom: var(--section-gap);
-    }
-
-    .work-header {
-      padding: 0 var(--pad-x);
-      max-width: calc(var(--max-w) + var(--pad-x) * 2);
-      margin: 0 auto 48px;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 2px;
-    }
-
-    .project-card {
-      position: relative;
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      background: var(--bg-3);
-      cursor: pointer;
-    }
-
-    .project-card img {
-      transition: transform 0.5s ease;
-    }
-
-    .project-card:hover img { transform: scale(1.04); }
-
-    .project-card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      display: flex;
-      align-items: flex-end;
-      padding: 24px;
-    }
-
-    .project-card:hover .project-card-overlay { opacity: 1; }
-
-    .project-card-info {}
-
-    .project-type {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .project-name {
-      font-size: 18px;
-      font-weight: 400;
-      color: #fff;
-    }
-
-    /* Placeholder for missing images */
-    .project-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-3);
-      color: var(--border);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-    }
-
-    /* ─── Testimonials ─── */
-    #testimonials {
-      border-top: 1px solid var(--border);
-    }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2px;
-    }
-
-    .testimonial {
-      padding: 40px 32px;
-      background: var(--bg-2);
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .testimonial-quote {
-      font-size: 15px;
-      line-height: 1.75;
-      color: var(--text);
-      font-weight: 300;
-      flex: 1;
-    }
-
-    .testimonial-author {}
-
-    .testimonial-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .testimonial-role {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* ─── Contact ─── */
-    #contact {
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .contact-inner {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .contact-title {
-      font-size: clamp(32px, 5vw, 60px);
-      font-weight: 300;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    .contact-sub {
-      font-size: 16px;
-      color: var(--text-muted);
-      margin-bottom: 48px;
-      line-height: 1.6;
-    }
-
-    .contact-links {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .contact-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.2s;
-    }
-
-    .contact-btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-    }
-
-    .contact-btn-primary:hover {
-      background: #dbb97e;
-    }
-
-    .contact-btn-ghost {
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-
-    .contact-btn-ghost:hover {
-      border-color: var(--text-muted);
-      color: var(--text);
-    }
-
-    /* ─── Footer ─── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px var(--pad-x);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .footer-logo {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-    }
-
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* ─── Mobile ─── */
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .hero-stats {
-        position: static;
-        margin-top: 40px;
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 32px;
-      }
-      .hero-stat { text-align: left; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .contact-links { flex-direction: column; align-items: center; }
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .nav-links { gap: 36px; }
+      nav { padding-top: 28px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NAV -->
   <nav>
-    <span class="nav-logo">DIXIPIX</span>
+    <a class="nav-logo" href="/">DIXIPIX</a>
     <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#testimonials">Studio</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="what-we-do.html">What We Do</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-bg">
-      <div class="hero-bg-cell"></div>
-      <div class="hero-bg-cell"></div>
-      <div class="hero-bg-cell"></div>
-      <div class="hero-bg-cell"></div>
-      <div class="hero-bg-cell"></div>
-      <div class="hero-bg-cell"></div>
-    </div>
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <p class="hero-eyebrow">Architectural Visualisation · Melbourne, AU</p>
-      <h1 class="hero-title">
-        Renders that<br />
-        <em>sell projects.</em>
-      </h1>
-      <p class="hero-sub">
-        High-end 3D visualisation for developers, architects, and builders across Australia and New Zealand.
-      </p>
-      <a href="#work" class="hero-cta">View the work →</a>
-    </div>
-
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">8+</div>
-        <div class="hero-stat-label">Years exp.</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">4d</div>
-        <div class="hero-stat-label">Turnaround</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">AU/NZ</div>
-        <div class="hero-stat-label">Market</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT WE DO -->
-  <section id="services">
-    <p class="section-label">What We Do</p>
-    <h2 class="section-title">Every deliverable, built to close.</h2>
-    <div class="services-grid">
-      <div class="service-item">
-        <div class="service-icon">01</div>
-        <div class="service-name">Exterior Renders</div>
-        <div class="service-desc">Photorealistic facades, landscaping, and context. Day, dusk, or golden hour.</div>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">02</div>
-        <div class="service-name">Interior Renders</div>
-        <div class="service-desc">Mood-accurate lighting, materials, and furniture. Residential through commercial.</div>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">03</div>
-        <div class="service-name">Axonometrics</div>
-        <div class="service-desc">Exploded axos and elevations for DA submissions and marketing packs.</div>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">04</div>
-        <div class="service-name">Floor Plans</div>
-        <div class="service-desc">Clean, branded 2D floor plans ready for print and digital campaigns.</div>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">05</div>
-        <div class="service-name">Animations</div>
-        <div class="service-desc">Walkthrough and flythrough animations for launch campaigns and EOI.</div>
-      </div>
-      <div class="service-item">
-        <div class="service-icon">06</div>
-        <div class="service-name">Catalogues</div>
-        <div class="service-desc">Full marketing collateral — renders, plans, and copy-ready layout in one package.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section id="work">
-    <div class="work-header">
-      <p class="section-label">Selected Work</p>
-      <h2 class="section-title">8 projects. Speak for themselves.</h2>
-    </div>
-
-    <div class="projects-grid" id="projects-grid">
-      <!-- Projects injected via JS below — swap src for real images -->
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <p class="section-label">From the Studio</p>
-    <h2 class="section-title">People who've put their name on it.</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial">
-        <p class="testimonial-quote">"[Add Chris Austin's testimonial here]"</p>
-        <div class="testimonial-author">
-          <div class="testimonial-name">Chris Austin</div>
-          <div class="testimonial-role">Couvaras Architects</div>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-quote">"[Add Chris Freeburn's testimonial here]"</p>
-        <div class="testimonial-author">
-          <div class="testimonial-name">Chris Freeburn</div>
-          <div class="testimonial-role">Ironbark Architects</div>
-        </div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-quote">"[Add Sargiz Morad's testimonial here]"</p>
-        <div class="testimonial-author">
-          <div class="testimonial-name">Sargiz Morad</div>
-          <div class="testimonial-role">Morad Design</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-inner">
-      <p class="section-label">Get in Touch</p>
-      <h2 class="contact-title">Let's make something worth looking at.</h2>
-      <p class="contact-sub">
-        4-day standard turnaround. AU + NZ projects.<br />
-        From $1,000 AUD per deliverable.
-      </p>
-      <div class="contact-links">
-        <a href="mailto:will@dixipix.nz" class="contact-btn contact-btn-primary">
-          Email Will →
-        </a>
-        <a href="mailto:accounts@dixipix.nz" class="contact-btn contact-btn-ghost">
-          Accounts
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-logo">DIXIPIX</span>
-    <span class="footer-copy">© 2025 DIXIPIX. Melbourne, Australia.</span>
-  </footer>
-
-  <script>
-    // ── Projects ──────────────────────────────────────────────────────────────
-    // Replace src values with real image paths once you drop images into the repo.
-    // Format: images/project-name/01.jpg (or .webp — webp is smaller, prefer it)
-    const projects = [
-      { name: 'Project 01', type: 'Exterior', src: null },
-      { name: 'Project 02', type: 'Interior', src: null },
-      { name: 'Project 03', type: 'Exterior', src: null },
-      { name: 'Project 04', type: 'Axonometric', src: null },
-      { name: 'Project 05', type: 'Interior', src: null },
-      { name: 'Project 06', type: 'Exterior', src: null },
-      { name: 'Project 07', type: 'Animation', src: null },
-      { name: 'Project 08', type: 'Catalogue', src: null },
-    ];
-
-    const grid = document.getElementById('projects-grid');
-
-    projects.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'project-card';
-
-      const inner = p.src
-        ? `<img src="${p.src}" alt="${p.name}" loading="lazy" />`
-        : `<div class="project-placeholder">[ image pending ]</div>`;
-
-      card.innerHTML = `
-        ${inner}
-        <div class="project-card-overlay">
-          <div class="project-card-info">
-            <div class="project-type">${p.type}</div>
-            <div class="project-name">${p.name}</div>
-          </div>
-        </div>
-      `;
-
-      grid.appendChild(card);
-    });
-  </script>
+  <div id="hero"></div>
 
 </body>
 </html>
