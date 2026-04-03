@@ -14,7 +14,6 @@
     :root {
       --bg:         #0d0d0d;
       --bg-2:       #111;
-      --bg-3:       #161616;
       --border:     #1e1e1e;
       --text:       #e0e0e0;
       --text-muted: #555;
@@ -30,7 +29,6 @@
     }
 
     a { color: inherit; text-decoration: none; }
-    img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
     /* ── Nav ── */
     nav {
@@ -41,7 +39,7 @@
       flex-direction: column;
       align-items: center;
       padding: 32px 40px 18px;
-      background: rgba(13,13,13,0.88);
+      background: rgba(13,13,13,0.92);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
@@ -73,134 +71,59 @@
     .nav-links a:hover,
     .nav-links a.active { color: rgba(255,255,255,0.9); }
 
-    /* ── Page ── */
-    main { padding-top: 118px; }
-
-    /* ── Project rows — editorial layout ── */
-    .project-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2px;
-      margin-bottom: 2px;
-      height: clamp(320px, 38vw, 580px);
+    /* ── Project list ── */
+    main {
+      padding-top: 118px;
     }
 
-    /* Alternate: small stack left, feature right */
-    .project-row.reverse {
-      grid-template-columns: 1fr 2fr;
-    }
-
-    .project-row.reverse .project-support-stack { order: 1; }
-    .project-row.reverse .project-feature        { order: 2; }
-
-    /* ── Feature card (large) ── */
-    .project-feature {
-      position: relative;
-      overflow: hidden;
+    .project-item {
       cursor: pointer;
-      background: var(--bg-3);
+      border-bottom: 1px solid var(--border);
     }
 
-    .project-feature img {
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .project-feature:hover img { transform: scale(1.04); }
-
-    /* Always-visible label at bottom */
-    .feature-label {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 48px 28px 24px;
-      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
-      z-index: 2;
-      transition: opacity 0.3s;
-    }
-
-    .feature-label-type {
-      font-size: 9px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 7px;
-    }
-
-    .feature-label-name {
-      font-size: clamp(16px, 2vw, 22px);
-      font-weight: 300;
-      color: #fff;
-      letter-spacing: 0.02em;
-    }
-
-    /* Hover: show "View project" cue */
-    .feature-cue {
-      position: absolute;
-      top: 24px; right: 24px;
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-    }
-
-    .project-feature:hover .feature-cue { opacity: 1; }
-
-    /* ── Support stack (2 small) ── */
-    .project-support-stack {
-      display: grid;
-      grid-template-rows: 1fr 1fr;
-      gap: 2px;
-    }
-
-    .project-support {
-      position: relative;
+    /* Full-width image */
+    .project-image {
+      width: 100%;
+      aspect-ratio: 16/9;
       overflow: hidden;
-      cursor: pointer;
-      background: var(--bg-3);
+      background: #161616;
     }
 
-    .project-support img {
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .project-support:hover img { transform: scale(1.05); }
-
-    /* Support hover overlay */
-    .support-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-      opacity: 0;
-      transition: opacity 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .project-support:hover .support-overlay { opacity: 1; }
-
-    .support-overlay span {
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.8);
-    }
-
-    /* ── Placeholder ── */
-    .project-placeholder {
+    .project-image img {
+      display: block;
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .project-placeholder span {
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      color: #252525;
+    .project-item:hover .project-image img {
+      transform: scale(1.03);
+    }
+
+    /* Label row beneath image */
+    .project-label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 20px clamp(24px, 4vw, 60px);
+      gap: 16px;
+    }
+
+    .project-name {
+      font-size: clamp(15px, 2vw, 20px);
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .project-type {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
     }
 
     /* ── Modal ── */
@@ -240,22 +163,15 @@
 
     .modal-image {
       aspect-ratio: 4/3;
-      background: var(--bg-3);
+      background: #161616;
       overflow: hidden;
     }
 
-    .modal-img-placeholder {
+    .modal-image img {
+      display: block;
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-img-placeholder span {
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      color: #2c2c2c;
+      object-fit: cover;
     }
 
     .modal-info {
@@ -301,7 +217,6 @@
     .modal-meta-row {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
     }
 
     .modal-meta-key {
@@ -333,27 +248,14 @@
       z-index: 201;
     }
 
-    .modal-close:hover {
-      background: rgba(255,255,255,0.12);
-      color: #fff;
-    }
+    .modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
 
     /* ── Mobile ── */
-    @media (max-width: 860px) {
-      .project-row,
-      .project-row.reverse { grid-template-columns: 1fr; height: auto; }
-      .project-feature { aspect-ratio: 16/10; }
-      .project-support-stack { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
-      .project-support { aspect-ratio: 4/3; }
-      .project-row.reverse .project-support-stack { order: unset; }
-      .project-row.reverse .project-feature { order: unset; }
+    @media (max-width: 640px) {
+      .nav-links { gap: 32px; }
+      .project-image { aspect-ratio: 4/3; }
       .modal { grid-template-columns: 1fr; }
       .modal-image { aspect-ratio: 16/9; }
-    }
-
-    @media (max-width: 520px) {
-      .nav-links { gap: 32px; }
-      .project-support-stack { grid-template-columns: 1fr 1fr; }
       .modal-info { padding: 28px 24px; }
     }
   </style>
@@ -370,31 +272,25 @@
     </ul>
   </nav>
 
-  <main id="work-grid"></main>
+  <main id="project-list"></main>
 
   <!-- Modal -->
   <div class="modal-backdrop" id="modal-backdrop">
-    <div class="modal" id="modal">
-      <div class="modal-image" id="modal-image">
-        <div class="modal-img-placeholder"><span>—</span></div>
-      </div>
+    <div class="modal">
+      <div class="modal-image" id="modal-image"></div>
       <div class="modal-info">
         <div>
           <div class="modal-type"  id="modal-type"></div>
           <div class="modal-name"  id="modal-name"></div>
           <p   class="modal-about" id="modal-about"></p>
         </div>
-        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-meta"   id="modal-meta"></div>
       </div>
     </div>
     <button class="modal-close" id="modal-close">&#x2715;</button>
   </div>
 
   <script>
-    // ── Project data ──────────────────────────────────────────────────────────
-    // hero  = feature image (large left/right card)
-    // img2  = top support image
-    // img3  = bottom support image
     const projects = [
       {
         name:     'Tiny Home',
@@ -403,8 +299,6 @@
         date:     '2023',
         about:    'Prefab modular home visualisation. Exterior renders, floor plan graphics, and a full marketing catalogue delivered as a complete sales package.',
         hero:     'images/tiny-home/01.jpg',
-        img2:     'images/tiny-home/02.jpg',
-        img3:     'images/tiny-home/03.jpg',
       },
       {
         name:     'Taren Point',
@@ -413,8 +307,6 @@
         date:     '2024',
         about:    'Full exterior visualisation for a residential development on the Taren Point waterfront. Day shot, golden hour, and sunset treatments to support the sales campaign.',
         hero:     'images/taren-point/01.jpg',
-        img2:     'images/taren-point/02.jpg',
-        img3:     'images/taren-point/03.jpg',
       },
       {
         name:     'Beacons',
@@ -423,8 +315,6 @@
         date:     '2024',
         about:    'Comprehensive render package covering exterior, bathroom, and pool. Delivered for marketing collateral ahead of project launch.',
         hero:     'images/beacons/01.jpg',
-        img2:     'images/beacons/02.jpg',   // copper bathroom — showstopper
-        img3:     'images/beacons/03.jpg',
       },
       {
         name:     'The Church',
@@ -433,8 +323,6 @@
         date:     '2023',
         about:    'Adaptive reuse visualisation for a heritage church conversion. Multiple exterior angles to communicate the scale and material palette of the proposed development.',
         hero:     'images/the-church/01.jpg',
-        img2:     'images/the-church/02.jpg',
-        img3:     'images/the-church/03.jpg',
       },
       {
         name:     'Seaforth Residence',
@@ -443,8 +331,6 @@
         date:     '2023',
         about:    'Full interior render suite for a high-end residential project. Living, kitchen, and bedroom spaces delivered with mood-accurate lighting and material detail.',
         hero:     'images/seaforth/01.jpg',
-        img2:     'images/seaforth/02.jpg',
-        img3:     'images/seaforth/03.jpg',
       },
       {
         name:     'Dugs Project',
@@ -453,8 +339,6 @@
         date:     '2023',
         about:    'Interior visualisation across living, kitchen, and detail spaces. Timber materiality and natural light were the design drivers.',
         hero:     'images/dugs/01.jpg',
-        img2:     'images/dugs/02.jpg',
-        img3:     'images/dugs/03.jpg',
       },
       {
         name:     'Crescent Street',
@@ -463,8 +347,6 @@
         date:     '2022',
         about:    'Residential exterior package. Full shot, left and right elevation views for DA submission and marketing use.',
         hero:     'images/crescent-street/01.jpg',
-        img2:     'images/crescent-street/02.jpg',
-        img3:     'images/crescent-street/03.jpg',
       },
       {
         name:     'Sansouci',
@@ -473,58 +355,29 @@
         date:     '2022',
         about:    'Day and night exterior renders for a residential project. Dusk lighting treatment to support premium positioning.',
         hero:     'images/sansouci/01.jpg',
-        img2:     'images/sansouci/02.jpg',
-        img3:     'images/sansouci/03.jpg',
       },
     ];
 
-    // ── Build editorial grid ──────────────────────────────────────────────────
-    const workGrid = document.getElementById('work-grid');
+    // Build list
+    const list = document.getElementById('project-list');
 
-    projects.forEach((p, pi) => {
-      const row = document.createElement('div');
-      row.className = `project-row${pi % 2 === 1 ? ' reverse' : ''}`;
-
-      // Feature card
-      const feature = document.createElement('div');
-      feature.className = 'project-feature';
-      feature.innerHTML = `
-        ${p.hero
-          ? `<img src="${p.hero}" alt="${p.name}" loading="${pi < 2 ? 'eager' : 'lazy'}" />`
-          : `<div class="project-placeholder"><span>${String(pi+1).padStart(2,'0')}</span></div>`
-        }
-        <div class="feature-label">
-          <div class="feature-label-type">${p.type}</div>
-          <div class="feature-label-name">${p.name}</div>
+    projects.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'project-item';
+      item.innerHTML = `
+        <div class="project-image">
+          <img src="${p.hero}" alt="${p.name}" loading="lazy" />
         </div>
-        <span class="feature-cue">View project</span>
+        <div class="project-label">
+          <span class="project-name">${p.name}</span>
+          <span class="project-type">${p.type}</span>
+        </div>
       `;
-      feature.addEventListener('click', () => openModal(p, p.hero));
-
-      // Support stack
-      const stack = document.createElement('div');
-      stack.className = 'project-support-stack';
-
-      [p.img2, p.img3].forEach((src, ii) => {
-        const card = document.createElement('div');
-        card.className = 'project-support';
-        card.innerHTML = `
-          ${src
-            ? `<img src="${src}" alt="${p.name} — detail ${ii + 2}" loading="lazy" />`
-            : `<div class="project-placeholder"><span>${String(pi+1).padStart(2,'0')} · ${ii+2}</span></div>`
-          }
-          <div class="support-overlay"><span>${p.type}</span></div>
-        `;
-        card.addEventListener('click', () => openModal(p, src));
-        stack.appendChild(card);
-      });
-
-      row.appendChild(feature);
-      row.appendChild(stack);
-      workGrid.appendChild(row);
+      item.addEventListener('click', () => openModal(p));
+      list.appendChild(item);
     });
 
-    // ── Modal ─────────────────────────────────────────────────────────────────
+    // Modal
     const backdrop = document.getElementById('modal-backdrop');
     const imgEl    = document.getElementById('modal-image');
     const typeEl   = document.getElementById('modal-type');
@@ -533,11 +386,8 @@
     const metaEl   = document.getElementById('modal-meta');
     const closeBtn = document.getElementById('modal-close');
 
-    function openModal(p, imgSrc) {
-      imgEl.innerHTML = imgSrc
-        ? `<img src="${imgSrc}" alt="${p.name}" />`
-        : `<div class="modal-img-placeholder"><span>${p.type.toLowerCase()}</span></div>`;
-
+    function openModal(p) {
+      imgEl.innerHTML   = `<img src="${p.hero}" alt="${p.name}" />`;
       typeEl.textContent  = p.type;
       nameEl.textContent  = p.name;
       aboutEl.textContent = p.about;
