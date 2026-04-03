@@ -165,6 +165,7 @@
       aspect-ratio: 4/3;
       background: #161616;
       overflow: hidden;
+      position: relative;
     }
 
     .modal-image img {
@@ -172,6 +173,39 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    /* Gallery nav */
+    .gallery-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: rgba(255,255,255,0.8);
+      width: 40px; height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s;
+      backdrop-filter: blur(4px);
+    }
+
+    .gallery-btn:hover { background: rgba(0,0,0,0.8); color: #fff; }
+    .gallery-btn.prev  { left: 12px; }
+    .gallery-btn.next  { right: 12px; }
+    .gallery-btn:disabled { opacity: 0.2; cursor: default; }
+
+    .gallery-counter {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.5);
     }
 
     .modal-info {
@@ -277,7 +311,11 @@
   <!-- Modal -->
   <div class="modal-backdrop" id="modal-backdrop">
     <div class="modal">
-      <div class="modal-image" id="modal-image"></div>
+      <div class="modal-image" id="modal-image">
+        <button class="gallery-btn prev" id="gallery-prev">&#8592;</button>
+        <button class="gallery-btn next" id="gallery-next">&#8594;</button>
+        <span class="gallery-counter" id="gallery-counter"></span>
+      </div>
       <div class="modal-info">
         <div>
           <div class="modal-type"  id="modal-type"></div>
@@ -298,7 +336,7 @@
         location: 'Australia',
         date:     '2023',
         about:    'Prefab modular home visualisation. Exterior renders, floor plan graphics, and a full marketing catalogue delivered as a complete sales package.',
-        hero:     'images/tiny-home/01.jpg',
+        images:   ['images/tiny-home/01.jpg','images/tiny-home/02.jpg','images/tiny-home/03.jpg'],
       },
       {
         name:     'Taren Point',
@@ -306,7 +344,7 @@
         location: 'Taren Point, NSW',
         date:     '2024',
         about:    'Full exterior visualisation for a residential development on the Taren Point waterfront. Day shot, golden hour, and sunset treatments to support the sales campaign.',
-        hero:     'images/taren-point/01.jpg',
+        images:   ['images/taren-point/01.jpg','images/taren-point/02.jpg','images/taren-point/03.jpg'],
       },
       {
         name:     'Beacons',
@@ -314,7 +352,7 @@
         location: 'Melbourne, VIC',
         date:     '2024',
         about:    'Comprehensive render package covering exterior, bathroom, and pool. Delivered for marketing collateral ahead of project launch.',
-        hero:     'images/beacons/01.jpg',
+        images:   ['images/beacons/01.jpg','images/beacons/02.jpg','images/beacons/03.jpg'],
       },
       {
         name:     'The Church',
@@ -322,7 +360,7 @@
         location: 'Sydney, NSW',
         date:     '2023',
         about:    'Adaptive reuse visualisation for a heritage church conversion. Multiple exterior angles to communicate the scale and material palette of the proposed development.',
-        hero:     'images/the-church/01.jpg',
+        images:   ['images/the-church/01.jpg','images/the-church/02.jpg','images/the-church/03.jpg'],
       },
       {
         name:     'Seaforth Residence',
@@ -330,7 +368,7 @@
         location: 'Seaforth, NSW',
         date:     '2023',
         about:    'Full interior render suite for a high-end residential project. Living, kitchen, and bedroom spaces delivered with mood-accurate lighting and material detail.',
-        hero:     'images/seaforth/01.jpg',
+        images:   ['images/seaforth/01.jpg','images/seaforth/02.jpg','images/seaforth/03.jpg'],
       },
       {
         name:     'Dugs Project',
@@ -338,7 +376,7 @@
         location: 'Melbourne, VIC',
         date:     '2023',
         about:    'Interior visualisation across living, kitchen, and detail spaces. Timber materiality and natural light were the design drivers.',
-        hero:     'images/dugs/01.jpg',
+        images:   ['images/dugs/01.jpg','images/dugs/02.jpg','images/dugs/03.jpg'],
       },
       {
         name:     'Crescent Street',
@@ -346,7 +384,7 @@
         location: 'Melbourne, VIC',
         date:     '2022',
         about:    'Residential exterior package. Full shot, left and right elevation views for DA submission and marketing use.',
-        hero:     'images/crescent-street/01.jpg',
+        images:   ['images/crescent-street/01.jpg','images/crescent-street/02.jpg','images/crescent-street/03.jpg'],
       },
       {
         name:     'Sansouci',
@@ -354,11 +392,11 @@
         location: 'Sydney, NSW',
         date:     '2022',
         about:    'Day and night exterior renders for a residential project. Dusk lighting treatment to support premium positioning.',
-        hero:     'images/sansouci/01.jpg',
+        images:   ['images/sansouci/01.jpg','images/sansouci/02.jpg','images/sansouci/03.jpg'],
       },
     ];
 
-    // Build list
+    // ── Build list ────────────────────────────────────────────────────────────
     const list = document.getElementById('project-list');
 
     projects.forEach(p => {
@@ -366,32 +404,55 @@
       item.className = 'project-item';
       item.innerHTML = `
         <div class="project-image">
-          <img src="${p.hero}" alt="${p.name}" loading="lazy" />
+          <img src="${p.images[0]}" alt="${p.name}" loading="lazy" />
         </div>
         <div class="project-label">
           <span class="project-name">${p.name}</span>
           <span class="project-type">${p.type}</span>
         </div>
       `;
-      item.addEventListener('click', () => openModal(p));
+      item.addEventListener('click', () => openModal(p, 0));
       list.appendChild(item);
     });
 
-    // Modal
-    const backdrop = document.getElementById('modal-backdrop');
-    const imgEl    = document.getElementById('modal-image');
-    const typeEl   = document.getElementById('modal-type');
-    const nameEl   = document.getElementById('modal-name');
-    const aboutEl  = document.getElementById('modal-about');
-    const metaEl   = document.getElementById('modal-meta');
-    const closeBtn = document.getElementById('modal-close');
+    // ── Modal + gallery ───────────────────────────────────────────────────────
+    const backdrop  = document.getElementById('modal-backdrop');
+    const imgEl     = document.getElementById('modal-image');
+    const typeEl    = document.getElementById('modal-type');
+    const nameEl    = document.getElementById('modal-name');
+    const aboutEl   = document.getElementById('modal-about');
+    const metaEl    = document.getElementById('modal-meta');
+    const closeBtn  = document.getElementById('modal-close');
+    const prevBtn   = document.getElementById('gallery-prev');
+    const nextBtn   = document.getElementById('gallery-next');
+    const counter   = document.getElementById('gallery-counter');
 
-    function openModal(p) {
-      imgEl.innerHTML   = `<img src="${p.hero}" alt="${p.name}" />`;
+    let currentProject = null;
+    let currentIndex   = 0;
+
+    function setImage(index) {
+      currentIndex = index;
+      const imgs = currentProject.images;
+      // swap image — keep prev/next buttons inside imgEl
+      const existing = imgEl.querySelector('img');
+      if (existing) existing.remove();
+      const img = document.createElement('img');
+      img.src = imgs[index];
+      img.alt = currentProject.name;
+      imgEl.insertBefore(img, prevBtn);
+      // update counter
+      counter.textContent = `${index + 1} / ${imgs.length}`;
+      // disable buttons at ends
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === imgs.length - 1;
+    }
+
+    function openModal(p, startIndex = 0) {
+      currentProject = p;
       typeEl.textContent  = p.type;
       nameEl.textContent  = p.name;
       aboutEl.textContent = p.about;
-      metaEl.innerHTML    = `
+      metaEl.innerHTML = `
         <div class="modal-meta-row">
           <span class="modal-meta-key">Location</span>
           <span class="modal-meta-val">${p.location}</span>
@@ -405,6 +466,7 @@
           <span class="modal-meta-val">${p.type}</span>
         </div>
       `;
+      setImage(startIndex);
       backdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -414,9 +476,27 @@
       document.body.style.overflow = '';
     }
 
+    prevBtn.addEventListener('click', e => { e.stopPropagation(); if (currentIndex > 0) setImage(currentIndex - 1); });
+    nextBtn.addEventListener('click', e => { e.stopPropagation(); if (currentProject && currentIndex < currentProject.images.length - 1) setImage(currentIndex + 1); });
     closeBtn.addEventListener('click', closeModal);
     backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', e => {
+      if (!backdrop.classList.contains('open')) return;
+      if (e.key === 'Escape')      closeModal();
+      if (e.key === 'ArrowLeft'  && currentIndex > 0) setImage(currentIndex - 1);
+      if (e.key === 'ArrowRight' && currentProject && currentIndex < currentProject.images.length - 1) setImage(currentIndex + 1);
+    });
+
+    // Touch swipe on modal image
+    let touchStartX = 0;
+    imgEl.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    imgEl.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0 && currentIndex < currentProject.images.length - 1) setImage(currentIndex + 1);
+        if (diff < 0 && currentIndex > 0) setImage(currentIndex - 1);
+      }
+    });
   </script>
 
 </body>
