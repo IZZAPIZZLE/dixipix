@@ -145,116 +145,46 @@
       margin-top: 5px;
     }
 
-    /* ── Carousel ── */
-    .carousel-wrap {
-      position: relative;
-    }
-
-    .carousel-track-outer {
-      overflow: hidden;
-    }
-
-    .carousel-track {
+    /* ── Service section layout ── */
+    .service-header {
       display: flex;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: clamp(32px, 5vw, 52px);
     }
-
-    .carousel-slide {
-      flex: 0 0 100%;
-      aspect-ratio: 4/3;
-      background: var(--bg-3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .carousel-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .carousel-placeholder span {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: #2a2a2a;
-    }
-
-    /* Prev / Next */
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 2;
-      background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.7);
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.2s, color 0.2s;
-      backdrop-filter: blur(6px);
-    }
-
-    .carousel-btn:hover {
-      background: rgba(200,169,110,0.25);
-      color: var(--accent);
-    }
-
-    .carousel-btn.prev { left: 16px; }
-    .carousel-btn.next { right: 16px; }
-
-    /* Dots */
-    .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .carousel-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #333;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .carousel-dot.active { background: var(--accent); }
-
-    /* Service section layout */
-    .service-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(40px, 6vw, 80px);
-      align-items: center;
-    }
-
-    .service-section.reverse { direction: rtl; }
-    .service-section.reverse > * { direction: ltr; }
-
-    .service-text {}
 
     .service-desc {
       font-size: 14px;
       font-weight: 300;
       line-height: 1.85;
       color: var(--text-muted);
-      max-width: 420px;
+      max-width: 480px;
     }
+
+    /* Stacked images */
+    .service-images {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .service-img-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: var(--bg-3);
+    }
+
+    .service-img-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .service-img-wrap:hover img { transform: scale(1.02); }
 
     /* ── Other services ── */
     #other-services {
@@ -328,8 +258,7 @@
     /* ── Mobile ── */
     @media (max-width: 860px) {
       .testimonials-grid { grid-template-columns: 1fr; }
-      .service-section { grid-template-columns: 1fr; }
-      .service-section.reverse { direction: ltr; }
+      .service-header { flex-direction: column; gap: 12px; }
     }
 
     @media (max-width: 600px) {
@@ -387,82 +316,49 @@
 
     <!-- ── EXTERIOR RENDERS ── -->
     <section class="section">
-      <div class="service-section">
-        <div class="service-text">
+      <div class="service-header">
+        <div>
           <p class="section-label">01</p>
           <h2 class="section-title">Exterior<br />Renders</h2>
-          <p class="service-desc">Photorealistic facades, landscaping, and context. Day, dusk, or golden hour. Built to sell the project before a brick is laid.</p>
         </div>
-        <div class="carousel-wrap" data-carousel="exterior">
-          <div class="carousel-track-outer">
-            <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/_exterior/01.jpg" alt="Exterior render — Crescent Street" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_exterior/02.jpg" alt="Exterior render — Taren Point" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_exterior/03.jpg" alt="Exterior render — Beacons" loading="lazy" /></div>
-            </div>
-          </div>
-          <button class="carousel-btn prev">&#8592;</button>
-          <button class="carousel-btn next">&#8594;</button>
-          <div class="carousel-dots">
-            <div class="carousel-dot active"></div>
-            <div class="carousel-dot"></div>
-            <div class="carousel-dot"></div>
-          </div>
-        </div>
+        <p class="service-desc">Photorealistic facades, landscaping, and context. Day, dusk, or golden hour. Built to sell the project before a brick is laid.</p>
+      </div>
+      <div class="service-images">
+        <div class="service-img-wrap"><img src="images/_exterior/01.jpg" alt="Exterior render" loading="lazy" /></div>
+        <div class="service-img-wrap"><img src="images/_exterior/02.jpg" alt="Exterior render" loading="lazy" /></div>
+        <div class="service-img-wrap"><img src="images/_exterior/03.jpg" alt="Exterior render" loading="lazy" /></div>
       </div>
     </section>
 
     <!-- ── INTERIOR IMAGERY ── -->
     <section class="section">
-      <div class="service-section reverse">
-        <div class="service-text">
+      <div class="service-header">
+        <div>
           <p class="section-label">02</p>
           <h2 class="section-title">Interior<br />Imagery</h2>
-          <p class="service-desc">Mood-accurate lighting, materials, and furniture. Every render calibrated to the atmosphere the project demands — residential through commercial.</p>
         </div>
-        <div class="carousel-wrap" data-carousel="interior">
-          <div class="carousel-track-outer">
-            <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/_interior/01.jpg" alt="Interior render — Seaforth" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_interior/02.jpg" alt="Interior render — Dugs" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_interior/03.jpg" alt="Interior render — Beacons" loading="lazy" /></div>
-            </div>
-          </div>
-          <button class="carousel-btn prev">&#8592;</button>
-          <button class="carousel-btn next">&#8594;</button>
-          <div class="carousel-dots">
-            <div class="carousel-dot active"></div>
-            <div class="carousel-dot"></div>
-            <div class="carousel-dot"></div>
-          </div>
-        </div>
+        <p class="service-desc">Mood-accurate lighting, materials, and furniture. Every render calibrated to the atmosphere the project demands — residential through commercial.</p>
+      </div>
+      <div class="service-images">
+        <div class="service-img-wrap"><img src="images/_interior/01.jpg" alt="Interior render" loading="lazy" /></div>
+        <div class="service-img-wrap"><img src="images/_interior/02.jpg" alt="Interior render" loading="lazy" /></div>
+        <div class="service-img-wrap"><img src="images/_interior/03.jpg" alt="Interior render" loading="lazy" /></div>
       </div>
     </section>
 
     <!-- ── ELEVATIONS & FLOOR PLANS ── -->
     <section class="section">
-      <div class="service-section">
-        <div class="service-text">
+      <div class="service-header">
+        <div>
           <p class="section-label">03</p>
           <h2 class="section-title">Elevations &<br />Floor Plans</h2>
-          <p class="service-desc">Exploded axos, elevations, and clean 2D floor plans. DA submissions, marketing packs, and print-ready collateral.</p>
         </div>
-        <div class="carousel-wrap" data-carousel="elevations">
-          <div class="carousel-track-outer">
-            <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/_elevations/01.jpg" alt="Floor plan — Tiny Home" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_elevations/02.jpg" alt="Axonometric — Tiny Home" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_elevations/03.jpg" alt="Floor plan — Tiny Home" loading="lazy" /></div>
-            </div>
-          </div>
-          <button class="carousel-btn prev">&#8592;</button>
-          <button class="carousel-btn next">&#8594;</button>
-          <div class="carousel-dots">
-            <div class="carousel-dot active"></div>
-            <div class="carousel-dot"></div>
-            <div class="carousel-dot"></div>
-          </div>
-        </div>
+        <p class="service-desc">Exploded axos, elevations, and clean 2D floor plans. DA submissions, marketing packs, and print-ready collateral.</p>
+      </div>
+      <div class="service-images">
+        <div class="service-img-wrap"><img src="images/_elevations/01.jpg" alt="Elevation" loading="lazy" /></div>
+        <div class="service-img-wrap"><img src="images/_elevations/02.jpg" alt="Elevation" loading="lazy" /></div>
+        <div class="service-img-wrap"><img src="images/_elevations/03.jpg" alt="Elevation" loading="lazy" /></div>
       </div>
     </section>
 
@@ -501,36 +397,6 @@
 
   </main>
 
-  <script>
-    // Carousel — works for any number of .carousel-wrap on the page
-    document.querySelectorAll('.carousel-wrap').forEach(wrap => {
-      const track  = wrap.querySelector('.carousel-track');
-      const slides = wrap.querySelectorAll('.carousel-slide');
-      const dots   = wrap.querySelectorAll('.carousel-dot');
-      const prev   = wrap.querySelector('.carousel-btn.prev');
-      const next   = wrap.querySelector('.carousel-btn.next');
-      let current  = 0;
-      const total  = slides.length;
-
-      function goTo(n) {
-        current = (n + total) % total;
-        track.style.transform = `translateX(-${current * 100}%)`;
-        dots.forEach((d, i) => d.classList.toggle('active', i === current));
-      }
-
-      prev.addEventListener('click', () => goTo(current - 1));
-      next.addEventListener('click', () => goTo(current + 1));
-      dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
-
-      // Touch swipe
-      let startX = 0;
-      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-      track.addEventListener('touchend',   e => {
-        const diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
-      });
-    });
-  </script>
 
 </body>
 </html>
