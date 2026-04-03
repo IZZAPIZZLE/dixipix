@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project — DIXIPIX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d0d0d;
+      --bg-2:       #111;
+      --border:     #1e1e1e;
+      --text:       #e0e0e0;
+      --text-muted: #555;
+      --accent:     #c8a96e;
+      --font:       'Inter', system-ui, sans-serif;
+      --pad:        clamp(24px, 6vw, 96px);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 40px 18px;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.45em;
+      color: rgba(255,255,255,0.95);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 60px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: rgba(255,255,255,0.9); }
+
+    /* ── Page ── */
+    main {
+      padding-top: 118px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: var(--pad);
+      padding-right: var(--pad);
+      padding-bottom: 100px;
+    }
+
+    /* ── Back link ── */
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 48px;
+      margin-bottom: 52px;
+      transition: color 0.2s;
+    }
+
+    .back:hover { color: var(--text); }
+
+    /* ── Header ── */
+    .project-header {
+      margin-bottom: 56px;
+    }
+
+    .project-type {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .project-title {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      margin-bottom: 36px;
+    }
+
+    .meta-item {}
+
+    .meta-key {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .meta-val {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .project-description {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.6);
+      max-width: 620px;
+    }
+
+    /* ── Images ── */
+    .project-images {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .project-img-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: #161616;
+    }
+
+    .project-img-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-img-wrap:hover img { transform: scale(1.02); }
+
+    /* ── CTA ── */
+    .project-cta {
+      margin-top: 72px;
+      padding-top: 52px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .cta-text {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover { background: #d9ba7e; }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .nav-links { gap: 32px; }
+      .project-meta { gap: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">DIXIPIX</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="what-we-do.html">What We Do</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="project-main">
+    <!-- injected by JS -->
+  </main>
+
+  <script>
+    const projects = {
+      'tiny-home': {
+        name:     'Tiny Home',
+        type:     'Exterior · Floor Plans',
+        location: 'Australia',
+        date:     '2023',
+        description: `A study in doing more with less. The Tiny Home project strips residential architecture back to its essentials — a black steel exoskeleton, warm timber cladding, and full-height glazing that dissolves the boundary between inside and out. Set in native bushland, the structure sits lightly on the land with a raised deck that grounds it without anchoring it. The floor plan is tight, deliberate, and wastes nothing. This is prefab done with conviction.`,
+        images: [
+          'images/tiny-home/01.jpg',
+          'images/tiny-home/02.jpg',
+          'images/tiny-home/03.jpg',
+        ],
+      },
+      'taren-point': {
+        name:     'Taren Point',
+        type:     'Exterior',
+        location: 'Taren Point, NSW',
+        date:     '2024',
+        description: `Taren Point commands attention from the street. The building's curved balconies wrap each level in a continuous sweep of white render, contrasted by a vertical band of dark textured stone at its core. The proportions are generous — five storeys that feel considered rather than imposed. Mature trees frame the elevation and soften the street edge, while golden-hour light brings warmth to a palette that could easily read cold. A building that earns its place.`,
+        images: [
+          'images/taren-point/01.jpg',
+          'images/taren-point/02.jpg',
+          'images/taren-point/03.jpg',
+        ],
+      },
+      'beacons': {
+        name:     'Beacons',
+        type:     'Exterior · Interior',
+        location: 'Melbourne, VIC',
+        date:     '2024',
+        description: `Beacons sits at the edge of the bush like it grew there. Three gabled timber forms cluster together, their vertical batten skins ageing to silver against a misty mountain backdrop. Inside, the copper bathroom is the centrepiece — a warm, sculptural space where every surface is intentional. The pool terrace connects the building to the landscape with a single clean gesture. Organic in material, precise in form.`,
+        images: [
+          'images/beacons/01.jpg',
+          'images/beacons/02.jpg',
+          'images/beacons/03.jpg',
+        ],
+      },
+      'the-church': {
+        name:     'The Church',
+        type:     'Exterior',
+        location: 'Sydney, NSW',
+        date:     '2023',
+        description: `The Church is an exercise in contrast — raw concrete panels meet large-format glazing across a low, horizontal form that reads as both civic and residential. The façade is deliberate in its restraint: no ornament, no excess, just material doing the work. Uplighting at night shifts the mood entirely, turning a daytime monument into something more intimate. A building that references its heritage without being defined by it.`,
+        images: [
+          'images/the-church/01.jpg',
+          'images/the-church/02.jpg',
+          'images/the-church/03.jpg',
+        ],
+      },
+      'seaforth-residence': {
+        name:     'Seaforth Residence',
+        type:     'Interior',
+        location: 'Seaforth, NSW',
+        date:     '2023',
+        description: `The Seaforth kitchen is the kind of space that makes you want to stay. A fluted island bench in deep charcoal anchors the room, flanked by floor-to-ceiling cabinetry in a matching dark oak. Three hand-blown pendants drop at precise intervals overhead. The material palette is tight — black, charcoal, grey terrazzo — with every detail resolved. Living and bedroom spaces carry the same discipline: calm, high-contrast, built to last.`,
+        images: [
+          'images/seaforth/01.jpg',
+          'images/seaforth/02.jpg',
+          'images/seaforth/03.jpg',
+        ],
+      },
+      'dugs-project': {
+        name:     'Dugs Project',
+        type:     'Interior',
+        location: 'Melbourne, VIC',
+        date:     '2023',
+        description: `The Dugs Project is defined by its openness. A double-height living space dissolves into a north-facing kitchen and dining zone, with the garden pulled right to the threshold through steel-framed glazing. Timber is the constant — warm American oak on the cabinetry, raw timber on the shelving, pale stone underfoot. The architecture works with the light, not against it. Every room feels connected to the next without losing its own identity.`,
+        images: [
+          'images/dugs/01.jpg',
+          'images/dugs/02.jpg',
+          'images/dugs/03.jpg',
+        ],
+      },
+      'crescent-street': {
+        name:     'Crescent Street',
+        type:     'Exterior',
+        location: 'Melbourne, VIC',
+        date:     '2022',
+        description: `Crescent Street delivers two homes with a shared architectural language that never feels repetitive. The upper levels curve outward, clad in vertical timber battens that filter light and add rhythm to the façade. Below, a solid concrete base grounds the structure and provides contrast. Front gardens are planted generously, softening the street edge. These are houses that add to their neighbourhood rather than simply occupying it.`,
+        images: [
+          'images/crescent-street/01.jpg',
+          'images/crescent-street/02.jpg',
+          'images/crescent-street/03.jpg',
+        ],
+      },
+      'sansouci': {
+        name:     'Sansouci',
+        type:     'Exterior',
+        location: 'Sydney, NSW',
+        date:     '2022',
+        description: `Sansouci is bold and unapologetic. Black vertical cladding wraps the upper level in a continuous skin, broken only by deep-set window reveals and louvred screens. The lower level sits in white render — the contrast is sharp and intentional. Curved forms at the building's edges soften what could be a hard composition, giving the massing a sense of movement. By night, warm interior light bleeds through the screens and the building becomes something else entirely.`,
+        images: [
+          'images/sansouci/01.jpg',
+          'images/sansouci/02.jpg',
+          'images/sansouci/03.jpg',
+        ],
+      },
+    };
+
+    // Read project ID from URL: project.html?id=sansouci
+    const params = new URLSearchParams(window.location.search);
+    const id     = params.get('id');
+    const p      = projects[id];
+    const main   = document.getElementById('project-main');
+
+    if (!p) {
+      main.innerHTML = `
+        <a class="back" href="work.html">← Back to Work</a>
+        <p style="color:var(--text-muted);padding-top:40px;">Project not found.</p>
+      `;
+    } else {
+      document.title = `${p.name} — DIXIPIX`;
+
+      const imagesHTML = p.images.map(src => `
+        <div class="project-img-wrap">
+          <img src="${src}" alt="${p.name}" loading="lazy" />
+        </div>
+      `).join('');
+
+      main.innerHTML = `
+        <a class="back" href="work.html">← Back to Work</a>
+
+        <div class="project-header">
+          <p class="project-type">${p.type}</p>
+          <h1 class="project-title">${p.name}</h1>
+          <div class="project-meta">
+            <div class="meta-item">
+              <div class="meta-key">Location</div>
+              <div class="meta-val">${p.location}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key">Year</div>
+              <div class="meta-val">${p.date}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key">Type</div>
+              <div class="meta-val">${p.type}</div>
+            </div>
+          </div>
+          <p class="project-description">${p.description}</p>
+        </div>
+
+        <div class="project-images">
+          ${imagesHTML}
+        </div>
+
+        <div class="project-cta">
+          <p class="cta-text">Like what you see?</p>
+          <a href="contact.html" class="cta-btn">Start a project</a>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>

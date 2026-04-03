@@ -77,8 +77,11 @@
     }
 
     .project-item {
+      display: block;
       cursor: pointer;
       border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
     }
 
     /* Full-width image */
@@ -126,7 +129,7 @@
       white-space: nowrap;
     }
 
-    /* ── Modal ── */
+    /* ── Modal — removed, projects now open own page ── */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -330,172 +333,32 @@
 
   <script>
     const projects = [
-      {
-        name:     'Tiny Home',
-        type:     'Exterior · Floor Plans',
-        location: 'Australia',
-        date:     '2023',
-        about:    'Prefab modular home visualisation. Exterior renders, floor plan graphics, and a full marketing catalogue delivered as a complete sales package.',
-        images:   ['images/tiny-home/01.jpg','images/tiny-home/02.jpg','images/tiny-home/03.jpg'],
-      },
-      {
-        name:     'Taren Point',
-        type:     'Exterior',
-        location: 'Taren Point, NSW',
-        date:     '2024',
-        about:    'Full exterior visualisation for a residential development on the Taren Point waterfront. Day shot, golden hour, and sunset treatments to support the sales campaign.',
-        images:   ['images/taren-point/01.jpg','images/taren-point/02.jpg','images/taren-point/03.jpg'],
-      },
-      {
-        name:     'Beacons',
-        type:     'Exterior · Interior',
-        location: 'Melbourne, VIC',
-        date:     '2024',
-        about:    'Comprehensive render package covering exterior, bathroom, and pool. Delivered for marketing collateral ahead of project launch.',
-        images:   ['images/beacons/01.jpg','images/beacons/02.jpg','images/beacons/03.jpg'],
-      },
-      {
-        name:     'The Church',
-        type:     'Exterior',
-        location: 'Sydney, NSW',
-        date:     '2023',
-        about:    'Adaptive reuse visualisation for a heritage church conversion. Multiple exterior angles to communicate the scale and material palette of the proposed development.',
-        images:   ['images/the-church/01.jpg','images/the-church/02.jpg','images/the-church/03.jpg'],
-      },
-      {
-        name:     'Seaforth Residence',
-        type:     'Interior',
-        location: 'Seaforth, NSW',
-        date:     '2023',
-        about:    'Full interior render suite for a high-end residential project. Living, kitchen, and bedroom spaces delivered with mood-accurate lighting and material detail.',
-        images:   ['images/seaforth/01.jpg','images/seaforth/02.jpg','images/seaforth/03.jpg'],
-      },
-      {
-        name:     'Dugs Project',
-        type:     'Interior',
-        location: 'Melbourne, VIC',
-        date:     '2023',
-        about:    'Interior visualisation across living, kitchen, and detail spaces. Timber materiality and natural light were the design drivers.',
-        images:   ['images/dugs/01.jpg','images/dugs/02.jpg','images/dugs/03.jpg'],
-      },
-      {
-        name:     'Crescent Street',
-        type:     'Exterior',
-        location: 'Melbourne, VIC',
-        date:     '2022',
-        about:    'Residential exterior package. Full shot, left and right elevation views for DA submission and marketing use.',
-        images:   ['images/crescent-street/01.jpg','images/crescent-street/02.jpg','images/crescent-street/03.jpg'],
-      },
-      {
-        name:     'Sansouci',
-        type:     'Exterior',
-        location: 'Sydney, NSW',
-        date:     '2022',
-        about:    'Day and night exterior renders for a residential project. Dusk lighting treatment to support premium positioning.',
-        images:   ['images/sansouci/01.jpg','images/sansouci/02.jpg','images/sansouci/03.jpg'],
-      },
+      { name: 'Tiny Home',          type: 'Exterior · Floor Plans', id: 'tiny-home',          hero: 'images/tiny-home/01.jpg' },
+      { name: 'Taren Point',        type: 'Exterior',               id: 'taren-point',        hero: 'images/taren-point/01.jpg' },
+      { name: 'Beacons',            type: 'Exterior · Interior',    id: 'beacons',            hero: 'images/beacons/01.jpg' },
+      { name: 'The Church',         type: 'Exterior',               id: 'the-church',         hero: 'images/the-church/01.jpg' },
+      { name: 'Seaforth Residence', type: 'Interior',               id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
+      { name: 'Dugs Project',       type: 'Interior',               id: 'dugs-project',       hero: 'images/dugs/01.jpg' },
+      { name: 'Crescent Street',    type: 'Exterior',               id: 'crescent-street',    hero: 'images/crescent-street/01.jpg' },
+      { name: 'Sansouci',           type: 'Exterior',               id: 'sansouci',           hero: 'images/sansouci/01.jpg' },
     ];
 
-    // ── Build list ────────────────────────────────────────────────────────────
     const list = document.getElementById('project-list');
 
     projects.forEach(p => {
-      const item = document.createElement('div');
+      const item = document.createElement('a');
       item.className = 'project-item';
+      item.href = `project.html?id=${p.id}`;
       item.innerHTML = `
         <div class="project-image">
-          <img src="${p.images[0]}" alt="${p.name}" loading="lazy" />
+          <img src="${p.hero}" alt="${p.name}" loading="lazy" />
         </div>
         <div class="project-label">
           <span class="project-name">${p.name}</span>
           <span class="project-type">${p.type}</span>
         </div>
       `;
-      item.addEventListener('click', () => openModal(p, 0));
       list.appendChild(item);
-    });
-
-    // ── Modal + gallery ───────────────────────────────────────────────────────
-    const backdrop  = document.getElementById('modal-backdrop');
-    const imgEl     = document.getElementById('modal-image');
-    const typeEl    = document.getElementById('modal-type');
-    const nameEl    = document.getElementById('modal-name');
-    const aboutEl   = document.getElementById('modal-about');
-    const metaEl    = document.getElementById('modal-meta');
-    const closeBtn  = document.getElementById('modal-close');
-    const prevBtn   = document.getElementById('gallery-prev');
-    const nextBtn   = document.getElementById('gallery-next');
-    const counter   = document.getElementById('gallery-counter');
-
-    let currentProject = null;
-    let currentIndex   = 0;
-
-    function setImage(index) {
-      currentIndex = index;
-      const imgs = currentProject.images;
-      // swap image — keep prev/next buttons inside imgEl
-      const existing = imgEl.querySelector('img');
-      if (existing) existing.remove();
-      const img = document.createElement('img');
-      img.src = imgs[index];
-      img.alt = currentProject.name;
-      imgEl.insertBefore(img, prevBtn);
-      // update counter
-      counter.textContent = `${index + 1} / ${imgs.length}`;
-      // disable buttons at ends
-      prevBtn.disabled = index === 0;
-      nextBtn.disabled = index === imgs.length - 1;
-    }
-
-    function openModal(p, startIndex = 0) {
-      currentProject = p;
-      typeEl.textContent  = p.type;
-      nameEl.textContent  = p.name;
-      aboutEl.textContent = p.about;
-      metaEl.innerHTML = `
-        <div class="modal-meta-row">
-          <span class="modal-meta-key">Location</span>
-          <span class="modal-meta-val">${p.location}</span>
-        </div>
-        <div class="modal-meta-row">
-          <span class="modal-meta-key">Year</span>
-          <span class="modal-meta-val">${p.date}</span>
-        </div>
-        <div class="modal-meta-row">
-          <span class="modal-meta-key">Type</span>
-          <span class="modal-meta-val">${p.type}</span>
-        </div>
-      `;
-      setImage(startIndex);
-      backdrop.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      backdrop.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    prevBtn.addEventListener('click', e => { e.stopPropagation(); if (currentIndex > 0) setImage(currentIndex - 1); });
-    nextBtn.addEventListener('click', e => { e.stopPropagation(); if (currentProject && currentIndex < currentProject.images.length - 1) setImage(currentIndex + 1); });
-    closeBtn.addEventListener('click', closeModal);
-    backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
-    document.addEventListener('keydown', e => {
-      if (!backdrop.classList.contains('open')) return;
-      if (e.key === 'Escape')      closeModal();
-      if (e.key === 'ArrowLeft'  && currentIndex > 0) setImage(currentIndex - 1);
-      if (e.key === 'ArrowRight' && currentProject && currentIndex < currentProject.images.length - 1) setImage(currentIndex + 1);
-    });
-
-    // Touch swipe on modal image
-    let touchStartX = 0;
-    imgEl.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    imgEl.addEventListener('touchend', e => {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) {
-        if (diff > 0 && currentIndex < currentProject.images.length - 1) setImage(currentIndex + 1);
-        if (diff < 0 && currentIndex > 0) setImage(currentIndex - 1);
-      }
     });
   </script>
 
