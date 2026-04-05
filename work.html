@@ -187,6 +187,59 @@
       white-space: nowrap;
     }
 
+    /* ── Testimonials ── */
+    .testimonials {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 72px clamp(20px, 4vw, 60px) 0;
+      border-top: 1px solid var(--border);
+    }
+    .testimonials-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 40px;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .testimonial {
+      padding: 36px 28px;
+      background: var(--bg-2);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .testimonial-mark {
+      font-size: 24px;
+      color: var(--accent);
+      opacity: 0.5;
+      line-height: 1;
+    }
+    .testimonial-quote {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.65);
+      flex: 1;
+    }
+    .testimonial-name {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .testimonial-role {
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
@@ -371,6 +424,7 @@
       .nav-links { gap: 24px; }
       .nav-links a { font-size: 9px; }
       .project-image { aspect-ratio: 4/3; }
+      .testimonials-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -389,6 +443,36 @@
 
   <main>
     <div class="project-list" id="project-list"></div>
+    <div class="testimonials fade-up">
+      <p class="testimonials-label">Client Feedback</p>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">Been working with dixipix team for about 3 years now, their 3D stuff is next level. Helped us generate clients and they're just a breeze to work with. If you're looking for quality, these guys are great.</p>
+          <div>
+            <div class="testimonial-name">Chris Austin</div>
+            <div class="testimonial-role">Couvaras Architects</div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">Working with Dixipix was very easy. It was really exciting to see our CAD model and a brief description of our vision turned into a realistic rendering! Very quick and efficient turnaround. Would definitely do more work with them in the future.</p>
+          <div>
+            <div class="testimonial-name">Chris Freeburn</div>
+            <div class="testimonial-role">Ironbark Architects</div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">I was looking for someone to cater for my style. I found dixipix and worked with the team back and forth to achieve my desired outcome. Been very happy using them since.</p>
+          <div>
+            <div class="testimonial-name">Sargiz Morad</div>
+            <div class="testimonial-role">Morad Design</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer>
       <span>© 2025 DIXIPIX Studio</span>
       <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
@@ -397,14 +481,14 @@
 
   <script>
     const projects = [
-      { name: 'Tiny Home',           type: 'Exterior',            id: 'tiny-home',          hero: 'images/tiny-home/01.jpg' },
       { name: 'Taren Point',         type: 'Exterior',            id: 'taren-point',        hero: 'images/taren-point/01.jpg' },
-      { name: 'Beacons',             type: 'Exterior · Interior', id: 'beacons',            hero: 'images/beacons/01.jpg' },
       { name: 'The Church',          type: 'Exterior',            id: 'the-church',         hero: 'images/the-church/01.jpg' },
+      { name: 'Beacons',             type: 'Exterior · Interior', id: 'beacons',            hero: 'images/beacons/01.jpg' },
+      { name: 'Sansouci',            type: 'Exterior',            id: 'sansouci',           hero: 'images/sansouci/01.jpg' },
+      { name: 'Crescent Street',     type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/01.jpg' },
       { name: 'Seaforth Residence',  type: 'Interior',            id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
       { name: 'Taren Point Project', type: 'Interior',            id: 'dugs-project',       hero: 'images/dugs/01.jpg' },
-      { name: 'Crescent Street',     type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/01.jpg' },
-      { name: 'Sansouci',            type: 'Exterior',            id: 'sansouci',           hero: 'images/sansouci/01.jpg' },
+      { name: 'Tiny Home',           type: 'Exterior',            id: 'tiny-home',          hero: 'images/tiny-home/01.jpg' },
     ];
 
     const list = document.getElementById('project-list');

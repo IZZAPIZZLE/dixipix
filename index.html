@@ -120,10 +120,30 @@
       z-index: 1;
     }
 
+    /* ── Hero tagline ── */
+    .hero-tagline {
+      position: absolute;
+      bottom: clamp(32px, 5vw, 56px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      text-align: center;
+      white-space: nowrap;
+      font-size: clamp(9px, 1vw, 11px);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      opacity: 0;
+      animation: taglineFade 1.2s ease 1s forwards;
+    }
+    @keyframes taglineFade { to { opacity: 1; } }
+
     /* ── Mobile ── */
     @media (max-width: 600px) {
       .nav-links { gap: 36px; }
       nav { padding-top: 28px; }
+      .hero-tagline { white-space: normal; padding: 0 24px; }
     }
   </style>
 </head>
@@ -145,6 +165,7 @@
 
   <div id="hero">
     <div class="hero-img"></div>
+    <p class="hero-tagline">Architectural Visualisation &nbsp;·&nbsp; Melbourne &nbsp;·&nbsp; 4-Day Turnaround</p>
   </div>
 
 </body>
