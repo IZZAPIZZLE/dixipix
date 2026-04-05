@@ -341,6 +341,59 @@
       opacity: 0.6;
     }
 
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      display: block;
+      transform: scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: default;
+    }
+
+    .lightbox.open img {
+      transform: scale(1);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 22px;
+      cursor: pointer;
+      transition: color 0.2s;
+      line-height: 1;
+      padding: 8px;
+    }
+
+    .lightbox-close:hover { color: #fff; }
+
+    /* cursor hint on slides */
+    .carousel-slide { cursor: zoom-in; }
+
     /* ── Mobile ── */
     @media (max-width: 860px) {
       .testimonials-grid { grid-template-columns: 1fr; }
@@ -560,7 +613,39 @@
   </main>
 
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="" />
+    <button class="lightbox-close" id="lightbox-close">&#x2715;</button>
+  </div>
+
   <script>
+    // ── Lightbox ──
+    const lightbox     = document.getElementById('lightbox');
+    const lightboxImg  = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightbox.addEventListener('click', e => {
+      if (e.target !== lightboxImg) closeLightbox();
+    });
+    lightboxClose.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // ── Carousels ──
     document.querySelectorAll('.carousel').forEach(car => {
       const track    = car.querySelector('.carousel-track');
       const slides   = car.querySelectorAll('.carousel-slide');
@@ -579,13 +664,20 @@
         fills.forEach(f => f.style.width = pct);
       }
 
-      // Init progress
       goTo(0);
 
       prevBtn.addEventListener('click', () => goTo(current - 1));
       nextBtn.addEventListener('click', () => goTo(current + 1));
 
-      // Keyboard on hover
+      // Click image to open lightbox
+      slides.forEach(slide => {
+        slide.addEventListener('click', () => {
+          const img = slide.querySelector('img');
+          if (img) openLightbox(img.src, img.alt);
+        });
+      });
+
+      // Keyboard
       car.setAttribute('tabindex', '0');
       car.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft')  goTo(current - 1);
