@@ -76,6 +76,12 @@
       padding-top: 118px;
     }
 
+    .project-list {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 60px) 80px;
+    }
+
     .project-item {
       display: block;
       cursor: pointer;
@@ -109,7 +115,7 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 20px clamp(24px, 4vw, 60px);
+      padding: 18px 0;
       gap: 16px;
     }
 
@@ -309,7 +315,9 @@
     </ul>
   </nav>
 
-  <main id="project-list"></main>
+  <main>
+    <div class="project-list" id="project-list"></div>
+  </main>
 
   <!-- Modal -->
   <div class="modal-backdrop" id="modal-backdrop">
