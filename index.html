@@ -54,11 +54,17 @@
       text-decoration: none;
     }
 
+    .nav-centre {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
     .nav-links {
       display: flex;
       gap: 48px;
       list-style: none;
-      justify-self: end;
     }
 
     .nav-links a {
@@ -121,12 +127,15 @@
 
   <nav>
     <a href="/"><img class="nav-mark" src="images/logo.png" alt="DIXIPIX" /></a>
-    <a class="nav-logo" href="/">DIXIPIX</a>
-    <ul class="nav-links">
-      <li><a href="work.html">Work</a></li>
-      <li><a href="what-we-do.html">What We Do</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
+    <div class="nav-centre">
+      <a class="nav-logo" href="/">DIXIPIX</a>
+      <ul class="nav-links">
+        <li><a href="work.html">Work</a></li>
+        <li><a href="what-we-do.html">What We Do</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div></div>
   </nav>
 
   <div id="hero">
