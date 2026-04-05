@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Developer Set — DIXIPIX</title>
+  <title>Developer Set — DIXIPIX</title>
   <link rel="icon" type="image/png" href="images/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -88,16 +88,14 @@
     .hook {
       padding: clamp(28px, 3vw, 40px) var(--pad) clamp(20px, 2.5vw, 32px);
     }
-
     .hook-headline {
-      font-size: clamp(28px, 4vw, 52px);
+      font-size: clamp(24px, 3.5vw, 48px);
       font-weight: 300;
       letter-spacing: -0.02em;
       line-height: 1.1;
       color: var(--text);
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
-
     .hook-sub {
       font-size: clamp(10px, 1.1vw, 12px);
       font-weight: 300;
@@ -106,14 +104,15 @@
       color: var(--text-muted);
     }
 
-    /* ── Magazine sequence ── */
+    /* ── Sequence ── */
     .sequence {
       display: flex;
       flex-direction: column;
     }
 
+    /* Full bleed slide */
     .slide {
-      margin-bottom: clamp(72px, 10vw, 130px);
+      margin-bottom: clamp(56px, 8vw, 110px);
     }
     .slide:last-child { margin-bottom: 0; }
 
@@ -130,25 +129,46 @@
     }
 
     .slide-caption {
-      padding: 20px var(--pad) 0;
+      padding: 18px var(--pad) 0;
       display: flex;
       align-items: baseline;
-      gap: 28px;
+      gap: 24px;
     }
-
-    .slide-title {
+    .slide-label {
       font-size: 9px;
       letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--accent);
-      white-space: nowrap;
     }
 
-    .slide-context {
-      font-size: 11px;
-      font-weight: 300;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
+    /* Paired slide (side by side) */
+    .slide-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-bottom: clamp(56px, 8vw, 110px);
+    }
+    .slide-pair .pair-item {
+      overflow: hidden;
+      background: #111;
+      line-height: 0;
+    }
+    .slide-pair .pair-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pair-captions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding-top: 18px;
+      padding-left: var(--pad);
+      padding-right: var(--pad);
+    }
+    .pair-captions .slide-label {
+      padding: 0;
     }
 
     /* ── CTA ── */
@@ -161,14 +181,12 @@
       flex-wrap: wrap;
       gap: 32px;
     }
-
     .cta-text {
       font-size: clamp(18px, 2.5vw, 28px);
       font-weight: 300;
       letter-spacing: -0.01em;
       color: var(--text);
     }
-
     .cta-btn {
       display: inline-flex;
       align-items: center;
@@ -207,8 +225,9 @@
       nav { padding: 20px 24px; }
       .nav-links { gap: 24px; }
       .nav-links a { font-size: 9px; }
+      .slide-pair { grid-template-columns: 1fr; }
+      .pair-captions { grid-template-columns: 1fr; }
       .cta-block { flex-direction: column; align-items: flex-start; }
-      .slide-caption { flex-direction: column; gap: 8px; }
     }
   </style>
 </head>
@@ -229,50 +248,64 @@
 
     <!-- ── HOOK ── -->
     <div class="hook fade-up">
-      <h1 class="hook-headline">From brief to buyer-ready.</h1>
-      <p class="hook-sub">Westport, NZ — A complete development visual package.</p>
+      <h1 class="hook-headline">Taren Point House — Sydney</h1>
+      <p class="hook-sub">Full residential visual package — exterior to interior.</p>
     </div>
 
-    <!-- ── IMAGE SEQUENCE ── -->
+    <!-- ── SEQUENCE ── -->
     <div class="sequence">
 
+      <!-- 1. Hero exterior — full bleed -->
       <div class="slide fade-up">
         <div class="slide-img">
-          <img src="images/developer-set/01.jpg" alt="Open View" loading="eager" />
+          <img src="images/developer-set/hero.jpg" alt="Exterior" loading="eager" />
         </div>
         <div class="slide-caption">
-          <span class="slide-title">Open View</span>
-          <span class="slide-context">Golden hour exterior. Lifestyle, setting, scale.</span>
+          <span class="slide-label">Exterior</span>
         </div>
       </div>
 
+      <!-- 2. Living & Kitchen — full bleed -->
       <div class="slide fade-up">
         <div class="slide-img">
-          <img src="images/developer-set/03.jpg" alt="Panoramic Serenity" loading="lazy" />
+          <img src="images/developer-set/tp-1.jpg" alt="Living & Kitchen" loading="lazy" />
         </div>
         <div class="slide-caption">
-          <span class="slide-title">Panoramic Serenity</span>
-          <span class="slide-context">The bedroom interior. Light through glass.</span>
+          <span class="slide-label">Living & Kitchen</span>
         </div>
       </div>
 
+      <!-- 3. Kitchen — full bleed -->
       <div class="slide fade-up">
         <div class="slide-img">
-          <img src="images/developer-set/page2.jpg" alt="Virtual Show Rooms" loading="lazy" />
+          <img src="images/developer-set/tp-2.jpg" alt="Kitchen" loading="lazy" />
         </div>
         <div class="slide-caption">
-          <span class="slide-title">Virtual Show Rooms</span>
-          <span class="slide-context">Every room, labelled. Structure, material, and scale at a glance.</span>
+          <span class="slide-label">Kitchen</span>
         </div>
       </div>
 
-<div class="slide fade-up">
+      <!-- 4. Interior + Upper Study — side by side pair -->
+      <div class="slide-pair fade-up">
+        <div class="pair-item">
+          <img src="images/developer-set/tp-5.jpg" alt="Interior" loading="lazy" />
+        </div>
+        <div class="pair-item">
+          <img src="images/developer-set/tp-4.jpg" alt="Upper Study" loading="lazy" />
+        </div>
+      </div>
+      <div class="pair-captions fade-up">
+        <span class="slide-label">Interior</span>
+        <span class="slide-label">Upper Study</span>
+      </div>
+
+      <!-- 5. Detail — full bleed (3.jpg is landscape) -->
+      <div class="slide fade-up" style="margin-top: clamp(56px, 8vw, 110px);">
         <div class="slide-img">
-          <img src="images/developer-set/06.jpg" alt="Catalogue Mockup" loading="lazy" />
+          <img src="images/developer-set/tp-3.jpg" alt="Detail" loading="lazy" />
         </div>
         <div class="slide-caption">
-          <span class="slide-title">The Package</span>
-          <span class="slide-context">Three pieces. Printed, bound, buyer-ready.</span>
+          <span class="slide-label">Detail</span>
         </div>
       </div>
 
@@ -280,8 +313,8 @@
 
     <!-- ── CTA ── -->
     <div class="cta-block fade-up">
-      <p class="cta-text">Want this for your development?</p>
-      <a href="contact.html" class="cta-btn">Start here &nbsp;→</a>
+      <p class="cta-text">Want this for your project?</p>
+      <a href="contact.html" class="cta-btn">Start your project &nbsp;→</a>
     </div>
 
     <footer>
@@ -293,7 +326,9 @@
 
   <script>
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
     }, { threshold: 0.05 });
     document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
   </script>
