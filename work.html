@@ -78,10 +78,20 @@
     .nav-links a:hover,
     .nav-links a.active { color: rgba(255,255,255,0.9); }
 
-    /* ── Project list ── */
-    main {
-      padding-top: 80px;
+    /* ── Page fade ── */
+    body { opacity: 0; animation: pageFade 0.6s ease 0.05s forwards; }
+    @keyframes pageFade { to { opacity: 1; } }
+
+    /* ── Scroll fade ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
     }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Project list ── */
+    main { padding-top: 80px; }
 
     .project-list {
       max-width: 900px;
@@ -92,17 +102,17 @@
     .project-item {
       display: block;
       cursor: pointer;
-      border-bottom: 1px solid var(--border);
       text-decoration: none;
       color: inherit;
+      margin-bottom: 4px;
     }
 
-    /* Full-width image */
     .project-image {
       width: 100%;
       aspect-ratio: 16/9;
       overflow: hidden;
       background: #161616;
+      position: relative;
     }
 
     .project-image img {
@@ -110,37 +120,93 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease;
     }
 
     .project-item:hover .project-image img {
-      transform: scale(1.03);
+      transform: scale(1.04);
+      filter: brightness(0.72);
     }
 
-    /* Label row beneath image */
+    /* Hover overlay */
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(18px, 3vw, 32px);
+    }
+    .project-item:hover .project-overlay { opacity: 1; }
+
+    .project-overlay-name {
+      font-size: clamp(16px, 2.2vw, 24px);
+      font-weight: 300;
+      color: #fff;
+      transform: translateY(14px);
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .project-item:hover .project-overlay-name { transform: translateY(0); }
+
+    .project-overlay-type {
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 6px;
+      transform: translateY(14px);
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.05s;
+    }
+    .project-item:hover .project-overlay-type { transform: translateY(0); }
+
+    /* Static label (visible always) */
     .project-label {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 18px 0;
+      padding: 14px 0 18px;
       gap: 16px;
+      border-bottom: 1px solid var(--border);
     }
-
     .project-name {
-      font-size: clamp(15px, 2vw, 20px);
+      font-size: clamp(13px, 1.6vw, 17px);
       font-weight: 300;
-      color: var(--text);
+      color: rgba(255,255,255,0.7);
       letter-spacing: 0.01em;
     }
-
     .project-type {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 300;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--text-muted);
       white-space: nowrap;
     }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px clamp(20px, 4vw, 60px);
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer span, footer a {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    footer a:hover { color: var(--text); }
 
     /* ── Modal — removed, projects now open own page ── */
     .modal-backdrop {
@@ -302,11 +368,9 @@
 
     /* ── Mobile ── */
     @media (max-width: 640px) {
-      .nav-links { gap: 32px; }
+      .nav-links { gap: 24px; }
+      .nav-links a { font-size: 9px; }
       .project-image { aspect-ratio: 4/3; }
-      .modal { grid-template-columns: 1fr; }
-      .modal-image { aspect-ratio: 16/9; }
-      .modal-info { padding: 28px 24px; }
     }
   </style>
 </head>
@@ -325,49 +389,38 @@
 
   <main>
     <div class="project-list" id="project-list"></div>
+    <footer>
+      <span>© 2025 DIXIPIX Studio</span>
+      <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
+    </footer>
   </main>
-
-  <!-- Modal -->
-  <div class="modal-backdrop" id="modal-backdrop">
-    <div class="modal">
-      <div class="modal-image" id="modal-image">
-        <button class="gallery-btn prev" id="gallery-prev">&#8592;</button>
-        <button class="gallery-btn next" id="gallery-next">&#8594;</button>
-        <span class="gallery-counter" id="gallery-counter"></span>
-      </div>
-      <div class="modal-info">
-        <div>
-          <div class="modal-type"  id="modal-type"></div>
-          <div class="modal-name"  id="modal-name"></div>
-          <p   class="modal-about" id="modal-about"></p>
-        </div>
-        <div class="modal-meta"   id="modal-meta"></div>
-      </div>
-    </div>
-    <button class="modal-close" id="modal-close">&#x2715;</button>
-  </div>
 
   <script>
     const projects = [
-      { name: 'Tiny Home',          type: 'Exterior',               id: 'tiny-home',          hero: 'images/tiny-home/01.jpg' },
-      { name: 'Taren Point',        type: 'Exterior',               id: 'taren-point',        hero: 'images/taren-point/01.jpg' },
-      { name: 'Beacons',            type: 'Exterior · Interior',    id: 'beacons',            hero: 'images/beacons/01.jpg' },
-      { name: 'The Church',         type: 'Exterior',               id: 'the-church',         hero: 'images/the-church/01.jpg' },
-      { name: 'Seaforth Residence', type: 'Interior',               id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
-      { name: 'Taren Point Project', type: 'Interior',               id: 'dugs-project',       hero: 'images/dugs/01.jpg' },
-      { name: 'Crescent Street',    type: 'Exterior',               id: 'crescent-street',    hero: 'images/crescent-street/01.jpg' },
-      { name: 'Sansouci',           type: 'Exterior',               id: 'sansouci',           hero: 'images/sansouci/01.jpg' },
+      { name: 'Tiny Home',           type: 'Exterior',            id: 'tiny-home',          hero: 'images/tiny-home/01.jpg' },
+      { name: 'Taren Point',         type: 'Exterior',            id: 'taren-point',        hero: 'images/taren-point/01.jpg' },
+      { name: 'Beacons',             type: 'Exterior · Interior', id: 'beacons',            hero: 'images/beacons/01.jpg' },
+      { name: 'The Church',          type: 'Exterior',            id: 'the-church',         hero: 'images/the-church/01.jpg' },
+      { name: 'Seaforth Residence',  type: 'Interior',            id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
+      { name: 'Taren Point Project', type: 'Interior',            id: 'dugs-project',       hero: 'images/dugs/01.jpg' },
+      { name: 'Crescent Street',     type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/01.jpg' },
+      { name: 'Sansouci',            type: 'Exterior',            id: 'sansouci',           hero: 'images/sansouci/01.jpg' },
     ];
 
     const list = document.getElementById('project-list');
 
-    projects.forEach(p => {
+    projects.forEach((p, i) => {
       const item = document.createElement('a');
-      item.className = 'project-item';
+      item.className = 'project-item fade-up';
       item.href = `project.html?id=${p.id}`;
+      item.style.transitionDelay = `${i * 0.07}s`;
       item.innerHTML = `
         <div class="project-image">
-          <img src="${p.hero}" alt="${p.name}" loading="lazy" />
+          <img src="${p.hero}" alt="${p.name}" loading="${i < 2 ? 'eager' : 'lazy'}" />
+          <div class="project-overlay">
+            <div class="project-overlay-name">${p.name}</div>
+            <div class="project-overlay-type">${p.type}</div>
+          </div>
         </div>
         <div class="project-label">
           <span class="project-name">${p.name}</span>
@@ -376,6 +429,12 @@
       `;
       list.appendChild(item);
     });
+
+    // Scroll fade
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 
 </body>

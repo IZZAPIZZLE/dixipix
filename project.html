@@ -167,6 +167,18 @@
       max-width: 620px;
     }
 
+    /* ── Page fade ── */
+    body { opacity: 0; animation: pageFade 0.6s ease 0.05s forwards; }
+    @keyframes pageFade { to { opacity: 1; } }
+
+    /* ── Scroll fade ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
     /* ── Images ── */
     .project-images {
       display: flex;
@@ -178,6 +190,7 @@
       width: 100%;
       overflow: hidden;
       background: #161616;
+      cursor: zoom-in;
     }
 
     .project-img-wrap img {
@@ -189,6 +202,92 @@
     }
 
     .project-img-wrap:hover img { transform: scale(1.02); }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      display: block;
+      transform: scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .lightbox.open .lightbox-img { transform: scale(1); }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px; right: 32px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 22px; cursor: pointer;
+      transition: color 0.2s; padding: 8px;
+    }
+    .lightbox-close:hover { color: #fff; }
+
+    .lightbox-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 20px 28px;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lightbox-btn:hover { color: #fff; }
+    .lightbox-btn.prev { left: 0; }
+    .lightbox-btn.next { right: 0; }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px clamp(20px, 6vw, 96px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer span, footer a {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    footer a:hover { color: var(--text); }
 
     /* ── CTA ── */
     .project-cta {
@@ -224,8 +323,11 @@
 
     /* ── Mobile ── */
     @media (max-width: 600px) {
-      .nav-links { gap: 32px; }
+      .nav-links { gap: 24px; }
+      .nav-links a { font-size: 9px; }
       .project-meta { gap: 24px; }
+      .lightbox-btn { padding: 16px 14px; }
+      .lightbox-btn span { display: none; }
     }
   </style>
 </head>
@@ -245,6 +347,20 @@
   <main id="project-main">
     <!-- injected by JS -->
   </main>
+
+  <!-- Lightbox (must be before script so elements exist in DOM) -->
+  <div class="lightbox" id="lightbox">
+    <img class="lightbox-img" id="lb-img" src="" alt="" />
+    <button class="lightbox-close" id="lb-close">&#x2715;</button>
+    <button class="lightbox-btn prev" id="lb-prev"><span>Prev</span></button>
+    <button class="lightbox-btn next" id="lb-next"><span>Next</span></button>
+    <span class="lightbox-counter" id="lb-counter"></span>
+  </div>
+
+  <footer>
+    <span>© 2025 DIXIPIX Studio</span>
+    <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
+  </footer>
 
   <script>
     const projects = {
@@ -379,26 +495,27 @@
       document.title = `${p.name} — DIXIPIX`;
 
       const [firstImage, ...restImages] = p.images;
+      const allImages = p.images;
 
-      const restHTML = restImages.map(src => `
-        <div class="project-img-wrap">
+      const restHTML = restImages.map((src, i) => `
+        <div class="project-img-wrap fade-up" data-index="${i + 1}">
           <img src="${src}" alt="${p.name}" loading="lazy" />
         </div>
       `).join('');
 
       main.innerHTML = `
-        <a class="back" href="work.html">← Back to Work</a>
+        <a class="back fade-up" href="work.html">← Back to Work</a>
 
-        <div class="project-header">
+        <div class="project-header fade-up">
           <p class="project-type">${p.type}</p>
           <h1 class="project-title">${p.name}</h1>
         </div>
 
-        <div class="project-img-wrap project-hero-img">
+        <div class="project-img-wrap project-hero-img fade-up" data-index="0">
           <img src="${firstImage}" alt="${p.name}" loading="eager" />
         </div>
 
-        <div class="project-info">
+        <div class="project-info fade-up">
           <div class="project-meta">
             <div class="meta-item">
               <div class="meta-key">Location</div>
@@ -420,13 +537,69 @@
           ${restHTML}
         </div>
 
-        <div class="project-cta">
+        <div class="project-cta fade-up">
           <p class="cta-text">Like what you see?</p>
           <a href="contact.html" class="cta-btn">Start a project</a>
         </div>
       `;
+
+      // ── Lightbox (elements are static in DOM, safe to grab here) ──
+      const lightbox  = document.getElementById('lightbox');
+      const lbImg     = document.getElementById('lb-img');
+      const lbClose   = document.getElementById('lb-close');
+      const lbPrev    = document.getElementById('lb-prev');
+      const lbNext    = document.getElementById('lb-next');
+      const lbCounter = document.getElementById('lb-counter');
+      let lbIndex = 0;
+
+      function openLightbox(idx) {
+        lbIndex = idx;
+        lbImg.src = allImages[lbIndex];
+        lbCounter.textContent = `${lbIndex + 1} / ${allImages.length}`;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function lbNav(dir) {
+        lbIndex = (lbIndex + dir + allImages.length) % allImages.length;
+        lbImg.style.opacity = '0';
+        setTimeout(() => {
+          lbImg.src = allImages[lbIndex];
+          lbImg.style.opacity = '1';
+          lbCounter.textContent = `${lbIndex + 1} / ${allImages.length}`;
+        }, 150);
+      }
+
+      lbImg.style.transition = 'opacity 0.2s ease';
+
+      document.querySelectorAll('.project-img-wrap').forEach(wrap => {
+        wrap.addEventListener('click', () => openLightbox(+wrap.dataset.index));
+      });
+
+      lbClose.addEventListener('click', closeLightbox);
+      lbPrev.addEventListener('click',  () => lbNav(-1));
+      lbNext.addEventListener('click',  () => lbNav(1));
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === 'ArrowLeft')  lbNav(-1);
+        if (e.key === 'ArrowRight') lbNav(1);
+      });
+
+      // ── Scroll fade ──
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
     }
   </script>
+
 
 </body>
 </html>
