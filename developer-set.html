@@ -14,7 +14,6 @@
 
     :root {
       --bg:         #0d0d0d;
-      --bg-2:       #111;
       --border:     #1e1e1e;
       --text:       #e0e0e0;
       --text-muted: #555;
@@ -38,8 +37,8 @@
     /* ── Scroll fade ── */
     .fade-up {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
+      transform: translateY(32px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
@@ -87,85 +86,74 @@
     main { padding-top: 80px; }
 
     .hook {
-      padding: clamp(64px, 10vw, 110px) var(--pad) clamp(48px, 7vw, 80px);
-      max-width: 860px;
-    }
-
-    .hook-label {
-      font-size: 9px;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
+      padding: clamp(64px, 10vw, 110px) var(--pad) clamp(56px, 8vw, 96px);
     }
 
     .hook-headline {
-      font-size: clamp(26px, 4vw, 48px);
+      font-size: clamp(28px, 4vw, 52px);
       font-weight: 300;
       letter-spacing: -0.02em;
-      line-height: 1.15;
+      line-height: 1.1;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .hook-sub {
-      font-size: clamp(11px, 1.2vw, 13px);
+      font-size: clamp(10px, 1.1vw, 12px);
       font-weight: 300;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text-muted);
-      line-height: 2;
     }
 
-    /* ── Image sequence ── */
+    /* ── Magazine sequence ── */
     .sequence {
       display: flex;
       flex-direction: column;
-      gap: 4px;
     }
 
-    .seq-item {
-      position: relative;
+    .slide {
+      margin-bottom: clamp(72px, 10vw, 130px);
+    }
+    .slide:last-child { margin-bottom: 0; }
+
+    .slide-img {
       width: 100%;
       overflow: hidden;
-      background: #161616;
+      background: #111;
+      line-height: 0;
     }
-
-    .seq-item img {
+    .slide-img img {
       display: block;
       width: 100%;
       height: auto;
-      object-fit: cover;
     }
 
-    .seq-label {
-      position: absolute;
-      bottom: 20px;
-      left: 24px;
+    .slide-caption {
+      padding: 20px var(--pad) 0;
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      align-items: baseline;
+      gap: 28px;
     }
 
-    .seq-num {
+    .slide-title {
       font-size: 9px;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--accent);
-      opacity: 0.8;
+      white-space: nowrap;
     }
 
-    .seq-name {
+    .slide-context {
       font-size: 11px;
       font-weight: 300;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
     }
 
     /* ── CTA ── */
     .cta-block {
-      padding: clamp(64px, 10vw, 100px) var(--pad);
+      padding: clamp(80px, 12vw, 130px) var(--pad);
       border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
@@ -220,6 +208,7 @@
       .nav-links { gap: 24px; }
       .nav-links a { font-size: 9px; }
       .cta-block { flex-direction: column; align-items: flex-start; }
+      .slide-caption { flex-direction: column; gap: 8px; }
     }
   </style>
 </head>
@@ -241,57 +230,49 @@
     <!-- ── HOOK ── -->
     <div class="hook fade-up">
       <h1 class="hook-headline">From brief to buyer-ready.</h1>
-      <p class="hook-sub">Westport, NZ &nbsp;— A complete development visual package.</p>
+      <p class="hook-sub">Westport, NZ — A complete development visual package.</p>
     </div>
 
     <!-- ── IMAGE SEQUENCE ── -->
     <div class="sequence">
 
-      <div class="seq-item fade-up">
-        <img src="images/developer-set/01.jpg" alt="Exterior — Golden Hour" loading="eager" />
-        <div class="seq-label">
-          <span class="seq-num">01</span>
-          <span class="seq-name">Open View</span>
+      <div class="slide fade-up">
+        <div class="slide-img">
+          <img src="images/developer-set/01.jpg" alt="Open View" loading="eager" />
+        </div>
+        <div class="slide-caption">
+          <span class="slide-title">Open View</span>
+          <span class="slide-context">Golden hour exterior. Lifestyle, setting, scale.</span>
         </div>
       </div>
 
-      <div class="seq-item fade-up">
-        <img src="images/developer-set/02.jpg" alt="Seasonal Variant — Winter" loading="lazy" />
-        <div class="seq-label">
-          <span class="seq-num">02</span>
-          <span class="seq-name">Winter Variant</span>
+      <div class="slide fade-up">
+        <div class="slide-img">
+          <img src="images/developer-set/03.jpg" alt="Panoramic Serenity" loading="lazy" />
+        </div>
+        <div class="slide-caption">
+          <span class="slide-title">Panoramic Serenity</span>
+          <span class="slide-context">The bedroom interior. Light through glass.</span>
         </div>
       </div>
 
-      <div class="seq-item fade-up">
-        <img src="images/developer-set/03.jpg" alt="Interior — Panoramic View" loading="lazy" />
-        <div class="seq-label">
-          <span class="seq-num">03</span>
-          <span class="seq-name">Panoramic Serenity</span>
+      <div class="slide fade-up">
+        <div class="slide-img">
+          <img src="images/developer-set/05.jpg" alt="Floor Plan Overlay" loading="lazy" />
+        </div>
+        <div class="slide-caption">
+          <span class="slide-title">Floor Plan Overlay</span>
+          <span class="slide-context">Top-down. Dimensions in place.</span>
         </div>
       </div>
 
-      <div class="seq-item fade-up">
-        <img src="images/developer-set/04.jpg" alt="Structure — Open Plan Cutaway" loading="lazy" />
-        <div class="seq-label">
-          <span class="seq-num">04</span>
-          <span class="seq-name">Axo Cutaway</span>
+      <div class="slide fade-up">
+        <div class="slide-img">
+          <img src="images/developer-set/06.jpg" alt="Catalogue Mockup" loading="lazy" />
         </div>
-      </div>
-
-      <div class="seq-item fade-up">
-        <img src="images/developer-set/05.jpg" alt="Floor Plan" loading="lazy" />
-        <div class="seq-label">
-          <span class="seq-num">05</span>
-          <span class="seq-name">Floor Plan Overlay</span>
-        </div>
-      </div>
-
-      <div class="seq-item fade-up">
-        <img src="images/developer-set/06.jpg" alt="Development Package — Catalogue" loading="lazy" />
-        <div class="seq-label">
-          <span class="seq-num">06</span>
-          <span class="seq-name">Catalogue Mockup</span>
+        <div class="slide-caption">
+          <span class="slide-title">Catalogue Mockup</span>
+          <span class="slide-context">The finished package. Print-ready.</span>
         </div>
       </div>
 
@@ -313,7 +294,7 @@
   <script>
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-    }, { threshold: 0.06 });
+    }, { threshold: 0.05 });
     document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
   </script>
 
