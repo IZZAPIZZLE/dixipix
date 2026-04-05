@@ -100,7 +100,11 @@
 
     /* ── Header ── */
     .project-header {
-      margin-bottom: 56px;
+      margin-bottom: 28px;
+    }
+
+    .project-info {
+      padding: 36px 0 48px;
     }
 
     .project-type {
@@ -116,7 +120,7 @@
       font-weight: 300;
       letter-spacing: -0.02em;
       line-height: 1.1;
-      margin-bottom: 32px;
+      margin-bottom: 0;
     }
 
     .project-meta {
@@ -363,7 +367,9 @@
     } else {
       document.title = `${p.name} — DIXIPIX`;
 
-      const imagesHTML = p.images.map(src => `
+      const [firstImage, ...restImages] = p.images;
+
+      const restHTML = restImages.map(src => `
         <div class="project-img-wrap">
           <img src="${src}" alt="${p.name}" loading="lazy" />
         </div>
@@ -375,6 +381,13 @@
         <div class="project-header">
           <p class="project-type">${p.type}</p>
           <h1 class="project-title">${p.name}</h1>
+        </div>
+
+        <div class="project-img-wrap project-hero-img">
+          <img src="${firstImage}" alt="${p.name}" loading="eager" />
+        </div>
+
+        <div class="project-info">
           <div class="project-meta">
             <div class="meta-item">
               <div class="meta-key">Location</div>
@@ -393,7 +406,7 @@
         </div>
 
         <div class="project-images">
-          ${imagesHTML}
+          ${restHTML}
         </div>
 
         <div class="project-cta">
