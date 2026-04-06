@@ -122,6 +122,33 @@
       z-index: 1;
     }
 
+    /* ── Hero sky info ── */
+    .hero-sky {
+      position: absolute;
+      top: clamp(80px, 12vw, 130px);
+      left: clamp(24px, 5vw, 64px);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      animation: taglineFade 1.4s ease 1.2s forwards;
+    }
+    .hero-sky-title {
+      font-size: clamp(10px, 1.1vw, 13px);
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+    }
+    .hero-sky-meta {
+      font-size: clamp(9px, 0.9vw, 11px);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
     /* ── Hero bottom ── */
     .hero-bottom {
       position: absolute;
@@ -130,24 +157,28 @@
       transform: translateX(-50%);
       z-index: 2;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 16px;
+      gap: 28px;
+      white-space: nowrap;
       opacity: 0;
       animation: taglineFade 1.2s ease 1s forwards;
     }
     .hero-tagline {
-      text-align: center;
-      white-space: nowrap;
       font-size: clamp(9px, 1vw, 11px);
       font-weight: 300;
       letter-spacing: 0.35em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.55);
     }
+    .hero-divider {
+      width: 1px;
+      height: 12px;
+      background: rgba(255,255,255,0.2);
+    }
     .hero-view-btn {
       display: inline-block;
-      padding: 7px 22px;
+      padding: 7px 20px;
       border: 1px solid rgba(255,255,255,0.3);
       font-size: 9px;
       font-weight: 300;
@@ -190,8 +221,13 @@
 
   <div id="hero">
     <div class="hero-img"></div>
+    <div class="hero-sky">
+      <span class="hero-sky-title">No. 33–37 Sea View Crescent</span>
+      <span class="hero-sky-meta">Cronulla, NSW &nbsp;·&nbsp; Multi-Residential &nbsp;·&nbsp; 2024</span>
+    </div>
     <div class="hero-bottom">
       <p class="hero-tagline">Architectural Visualisation &nbsp;·&nbsp; Melbourne &nbsp;·&nbsp; 4-Day Turnaround</p>
+      <div class="hero-divider"></div>
       <a href="project.html?id=taren-point" class="hero-view-btn">View Project</a>
     </div>
   </div>
