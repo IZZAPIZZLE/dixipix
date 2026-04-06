@@ -117,6 +117,7 @@
     .slide:last-child { margin-bottom: 0; }
 
     .slide-img {
+      position: relative;
       width: 100%;
       overflow: hidden;
       background: #111;
@@ -128,19 +129,6 @@
       height: auto;
     }
 
-    .slide-caption {
-      padding: 18px var(--pad) 0;
-      display: flex;
-      align-items: baseline;
-      gap: 24px;
-    }
-    .slide-label {
-      font-size: 9px;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-
     /* Paired slide (side by side) */
     .slide-pair {
       display: grid;
@@ -149,6 +137,7 @@
       margin-bottom: clamp(56px, 8vw, 110px);
     }
     .slide-pair .pair-item {
+      position: relative;
       overflow: hidden;
       background: #111;
       line-height: 0;
@@ -159,16 +148,19 @@
       height: 100%;
       object-fit: cover;
     }
-    .pair-captions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      padding-top: 18px;
-      padding-left: var(--pad);
-      padding-right: var(--pad);
-    }
-    .pair-captions .slide-label {
-      padding: 0;
+
+    /* On-image label overlay */
+    .img-overlay {
+      position: absolute;
+      bottom: clamp(14px, 2.5vw, 26px);
+      left: clamp(16px, 2.5vw, 28px);
+      z-index: 2;
+      font-size: clamp(9px, 1vw, 11px);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      pointer-events: none;
     }
 
     /* ── CTA ── */
@@ -226,7 +218,6 @@
       .nav-links { gap: 24px; }
       .nav-links a { font-size: 9px; }
       .slide-pair { grid-template-columns: 1fr; }
-      .pair-captions { grid-template-columns: 1fr; }
       .cta-block { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -255,57 +246,47 @@
     <!-- ── SEQUENCE ── -->
     <div class="sequence">
 
-      <!-- 1. Hero exterior — full bleed -->
+      <!-- 1. Hero exterior -->
       <div class="slide fade-up">
         <div class="slide-img">
           <img src="images/developer-set/hero.jpg" alt="Exterior" loading="eager" />
-        </div>
-        <div class="slide-caption">
-          <span class="slide-label">Exterior</span>
+          <span class="img-overlay">Exterior</span>
         </div>
       </div>
 
-      <!-- 2. Living & Kitchen — full bleed -->
+      <!-- 2. Living & Kitchen -->
       <div class="slide fade-up">
         <div class="slide-img">
           <img src="images/developer-set/tp-1.jpg" alt="Living & Kitchen" loading="lazy" />
-        </div>
-        <div class="slide-caption">
-          <span class="slide-label">Living & Kitchen</span>
+          <span class="img-overlay">Living & Kitchen</span>
         </div>
       </div>
 
-      <!-- 3. Kitchen — full bleed -->
+      <!-- 3. Kitchen -->
       <div class="slide fade-up">
         <div class="slide-img">
           <img src="images/developer-set/tp-2.jpg" alt="Kitchen" loading="lazy" />
-        </div>
-        <div class="slide-caption">
-          <span class="slide-label">Kitchen</span>
+          <span class="img-overlay">Kitchen</span>
         </div>
       </div>
 
-      <!-- 4. Interior + Upper Study — side by side pair -->
+      <!-- 4. Kitchen — Garden + Study — side by side pair -->
       <div class="slide-pair fade-up">
         <div class="pair-item">
-          <img src="images/developer-set/tp-5.jpg" alt="Interior" loading="lazy" />
+          <img src="images/developer-set/tp-5.jpg" alt="Kitchen — Garden" loading="lazy" />
+          <span class="img-overlay">Kitchen — Garden</span>
         </div>
         <div class="pair-item">
-          <img src="images/developer-set/tp-4.jpg" alt="Upper Study" loading="lazy" />
+          <img src="images/developer-set/tp-4.jpg" alt="Study" loading="lazy" />
+          <span class="img-overlay">Study</span>
         </div>
       </div>
-      <div class="pair-captions fade-up">
-        <span class="slide-label">Interior</span>
-        <span class="slide-label">Upper Study</span>
-      </div>
 
-      <!-- 5. Detail — full bleed (3.jpg is landscape) -->
+      <!-- 5. Detail -->
       <div class="slide fade-up" style="margin-top: clamp(56px, 8vw, 110px);">
         <div class="slide-img">
           <img src="images/developer-set/tp-3.jpg" alt="Detail" loading="lazy" />
-        </div>
-        <div class="slide-caption">
-          <span class="slide-label">Detail</span>
+          <span class="img-overlay">Detail</span>
         </div>
       </div>
 
