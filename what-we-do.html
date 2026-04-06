@@ -301,6 +301,11 @@
       touch-action: none;
       line-height: 0;
     }
+    .compare-slider img {
+      pointer-events: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+    }
     .compare-base {
       display: block;
       width: 100%;
@@ -732,9 +737,9 @@
           <div class="carousel-track">
             <div class="carousel-slide">
               <div class="compare-slider" data-compare>
-                <img class="compare-base" src="images/_interior/02.jpg" alt="Kitchen light" loading="lazy" />
+                <img class="compare-base" src="images/_interior/02.jpg" alt="Kitchen light" loading="lazy" draggable="false" />
                 <div class="compare-overlay">
-                  <img src="images/_interior/01.jpg" alt="Kitchen dark" loading="lazy" />
+                  <img src="images/_interior/01.jpg" alt="Kitchen dark" loading="lazy" draggable="false" />
                 </div>
                 <div class="compare-handle">
                   <div class="compare-btn">
