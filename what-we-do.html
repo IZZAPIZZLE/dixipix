@@ -274,6 +274,9 @@
       transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* ── Carousel dots (mobile) ── */
+    .carousel-dots { display: none; }
+
     /* ── Carousel CTA overlay ── */
     .carousel-cta {
       position: absolute;
@@ -634,7 +637,24 @@
       .section { padding-top: 48px; padding-bottom: 48px; }
       .carousel { margin-left: calc(-1 * var(--pad)); margin-right: calc(-1 * var(--pad)); }
       .carousel-slide img { height: 72vw; object-fit: cover; }
-      .carousel-nav { padding-left: var(--pad); padding-right: var(--pad); }
+      .carousel-nav { display: none; }
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 16px 0 0;
+      }
+      .carousel-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.25);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+      .carousel-dot.active { background: rgba(255,255,255,0.85); transform: scale(1.3); }
       .pricing-bar { flex-direction: column; gap: 0; }
       .pricing-item { border-right: none; border-bottom: 1px solid var(--border); padding: 20px 24px; }
       .pricing-item:last-child { border-bottom: none; }
@@ -983,15 +1003,29 @@
       const total    = slides.length;
       let current    = 0;
 
+      // Dots
+      const dotsWrap = document.createElement('div');
+      dotsWrap.className = 'carousel-dots';
+      car.appendChild(dotsWrap);
+      const dotEls = Array.from({length: total}).map((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
       function goTo(n) {
         current = (n + total) % total;
         track.style.transform = `translateX(-${current * 100}%)`;
         counter.textContent = `${current + 1} / ${total}`;
         const pct = ((current + 1) / total * 100) + '%';
         fills.forEach(f => f.style.width = pct);
+        dotEls.forEach((d, i) => d.classList.toggle('active', i === current));
       }
 
       goTo(0);
+      dotEls.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
 
       prevBtn.addEventListener('click', () => goTo(current - 1));
       nextBtn.addEventListener('click', () => goTo(current + 1));
