@@ -11,15 +11,18 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     :root {
       --bg:         #0d0d0d;
+      --bg-2:       #111;
+      --bg-3:       #161616;
       --border:     #1e1e1e;
       --text:       #e0e0e0;
       --text-muted: #555;
       --accent:     #c8a96e;
       --font:       'Inter', system-ui, sans-serif;
-      --pad:        clamp(24px, 6vw, 96px);
+      --pad:        clamp(28px, 6vw, 96px);
     }
 
     body {
@@ -34,14 +37,6 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* ── Scroll fade ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
     /* ── Nav ── */
     nav {
       position: fixed;
@@ -51,7 +46,7 @@
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
       padding: 20px 40px;
-      background: rgba(13,13,13,0.92);
+      background: rgba(13,13,13,0.88);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
@@ -82,127 +77,259 @@
     .nav-featured { color: #c8a96e !important; }
     .nav-featured:hover { color: #d4b87a !important; }
 
-    /* ── Hook ── */
+    /* ── Page shell ── */
     main { padding-top: 80px; }
 
-    .hook {
-      padding: clamp(28px, 3vw, 40px) var(--pad) clamp(20px, 2.5vw, 32px);
+    /* ── Page hero ── */
+    .page-hero {
+      padding: clamp(64px, 10vw, 120px) var(--pad) clamp(48px, 6vw, 80px);
+      border-bottom: 1px solid var(--border);
     }
-    .hook-headline {
-      font-size: clamp(24px, 3.5vw, 48px);
+    .page-hero-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .page-hero-title {
+      font-size: clamp(32px, 5vw, 64px);
       font-weight: 300;
       letter-spacing: -0.02em;
       line-height: 1.1;
       color: var(--text);
+      max-width: 700px;
+      margin-bottom: 28px;
+    }
+    .page-hero-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+
+    /* ── Section shared ── */
+    .section {
+      padding: clamp(64px, 10vw, 120px) var(--pad);
+      border-top: 1px solid var(--border);
+    }
+
+    .section-inner {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
       margin-bottom: 14px;
     }
-    .hook-sub {
-      font-size: clamp(10px, 1.1vw, 12px);
+
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 38px);
       font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-muted);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
     }
 
-    /* ── Sequence ── */
-    .sequence {
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Full bleed slide */
-    .slide {
-      margin-bottom: clamp(56px, 8vw, 110px);
-    }
-    .slide:last-child { margin-bottom: 0; }
-
-    .slide-img {
-      position: relative;
-      width: auto;
-      margin: 0 18%;
-      overflow: hidden;
-      background: #111;
-      line-height: 0;
-    }
-    .slide-img img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /* Paired slide (side by side) */
-    .slide-pair {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      margin: 0 18% 14px;
-    }
-    .slide-pair .pair-item {
-      position: relative;
-      overflow: hidden;
-      background: #111;
-      line-height: 0;
-    }
-    .slide-pair .pair-item img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Caption below image */
-    .img-caption {
-      margin: 14px 18% 0;
-      font-size: clamp(10px, 1.1vw, 13px);
-      font-weight: 300;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s;
-    }
-    .img-caption.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .pair-caption {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      margin: 0 18% clamp(56px, 8vw, 110px);
-    }
-    .pair-caption span {
-      font-size: clamp(10px, 1.1vw, 13px);
-      font-weight: 300;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s;
-    }
-    .pair-caption span.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── CTA ── */
-    .cta-block {
-      padding: clamp(80px, 12vw, 130px) var(--pad);
-      border-top: 1px solid var(--border);
+    .service-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 40px;
       flex-wrap: wrap;
-      gap: 32px;
+      margin-bottom: 28px;
     }
-    .cta-text {
-      font-size: clamp(18px, 2.5vw, 28px);
+
+    .service-desc {
+      font-size: 14px;
       font-weight: 300;
-      letter-spacing: -0.01em;
-      color: var(--text);
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 480px;
     }
+
+    /* ── Carousel ── */
+    .carousel {
+      position: relative;
+      width: 100%;
+    }
+
+    .carousel-viewport {
+      overflow: hidden;
+      width: 100%;
+      background: var(--bg-3);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      cursor: zoom-in;
+    }
+
+    .carousel-slide img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Nav bar below carousel */
+    .carousel-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0 0;
+    }
+
+    .carousel-counter {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .carousel-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .carousel-btn:hover { color: rgba(255,255,255,0.9); }
+
+    .carousel-btn svg {
+      width: 32px;
+      height: 1px;
+      overflow: visible;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .carousel-btn.prev:hover svg { transform: translateX(-4px); }
+    .carousel-btn.next:hover svg { transform: translateX(4px); }
+
+    /* Progress line */
+    .carousel-progress {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin: 0 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-progress-fill {
+      position: absolute;
+      top: 0; left: 0; height: 100%;
+      background: var(--accent);
+      transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Carousel CTA overlay ── */
+    .carousel-cta {
+      position: absolute;
+      bottom: clamp(14px, 2.5vw, 26px);
+      left: clamp(16px, 2.5vw, 28px);
+      z-index: 4;
+      font-size: clamp(9px, 1vw, 11px);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      pointer-events: all;
+      transition: color 0.2s ease;
+    }
+    .carousel-cta:hover { color: rgba(255,255,255,1); }
+
+    /* ── Complete package section ── */
+    .section-package {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: clamp(64px, 10vw, 120px) var(--pad);
+    }
+    .package-inner {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+    .package-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 36px;
+    }
+    .package-image {
+      overflow: hidden;
+      background: var(--bg-3);
+      line-height: 0;
+    }
+    .package-image img {
+      display: block;
+      width: 100%;
+      height: clamp(280px, 40vw, 560px);
+      object-fit: cover;
+    }
+    .package-detail {
+      background: var(--bg-3);
+      padding: clamp(36px, 5vw, 64px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .package-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .package-items li {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+    .package-items li:last-child { border-bottom: none; padding-bottom: 0; }
+    .package-num {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .package-cta {
+      margin-top: 48px;
+    }
+    .package-turnaround {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* ── CTA btn ── */
     .cta-btn {
       display: inline-flex;
       align-items: center;
@@ -218,6 +345,56 @@
       white-space: nowrap;
     }
     .cta-btn:hover { background: #d9ba7e; gap: 18px; }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      cursor: zoom-out;
+    }
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      display: block;
+      transform: scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: default;
+    }
+    .lightbox.open img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute;
+      top: 24px; right: 32px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 22px;
+      cursor: pointer;
+      transition: color 0.2s;
+      line-height: 1;
+      padding: 8px;
+    }
+    .lightbox-close:hover { color: #fff; }
+
+    /* ── Scroll fade ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* ── Footer ── */
     footer {
@@ -237,12 +414,16 @@
     footer a:hover { color: var(--text); }
 
     /* ── Mobile ── */
-    @media (max-width: 600px) {
+    @media (max-width: 860px) {
+      .section-inner { max-width: 100%; }
+      .package-inner { max-width: 100%; }
+      .service-header { flex-direction: column; gap: 12px; }
+    }
+    @media (max-width: 640px) {
       nav { padding: 20px 24px; }
       .nav-links { gap: 24px; }
       .nav-links a { font-size: 9px; }
-      .slide-pair { grid-template-columns: 1fr; }
-      .cta-block { flex-direction: column; align-items: flex-start; }
+      .package-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -261,70 +442,207 @@
 
   <main>
 
-    <!-- ── HOOK ── -->
-    <div class="hook fade-up">
-      <h1 class="hook-headline">Taren Point House, Sydney</h1>
-      <p class="hook-sub">Full residential visual package, exterior to interior.</p>
+    <!-- ── INTRO ── -->
+    <div class="page-hero fade-up">
+      <p class="page-hero-label">Developer Set</p>
+      <h1 class="page-hero-title">Everything a development needs. Nothing it doesn't.</h1>
+      <p class="page-hero-desc">A full visual package built for developers and architects who need renders that sell. Exterior to interior, floor plans to elevations — delivered in 4 days.</p>
     </div>
 
-    <!-- ── SEQUENCE ── -->
-    <div class="sequence">
-
-      <!-- 1. Exterior -->
-      <div class="slide fade-up">
-        <div class="slide-img">
-          <img src="images/developer-set/hero.jpg" alt="Exterior" loading="eager" />
+    <!-- ── 01 EXTERIOR RENDERS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">01</p>
+            <h2 class="section-title">Exterior<br />Renders</h2>
+          </div>
+          <p class="service-desc">Full context exteriors built for DA submissions and sales marketing. Day, dusk, or golden hour. Photorealistic facades placed in their real streetscape — built to get approval and close sales.</p>
         </div>
-        <p class="img-caption">Exterior</p>
-      </div>
-
-      <!-- 2. Kitchen -->
-      <div class="slide fade-up">
-        <div class="slide-img">
-          <img src="images/developer-set/tp-2.jpg" alt="Kitchen" loading="lazy" />
+        <div class="carousel" data-total="2">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/developer-set/hero.jpg" alt="Exterior render" loading="eager" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/01.jpg" alt="Exterior render" loading="lazy" /></div>
+            </div>
+          </div>
+          <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 2</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
         </div>
-        <p class="img-caption">Kitchen</p>
       </div>
+    </section>
 
-      <!-- 3. Kitchen, Outdoor -->
-      <div class="slide fade-up">
-        <div class="slide-img">
-          <img src="images/developer-set/tp-3.jpg" alt="Kitchen, Outdoor" loading="lazy" />
+    <!-- ── 02 INTERIOR RENDERS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">02</p>
+            <h2 class="section-title">Interior<br />Renders</h2>
+          </div>
+          <p class="service-desc">Kitchen, living, bedroom. Every space that sells a unit. Mood-accurate lighting, materials, and furniture — calibrated to the atmosphere the project demands. Renders buyers remember.</p>
         </div>
-        <p class="img-caption">Kitchen, Outdoor</p>
-      </div>
-
-      <!-- 4. Living, Kitchen -->
-      <div class="slide fade-up">
-        <div class="slide-img">
-          <img src="images/developer-set/tp-5.jpg" alt="Living, Kitchen" loading="lazy" />
+        <div class="carousel" data-total="4">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/developer-set/02.jpg" alt="Interior render" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/03.jpg" alt="Interior render" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/04.jpg" alt="Interior render" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/05.jpg" alt="Interior render" loading="lazy" /></div>
+            </div>
+          </div>
+          <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 4</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
         </div>
-        <p class="img-caption">Living, Kitchen</p>
       </div>
+    </section>
 
-      <!-- 5. Living Study -->
-      <div class="slide fade-up">
-        <div class="slide-img">
-          <img src="images/developer-set/tp-6.jpg" alt="Living Study" loading="lazy" />
+    <!-- ── 03 FLOOR PLANS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">03</p>
+            <h2 class="section-title">Floor<br />Plans</h2>
+          </div>
+          <p class="service-desc">Clean, branded, buyer-ready. 2D floor plans formatted for marketing packs, DA submissions, and print. Every room labelled, every dimension clear. Designed to match your brand, not fight it.</p>
         </div>
-        <p class="img-caption">Living Study</p>
-      </div>
-
-      <!-- 6. Open Living -->
-      <div class="slide fade-up">
-        <div class="slide-img">
-          <img src="images/developer-set/tp-1.jpg" alt="Open Living" loading="lazy" />
+        <div class="carousel" data-total="2">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/_elevations/01.jpg" alt="Floor plan" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_elevations/02.jpg" alt="Floor plan" loading="lazy" /></div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 2</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
         </div>
-        <p class="img-caption">Open Living</p>
       </div>
+    </section>
 
-    </div>
+    <!-- ── 04 ELEVATIONS & SECTIONS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">04</p>
+            <h2 class="section-title">Elevations &<br />Sections</h2>
+          </div>
+          <p class="service-desc">Technical drawings that tell the full story. Exploded axonometrics, elevations, and building sections — formatted for council, consultants, and clients. Precise, legible, and presentation-ready.</p>
+        </div>
+        <div class="carousel" data-total="3">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/_elevations/01.jpg" alt="Elevation" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_elevations/02.jpg" alt="Elevation" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/_elevations/03.jpg" alt="Elevation" loading="lazy" /></div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 3</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- ── CTA ── -->
-    <div class="cta-block fade-up">
-      <p class="cta-text">Want this for your project?</p>
-      <a href="contact.html" class="cta-btn">Start your project &nbsp;→</a>
-    </div>
+    <!-- ── 05 THE COMPLETE PACKAGE ── -->
+    <section class="section-package">
+      <div class="package-inner">
+        <div class="service-header fade-up">
+          <div>
+            <p class="section-label">05</p>
+            <h2 class="section-title">The Complete<br />Package</h2>
+          </div>
+          <p class="service-desc">Everything above, delivered in 4 days. One brief, one point of contact, one set of files. Built for developers who move fast and need visuals that work as hard as they do.</p>
+        </div>
+        <div class="package-grid fade-up">
+          <div class="package-image">
+            <img src="images/developer-set/page2.jpg" alt="Complete Package" loading="lazy" />
+          </div>
+          <div class="package-detail">
+            <ul class="package-items">
+              <li><span class="package-num">01</span> Exterior Renders</li>
+              <li><span class="package-num">02</span> Interior Renders</li>
+              <li><span class="package-num">03</span> Floor Plans</li>
+              <li><span class="package-num">04</span> Elevations &amp; Sections</li>
+            </ul>
+            <div class="package-cta">
+              <p class="package-turnaround">4 day turnaround &nbsp;·&nbsp; One brief</p>
+              <a href="contact.html" class="cta-btn">Start your project &nbsp;→</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <footer>
       <span>© 2025 DIXIPIX Studio</span>
@@ -333,17 +651,76 @@
 
   </main>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="" />
+    <button class="lightbox-close" id="lightbox-close">&#x2715;</button>
+  </div>
+
   <script>
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          e.target.querySelectorAll('.img-caption, .pair-caption span').forEach(o => o.classList.add('visible'));
-          obs.unobserve(e.target);
-        }
+    // ── Lightbox ──
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxImg   = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
+    lightboxClose.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    // ── Scroll fade ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── Carousels ──
+    document.querySelectorAll('.carousel').forEach(car => {
+      const track   = car.querySelector('.carousel-track');
+      const slides  = car.querySelectorAll('.carousel-slide');
+      const counter = car.querySelector('.carousel-counter');
+      const fills   = car.querySelectorAll('.carousel-progress-fill');
+      const prevBtn = car.querySelector('.carousel-btn.prev');
+      const nextBtn = car.querySelector('.carousel-btn.next');
+      const total   = slides.length;
+      let current   = 0;
+
+      function goTo(n) {
+        current = (n + total) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        counter.textContent = `${current + 1} / ${total}`;
+        const pct = ((current + 1) / total * 100) + '%';
+        fills.forEach(f => f.style.width = pct);
+      }
+
+      goTo(0);
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+
+      slides.forEach(slide => {
+        slide.addEventListener('click', () => {
+          const img = slide.querySelector('img');
+          if (img) openLightbox(img.src, img.alt);
+        });
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+      car.setAttribute('tabindex', '0');
+      car.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+    });
   </script>
 
 </body>
