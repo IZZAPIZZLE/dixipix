@@ -118,7 +118,8 @@
 
     .slide-img {
       position: relative;
-      width: 100%;
+      width: auto;
+      margin: 0 clamp(16px, 6vw, 7%);
       overflow: hidden;
       background: #111;
       line-height: 0;
@@ -134,7 +135,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4px;
-      margin-bottom: clamp(56px, 8vw, 110px);
+      margin: 0 clamp(16px, 6vw, 7%) clamp(56px, 8vw, 110px);
     }
     .slide-pair .pair-item {
       position: relative;
