@@ -150,23 +150,39 @@
       object-fit: cover;
     }
 
-    /* On-image label overlay */
-    .img-overlay {
-      position: absolute;
-      bottom: clamp(14px, 2.5vw, 26px);
-      left: clamp(16px, 2.5vw, 28px);
-      z-index: 2;
-      font-size: clamp(11px, 1.4vw, 15px);
+    /* Caption below image */
+    .img-caption {
+      margin: 14px 0 0;
+      font-size: clamp(10px, 1.1vw, 13px);
       font-weight: 300;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
-      pointer-events: none;
+      color: rgba(255,255,255,0.4);
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s;
+      transform: translateY(8px);
+      transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s;
     }
-    .img-overlay.visible {
+    .img-caption.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .pair-caption {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin: 14px 18% 0;
+    }
+    .pair-caption span {
+      font-size: clamp(10px, 1.1vw, 13px);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s;
+    }
+    .pair-caption span.visible {
       opacity: 1;
       transform: translateY(0);
     }
@@ -258,44 +274,46 @@
       <div class="slide fade-up">
         <div class="slide-img">
           <img src="images/developer-set/hero.jpg" alt="Exterior" loading="eager" />
-          <span class="img-overlay">Exterior</span>
         </div>
+        <p class="img-caption">Exterior</p>
       </div>
 
       <!-- 2. Living & Kitchen -->
       <div class="slide fade-up">
         <div class="slide-img">
           <img src="images/developer-set/tp-1.jpg" alt="Living & Kitchen" loading="lazy" />
-          <span class="img-overlay">Living & Kitchen</span>
         </div>
+        <p class="img-caption">Living & Kitchen</p>
       </div>
 
       <!-- 3. Kitchen -->
       <div class="slide fade-up">
         <div class="slide-img">
           <img src="images/developer-set/tp-2.jpg" alt="Kitchen" loading="lazy" />
-          <span class="img-overlay">Kitchen</span>
         </div>
+        <p class="img-caption">Kitchen</p>
       </div>
 
       <!-- 4. Kitchen — Garden + Study — side by side pair -->
       <div class="slide-pair fade-up">
         <div class="pair-item">
           <img src="images/developer-set/tp-5.jpg" alt="Kitchen — Garden" loading="lazy" />
-          <span class="img-overlay">Kitchen — Garden</span>
         </div>
         <div class="pair-item">
           <img src="images/developer-set/tp-4.jpg" alt="Study" loading="lazy" />
-          <span class="img-overlay">Study</span>
         </div>
+      </div>
+      <div class="pair-caption fade-up">
+        <span>Kitchen — Garden</span>
+        <span>Study</span>
       </div>
 
       <!-- 5. Detail -->
       <div class="slide fade-up" style="margin-top: clamp(56px, 8vw, 110px);">
         <div class="slide-img">
           <img src="images/developer-set/tp-3.jpg" alt="Detail" loading="lazy" />
-          <span class="img-overlay">Detail</span>
         </div>
+        <p class="img-caption">Detail</p>
       </div>
 
     </div>
@@ -318,7 +336,7 @@
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          e.target.querySelectorAll('.img-overlay').forEach(o => o.classList.add('visible'));
+          e.target.querySelectorAll('.img-caption, .pair-caption span').forEach(o => o.classList.add('visible'));
           obs.unobserve(e.target);
         }
       });
