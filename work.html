@@ -96,9 +96,12 @@
     main { padding-top: 80px; }
 
     .project-list {
-      max-width: 900px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 0 clamp(20px, 4vw, 60px) 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
     }
 
     .project-item {
@@ -106,7 +109,6 @@
       cursor: pointer;
       text-decoration: none;
       color: inherit;
-      margin-bottom: 4px;
     }
 
     .project-image {
@@ -425,7 +427,8 @@
     @media (max-width: 640px) {
       .nav-links { gap: 24px; }
       .nav-links a { font-size: 9px; }
-      .project-image { aspect-ratio: 4/3; }
+      .project-list { grid-template-columns: 1fr; }
+      .project-image { aspect-ratio: 16/9; }
       .testimonials-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -492,15 +495,15 @@
       { name: 'Beacons House',       type: 'Exterior · Interior', id: 'beacons',            hero: 'images/beacons/01.jpg' },
       { name: 'Meriel St, San Souci', type: 'Exterior',           id: 'sansouci',           hero: 'images/sansouci/02.jpg' },
       { name: 'North West Arm Rd',   type: 'Exterior',            id: 'gymea',              hero: 'images/gymea/02.jpg' },
-      { name: 'Crescent Street',     type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/01.jpg' },
+      { name: 'Crescent Street',     type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/01.jpg', hide: true },
       { name: 'Seaforth Residence',  type: 'Interior',            id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
-      { name: 'Taren Point Project', type: 'Interior',            id: 'dugs-project',       hero: 'images/dugs/01.jpg' },
-      { name: 'Tiny Home',           type: 'Exterior',            id: 'tiny-home',          hero: 'images/tiny-home/01.jpg' },
+      { name: 'Taren Point Project', type: 'Interior',            id: 'dugs-project',       hero: 'images/dugs/01.jpg',            hide: true },
+      { name: 'Tiny Home',           type: 'Exterior',            id: 'tiny-home',          hero: 'images/tiny-home/01.jpg',       hide: true },
     ];
 
     const list = document.getElementById('project-list');
 
-    projects.forEach((p, i) => {
+    projects.filter(p => !p.hide).forEach((p, i) => {
       const item = document.createElement('a');
       item.className = 'project-item fade-up';
       item.href = `project.html?id=${p.id}`;
