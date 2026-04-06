@@ -274,6 +274,23 @@
       transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* ── Carousel CTA overlay ── */
+    .carousel-cta {
+      position: absolute;
+      bottom: clamp(14px, 2.5vw, 26px);
+      left: clamp(16px, 2.5vw, 28px);
+      z-index: 4;
+      font-size: clamp(9px, 1vw, 11px);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      pointer-events: all;
+      transition: color 0.2s ease;
+    }
+    .carousel-cta:hover { color: rgba(255,255,255,1); }
+
     /* ── Other services ── */
     #other-services {
       padding-top: clamp(48px, 8vw, 80px);
@@ -563,6 +580,7 @@
             <div class="carousel-slide"><img src="images/_context/03.jpg" alt="Context exterior" loading="lazy" /></div>
           </div>
         </div>
+        <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
         <div class="carousel-nav">
           <button class="carousel-btn prev">
             <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -604,6 +622,7 @@
             <div class="carousel-slide"><img src="images/_exterior/03.jpg" alt="Exterior render" loading="lazy" /></div>
           </div>
         </div>
+        <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
         <div class="carousel-nav">
           <button class="carousel-btn prev">
             <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -645,6 +664,7 @@
             <div class="carousel-slide"><img src="images/_interior/03.jpg" alt="Interior render" loading="lazy" /></div>
           </div>
         </div>
+        <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
         <div class="carousel-nav">
           <button class="carousel-btn prev">
             <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
