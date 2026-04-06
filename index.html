@@ -157,13 +157,17 @@
     }
     .hero-view-btn:hover { opacity: 0.55; }
 
-    /* ── Bottom tagline ── */
+    /* ── Bottom tagline + dots ── */
     .hero-bottom {
       position: absolute;
-      bottom: clamp(32px, 5vw, 56px);
+      bottom: clamp(28px, 4vw, 48px);
       left: 50%;
       transform: translateX(-50%);
       z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
       white-space: nowrap;
       opacity: 0;
       animation: infoFade 1.2s ease 1s forwards;
@@ -175,6 +179,26 @@
       text-transform: uppercase;
       color: rgba(255,255,255,0.5);
     }
+    .hero-dots {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .hero-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      border: none;
+      padding: 0;
+    }
+    .hero-dot.active {
+      background: rgba(255,255,255,0.9);
+      transform: scale(1.3);
+    }
+    .hero-dot:hover { background: rgba(255,255,255,0.65); }
 
     /* ── Arrows ── */
     .hero-arrow {
@@ -182,14 +206,14 @@
       top: 50%;
       transform: translateY(-50%);
       z-index: 3;
-      background: none;
-      border: none;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.15);
       cursor: pointer;
-      padding: 20px;
-      opacity: 0.35;
+      padding: 16px 14px;
+      opacity: 0.7;
       transition: opacity 0.2s;
     }
-    .hero-arrow:hover { opacity: 0.9; }
+    .hero-arrow:hover { opacity: 1; background: rgba(0,0,0,0.35); }
     .hero-arrow-prev { left: clamp(12px, 2vw, 28px); }
     .hero-arrow-next { right: clamp(12px, 2vw, 28px); }
     .hero-arrow svg { display: block; }
@@ -232,16 +256,17 @@
 
     <div class="hero-bottom">
       <p class="hero-tagline">Architectural Visualisation &nbsp;·&nbsp; Melbourne &nbsp;·&nbsp; 4-Day Turnaround</p>
+      <div class="hero-dots" id="hero-dots"></div>
     </div>
 
     <button class="hero-arrow hero-arrow-prev" id="hero-prev" aria-label="Previous">
       <svg width="18" height="32" viewBox="0 0 18 32" fill="none">
-        <path d="M15 2L3 16L15 30" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15 2L3 16L15 30" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
     <button class="hero-arrow hero-arrow-next" id="hero-next" aria-label="Next">
       <svg width="18" height="32" viewBox="0 0 18 32" fill="none">
-        <path d="M3 2L15 16L3 30" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 2L15 16L3 30" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
 
@@ -269,16 +294,31 @@
       },
     ];
 
-    const hero   = document.getElementById('hero');
-    const sky    = document.getElementById('hero-sky');
-    const title  = document.getElementById('sky-title');
-    const meta   = document.getElementById('sky-meta');
-    const btn    = document.getElementById('sky-btn');
-    const prev   = document.getElementById('hero-prev');
-    const next   = document.getElementById('hero-next');
+    const hero     = document.getElementById('hero');
+    const sky      = document.getElementById('hero-sky');
+    const title    = document.getElementById('sky-title');
+    const meta     = document.getElementById('sky-meta');
+    const btn      = document.getElementById('sky-btn');
+    const prev     = document.getElementById('hero-prev');
+    const next     = document.getElementById('hero-next');
+    const dotsWrap = document.getElementById('hero-dots');
 
     let current = 0;
     let transitioning = false;
+
+    // Build dots
+    const dotEls = slides.map((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+      return d;
+    });
+
+    function updateDots(i) {
+      dotEls.forEach((d, idx) => d.classList.toggle('active', idx === i));
+    }
 
     // Build slide elements
     const slideEls = slides.map((s, i) => {
@@ -326,6 +366,7 @@
 
       slideEls[index].classList.add('active');
       setSky(index, true);
+      updateDots(index);
       current = index;
 
       setTimeout(() => { transitioning = false; }, 1100);
