@@ -413,6 +413,41 @@
     }
     footer a:hover { color: var(--text); }
 
+    /* ── Featured image ── */
+    .featured-render {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    .featured-render img {
+      display: block;
+      width: 100%;
+      height: 80vh;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .featured-label {
+      position: absolute;
+      bottom: 36px;
+      left: clamp(24px, 4vw, 60px);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .featured-tag {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .featured-title {
+      font-size: clamp(20px, 3vw, 34px);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
     /* ── Mobile ── */
     @media (max-width: 860px) {
       .section-inner { max-width: 100%; }
@@ -442,6 +477,15 @@
 
   <main>
 
+    <!-- ── FEATURED ── -->
+    <section class="featured-render">
+      <img src="images/developer-set/hero-new.jpg" alt="Developer Set" loading="eager" />
+      <div class="featured-label">
+        <span class="featured-tag">Developer Set</span>
+        <span class="featured-title">Taren Point House, Sydney</span>
+      </div>
+    </section>
+
     <!-- ── INTRO ── -->
     <div class="page-hero fade-up">
       <p class="page-hero-label">Developer Set</p>
@@ -449,24 +493,22 @@
       <p class="page-hero-desc">A full visual package built for developers and architects who need renders that sell. Exterior to interior, floor plans to elevations — delivered in 4 days.</p>
     </div>
 
-    <!-- ── 01 EXTERIOR RENDERS ── -->
+    <!-- ── 01 KITCHEN ── -->
     <section class="section">
       <div class="section-inner fade-up">
         <div class="service-header">
           <div>
             <p class="section-label">01</p>
-            <h2 class="section-title">Exterior<br />Renders</h2>
+            <h2 class="section-title">Kitchen</h2>
           </div>
-          <p class="service-desc">Full context exteriors built for DA submissions and sales marketing. Day, dusk, or golden hour. Photorealistic facades placed in their real streetscape — built to get approval and close sales.</p>
+          <p class="service-desc">Full kitchen render. Materials, lighting, and joinery resolved. Built to show buyers exactly what they're getting.</p>
         </div>
-        <div class="carousel" data-total="2">
+        <div class="carousel" data-total="1">
           <div class="carousel-viewport">
             <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/developer-set/hero.jpg" alt="Exterior render" loading="eager" /></div>
-              <div class="carousel-slide"><img src="images/developer-set/01.jpg" alt="Exterior render" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/room-01.jpg" alt="Kitchen" loading="lazy" /></div>
             </div>
           </div>
-          <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
           <div class="carousel-nav">
             <button class="carousel-btn prev">
               <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -476,7 +518,7 @@
               Prev
             </button>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
-            <span class="carousel-counter">1 / 2</span>
+            <span class="carousel-counter">1 / 1</span>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
             <button class="carousel-btn next">
               Next
@@ -490,27 +532,22 @@
       </div>
     </section>
 
-    <!-- ── 02 INTERIOR RENDERS ── -->
+    <!-- ── 02 LIVING ── -->
     <section class="section">
       <div class="section-inner fade-up">
         <div class="service-header">
           <div>
             <p class="section-label">02</p>
-            <h2 class="section-title">Interior<br />Renders</h2>
+            <h2 class="section-title">Living</h2>
           </div>
-          <p class="service-desc">Kitchen, living, bedroom. Every space that sells a unit. Mood-accurate lighting, materials, and furniture — calibrated to the atmosphere the project demands. Renders buyers remember.</p>
+          <p class="service-desc">Living spaces rendered with atmosphere. Warm light, considered materiality, and real furniture scaled to the room.</p>
         </div>
-        <div class="carousel" data-total="5">
+        <div class="carousel" data-total="1">
           <div class="carousel-viewport">
             <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/seaforth/01.jpg" alt="Interior render" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/seaforth/02.jpg" alt="Interior render" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/seaforth/03.jpg" alt="Interior render" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/seaforth/04.jpg" alt="Interior render" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/seaforth/05.jpg" alt="Interior render" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/room-02.jpg" alt="Living" loading="lazy" /></div>
             </div>
           </div>
-          <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
           <div class="carousel-nav">
             <button class="carousel-btn prev">
               <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -520,7 +557,7 @@
               Prev
             </button>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
-            <span class="carousel-counter">1 / 5</span>
+            <span class="carousel-counter">1 / 1</span>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
             <button class="carousel-btn next">
               Next
@@ -534,21 +571,20 @@
       </div>
     </section>
 
-    <!-- ── 03 FLOOR PLANS ── -->
+    <!-- ── 03 OUTDOOR LIVING ── -->
     <section class="section">
       <div class="section-inner fade-up">
         <div class="service-header">
           <div>
             <p class="section-label">03</p>
-            <h2 class="section-title">Floor<br />Plans</h2>
+            <h2 class="section-title">Outdoor<br />Living</h2>
           </div>
-          <p class="service-desc">Clean, branded, buyer-ready. 2D floor plans formatted for marketing packs, DA submissions, and print. Every room labelled, every dimension clear. Designed to match your brand, not fight it.</p>
+          <p class="service-desc">Landscaping, pool, and alfresco. The outdoor spaces that close the deal — rendered with the same care as every room inside.</p>
         </div>
-        <div class="carousel" data-total="2">
+        <div class="carousel" data-total="1">
           <div class="carousel-viewport">
             <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/_elevations/01.jpg" alt="Floor plan" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_elevations/02.jpg" alt="Floor plan" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/room-03.jpg" alt="Outdoor Living" loading="lazy" /></div>
             </div>
           </div>
           <div class="carousel-nav">
@@ -560,7 +596,7 @@
               Prev
             </button>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
-            <span class="carousel-counter">1 / 2</span>
+            <span class="carousel-counter">1 / 1</span>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
             <button class="carousel-btn next">
               Next
@@ -574,22 +610,20 @@
       </div>
     </section>
 
-    <!-- ── 04 ELEVATIONS & SECTIONS ── -->
+    <!-- ── 04 LIVING STUDY ── -->
     <section class="section">
       <div class="section-inner fade-up">
         <div class="service-header">
           <div>
             <p class="section-label">04</p>
-            <h2 class="section-title">Elevations &<br />Sections</h2>
+            <h2 class="section-title">Living<br />Study</h2>
           </div>
-          <p class="service-desc">Technical drawings that tell the full story. Exploded axonometrics, elevations, and building sections — formatted for council, consultants, and clients. Precise, legible, and presentation-ready.</p>
+          <p class="service-desc">Secondary living spaces and studies. Every room in the package — not just the hero shots.</p>
         </div>
-        <div class="carousel" data-total="3">
+        <div class="carousel" data-total="1">
           <div class="carousel-viewport">
             <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/_elevations/01.jpg" alt="Elevation" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_elevations/02.jpg" alt="Elevation" loading="lazy" /></div>
-              <div class="carousel-slide"><img src="images/_elevations/03.jpg" alt="Elevation" loading="lazy" /></div>
+              <div class="carousel-slide"><img src="images/developer-set/room-05.jpg" alt="Living Study" loading="lazy" /></div>
             </div>
           </div>
           <div class="carousel-nav">
@@ -601,7 +635,7 @@
               Prev
             </button>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
-            <span class="carousel-counter">1 / 3</span>
+            <span class="carousel-counter">1 / 1</span>
             <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
             <button class="carousel-btn next">
               Next
@@ -615,12 +649,51 @@
       </div>
     </section>
 
-    <!-- ── 05 THE COMPLETE PACKAGE ── -->
+    <!-- ── 05 JOINERY ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">05</p>
+            <h2 class="section-title">Joinery</h2>
+          </div>
+          <p class="service-desc">Shelving, cabinetry, and built-in joinery rendered in full detail. Where craft meets specification.</p>
+        </div>
+        <div class="carousel" data-total="1">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide"><img src="images/developer-set/shelf.jpg" alt="Joinery" loading="lazy" /></div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 1</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 06 THE COMPLETE PACKAGE ── -->
     <section class="section-package">
       <div class="package-inner">
         <div class="service-header fade-up">
           <div>
-            <p class="section-label">05</p>
+            <p class="section-label">06</p>
             <h2 class="section-title">The Complete<br />Package</h2>
           </div>
           <p class="service-desc">Everything above, delivered in 4 days. One brief, one point of contact, one set of files. Built for developers who move fast and need visuals that work as hard as they do.</p>
