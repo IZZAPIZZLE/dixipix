@@ -374,13 +374,13 @@
     const next     = document.getElementById('hero-next');
     const dotsWrap = document.getElementById('hero-dots');
 
-    let current = 0;
+    let current = window.innerWidth <= 640 ? 2 : 0;
     let transitioning = false;
 
     // Build dots
     const dotEls = slides.map((_, i) => {
       const d = document.createElement('button');
-      d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      d.className = 'hero-dot' + (i === current ? ' active' : '');
       d.setAttribute('aria-label', 'Slide ' + (i + 1));
       d.addEventListener('click', () => goTo(i));
       dotsWrap.appendChild(d);
@@ -394,7 +394,7 @@
     // Build slide elements
     const slideEls = slides.map((s, i) => {
       const slide = document.createElement('div');
-      slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+      slide.className = 'hero-slide' + (i === current ? ' active' : '');
       const img = document.createElement('div');
       img.className = 'hero-img';
       img.style.backgroundImage = `url('${s.image}')`;
@@ -420,8 +420,8 @@
       }
     }
 
-    // Set slide 0 info immediately (no fade on load)
-    setSky(0, false);
+    // Set initial slide info (no fade on load)
+    setSky(current, false);
 
     function goTo(index) {
       if (transitioning || index === current) return;
