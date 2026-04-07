@@ -210,21 +210,25 @@
     }
 
     /* ── Animation section ── */
-    .anim-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
+    .anim-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #000;
     }
     .anim-video {
-      display: block;
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: auto;
-      aspect-ratio: 16/9;
+      height: 100%;
       object-fit: cover;
+      transition: opacity 0.5s ease;
     }
+    .anim-a { opacity: 1; }
+    .anim-b { opacity: 0; }
     @media (max-width: 640px) {
-      .anim-grid { grid-template-columns: 1fr; }
-      .anim-video { width: 100vw; margin-left: calc(-1 * var(--pad)); }
+      .anim-wrap { width: 100vw; margin-left: calc(-1 * var(--pad)); aspect-ratio: 16/9; }
     }
 
     .carousel-slide img.img-bordered {
@@ -794,18 +798,37 @@
           </div>
           <p class="service-desc">AI-assisted animation for architects and developers who want to feel the space, not just see it. Cinematic, atmospheric, and evolving fast.</p>
         </div>
-        <video class="anim-video" id="anim-player" autoplay muted playsinline preload="auto">
-          <source src="videos/animation-01.mp4" type="video/mp4" />
-        </video>
+        <div class="anim-wrap">
+          <video class="anim-video anim-a" id="anim-a" autoplay muted playsinline preload="auto"></video>
+          <video class="anim-video anim-b" id="anim-b" muted playsinline preload="auto"></video>
+        </div>
         <script>
           (function() {
             const clips = ['videos/animation-01.mp4', 'videos/animation-02.mp4'];
             let idx = 0;
-            const v = document.getElementById('anim-player');
-            v.addEventListener('ended', function() {
-              idx = (idx + 1) % clips.length;
-              v.src = clips[idx];
-              v.play();
+            const a = document.getElementById('anim-a');
+            const b = document.getElementById('anim-b');
+            a.src = clips[0];
+            b.src = clips[1];
+            a.play();
+            function crossfade(current, next, nextIdx) {
+              current.style.opacity = '0';
+              next.style.opacity = '1';
+              next.play();
+              setTimeout(() => { current.pause(); current.currentTime = 0; }, 600);
+              idx = nextIdx;
+              next.addEventListener('ended', function onEnd() {
+                next.removeEventListener('ended', onEnd);
+                const ni = (nextIdx + 1) % clips.length;
+                current.src = clips[ni];
+                current.load();
+                crossfade(next, current, ni);
+              });
+            }
+            a.addEventListener('ended', function onFirstEnd() {
+              a.removeEventListener('ended', onFirstEnd);
+              const ni = 1;
+              crossfade(a, b, ni);
             });
           })();
         </script>
