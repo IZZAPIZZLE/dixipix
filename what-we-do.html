@@ -209,6 +209,18 @@
       object-fit: cover;
     }
 
+    /* ── Animation section ── */
+    .anim-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    @media (max-width: 640px) {
+      .anim-video { width: 100vw; margin-left: calc(-1 * var(--pad)); }
+    }
+
     .carousel-slide img.img-bordered {
       border: 2px solid #c8a96e;
       object-fit: contain;
@@ -933,6 +945,22 @@
           <div class="other-name">Catalogues</div>
           <div class="other-desc">Full marketing collateral: renders, plans, and copy-ready layout in one package.</div>
         </div>
+      </div>
+    </section>
+
+    <!-- ── 05 ANIMATION ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">05</p>
+            <h2 class="section-title">Animation</h2>
+          </div>
+          <p class="service-desc">Still renders tell the story. Animation sells the feeling. Cinematic walkthroughs and AI-driven motion sequences that bring a project to life before a slab is poured.</p>
+        </div>
+        <video class="anim-video" autoplay muted loop playsinline>
+          <source src="videos/animation-01.mp4" type="video/mp4" />
+        </video>
       </div>
     </section>
 
