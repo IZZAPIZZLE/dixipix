@@ -483,30 +483,57 @@
     .nav-mobile-menu {
       position: fixed;
       inset: 0;
-      background: rgba(10,10,10,0.97);
+      background: rgba(10,10,10,0.98);
       z-index: 90;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 44px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      backdrop-filter: blur(8px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+      backdrop-filter: blur(12px);
+      padding: 0 clamp(28px, 6vw, 96px);
     }
     .nav-mobile-menu.open { opacity: 1; pointer-events: all; }
     .nav-mobile-menu a {
-      font-size: 26px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 340px;
+      font-size: 28px;
       font-weight: 300;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      transition: color 0.2s;
+      color: rgba(255,255,255,0.75);
       text-decoration: none;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.45s ease, opacity 0.45s ease, color 0.2s;
     }
+    .nav-mobile-menu.open a:nth-child(1) { transition-delay: 0.08s; }
+    .nav-mobile-menu.open a:nth-child(2) { transition-delay: 0.14s; }
+    .nav-mobile-menu.open a:nth-child(3) { transition-delay: 0.20s; }
+    .nav-mobile-menu.open a:nth-child(4) { transition-delay: 0.26s; }
+    .nav-mobile-menu.open a { transform: translateY(0); opacity: 1; }
     .nav-mobile-menu a:active { color: #fff; }
-    .nav-mobile-menu .mob-featured { color: #c8a96e; }
+    .nav-mobile-menu .mob-featured { color: #c8a96e; border-bottom: none; }
+    .mob-num {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: #c8a96e;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+    .nav-mobile-footer {
+      position: absolute;
+      bottom: 48px;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
 
     /* ── Mobile ── */
     @media (max-width: 860px) {
@@ -549,10 +576,11 @@
   </nav>
 
   <div class="nav-mobile-menu" id="nav-mobile-menu">
-    <a href="work.html">Work</a>
-    <a href="what-we-do.html">What We Do</a>
-    <a href="contact.html">Contact</a>
-    <a href="developer-set.html" class="mob-featured">Developer Set</a>
+    <a href="work.html"><span class="mob-num">01</span>Work</a>
+    <a href="what-we-do.html"><span class="mob-num">02</span>What We Do</a>
+    <a href="contact.html"><span class="mob-num">03</span>Contact</a>
+    <a href="developer-set.html" class="mob-featured"><span class="mob-num">04</span>Developer Set</a>
+    <span class="nav-mobile-footer">Architectural Visualisation</span>
   </div>
 
   <main>
