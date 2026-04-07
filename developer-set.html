@@ -183,6 +183,7 @@
       flex: 0 0 100%;
       width: 100%;
       cursor: zoom-in;
+      position: relative;
     }
 
     .carousel-slide img {
@@ -474,6 +475,35 @@
       object-fit: cover;
       object-position: center center;
     }
+    /* ── Slide overlay label ── */
+    .slide-wrap {
+      position: relative;
+    }
+    .slide-overlay {
+      position: absolute;
+      bottom: 16px;
+      left: 20px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      pointer-events: none;
+    }
+    .slide-overlay-address {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    }
+    .slide-overlay-arch {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    }
+
     .featured-label {
       position: absolute;
       bottom: 36px;
@@ -653,9 +683,15 @@
           </div>
           <p class="service-desc">AI-assisted animation for architects and developers who want to feel the space, not just see it. Cinematic, atmospheric, and evolving fast.</p>
         </div>
-        <video class="section-video" autoplay muted loop playsinline preload="auto">
-          <source src="videos/animation-02.mp4" type="video/mp4" />
-        </video>
+        <div class="slide-wrap">
+          <video class="section-video" autoplay muted loop playsinline preload="auto">
+            <source src="videos/animation-02.mp4" type="video/mp4" />
+          </video>
+          <div class="slide-overlay">
+            <span class="slide-overlay-address">Seaforth Residence, Seaforth NSW</span>
+            <span class="slide-overlay-arch">Mason Projects</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -672,7 +708,13 @@
         <div class="carousel" data-total="1">
           <div class="carousel-viewport">
             <div class="carousel-track">
-              <div class="carousel-slide"><img src="images/seaview/01.jpg" alt="Exterior Render" loading="lazy" /></div>
+              <div class="carousel-slide">
+                <img src="images/seaview/01.jpg" alt="Exterior Render" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Sea View Crescent, Cronulla NSW</span>
+                  <span class="slide-overlay-arch">Couvaras Architects</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="carousel-nav">
