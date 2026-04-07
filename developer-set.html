@@ -84,13 +84,14 @@
     .ds-hero {
       position: relative;
       width: 100%;
+      height: calc(100vh - 80px);
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
     .ds-hero-video {
       display: block;
       width: 100%;
-      aspect-ratio: 16/9;
+      height: 100%;
       object-fit: cover;
     }
     .ds-hero-overlay {
@@ -141,7 +142,7 @@
       gap: 3px;
     }
     @media (max-width: 640px) {
-      .ds-hero-video { aspect-ratio: 4/3; }
+      .ds-hero { height: 75vw; min-height: 320px; }
     }
 
     /* ── Section shared ── */
