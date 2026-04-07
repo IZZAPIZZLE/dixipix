@@ -80,41 +80,68 @@
     /* ── Page shell ── */
     main { padding-top: 80px; }
 
-    /* ── Section video ── */
-    .section-video {
+    /* ── DS Hero ── */
+    .ds-hero {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .ds-hero-video {
       display: block;
       width: 100%;
       aspect-ratio: 16/9;
       object-fit: cover;
     }
-
-    /* ── Page hero ── */
-    .page-hero {
-      padding: clamp(64px, 10vw, 120px) var(--pad) clamp(48px, 6vw, 80px);
-      border-bottom: 1px solid var(--border);
+    .ds-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--pad);
     }
-    .page-hero-label {
+    .ds-hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 580px;
+      margin-bottom: 18px;
+    }
+    .ds-hero-label {
       font-size: 9px;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 20px;
     }
-    .page-hero-title {
-      font-size: clamp(32px, 5vw, 64px);
+    .ds-hero-title {
+      font-size: clamp(26px, 3.8vw, 54px);
       font-weight: 300;
       letter-spacing: -0.02em;
       line-height: 1.1;
-      color: var(--text);
-      max-width: 700px;
-      margin-bottom: 28px;
+      color: #fff;
     }
-    .page-hero-desc {
-      font-size: 14px;
+    .ds-hero-desc {
+      font-size: 13px;
       font-weight: 300;
-      line-height: 1.85;
-      color: var(--text-muted);
-      max-width: 520px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.55);
+      max-width: 460px;
+    }
+    .ds-hero-badge {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .ds-hero-attr {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    @media (max-width: 640px) {
+      .ds-hero-video { aspect-ratio: 4/3; }
     }
 
     /* ── Section shared ── */
@@ -659,35 +686,24 @@
 
   <main>
 
-    <!-- ── INTRO ── -->
-    <div class="page-hero fade-up">
-      <p class="page-hero-label">Developer Set</p>
-      <h1 class="page-hero-title">Everything a development needs. Nothing it doesn't.</h1>
-      <p class="page-hero-desc">A full visual package built for developers and architects who need renders that sell. Exterior to interior, floor plans to elevations.</p>
-      <p class="package-turnaround" style="margin-top:20px;">⚡ Delivered in 4 days</p>
-    </div>
-
-    <!-- ── 01 ANIMATION ── -->
-    <section class="section">
-      <div class="section-inner fade-up">
-        <div class="service-header">
-          <div>
-            <p class="section-label">01</p>
-            <h2 class="section-title">Detail<br />Imagery</h2>
-          </div>
-          <p class="service-desc">AI-assisted animation for architects and developers who want to feel the space, not just see it. Cinematic, atmospheric, and evolving fast.</p>
+    <!-- ── HERO ── -->
+    <div class="ds-hero">
+      <video class="ds-hero-video" autoplay muted loop playsinline preload="auto">
+        <source src="videos/animation-02.mp4" type="video/mp4" />
+      </video>
+      <div class="ds-hero-overlay">
+        <div class="ds-hero-text">
+          <p class="ds-hero-label">Developer Set</p>
+          <h1 class="ds-hero-title">Everything a development<br>needs. Nothing it doesn't.</h1>
+          <p class="ds-hero-desc">A full visual package built for developers and architects who need renders that sell. Exterior to interior, floor plans to elevations.</p>
+          <p class="ds-hero-badge">⚡ Delivered in 4 days</p>
         </div>
-        <div class="slide-wrap">
-          <video class="section-video" autoplay muted loop playsinline preload="auto">
-            <source src="videos/animation-02.mp4" type="video/mp4" />
-          </video>
-          <div class="slide-overlay">
-            <span class="slide-overlay-address">Seaforth Residence, Woolooware NSW</span>
-            <span class="slide-overlay-arch">Mason Projects</span>
-          </div>
+        <div class="ds-hero-attr">
+          <span class="slide-overlay-address">Seaforth Residence, Woolooware NSW</span>
+          <span class="slide-overlay-arch">Mason Projects</span>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- ── 02 EXTERIOR ── -->
     <section class="section">
