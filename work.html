@@ -504,10 +504,35 @@
       color: rgba(255,255,255,0.18);
     }
 
+    /* ── Work Filter ── */
+    .work-filter {
+      display: flex;
+      gap: 2px;
+      padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 60px) clamp(16px, 3vw, 28px);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .filter-btn {
+      font-family: var(--font);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: none;
+      padding: 11px 22px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .filter-btn:hover { color: rgba(255,255,255,0.65); border-color: rgba(255,255,255,0.2); }
+    .filter-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(200,169,110,0.05); }
+
     /* ── Mobile ── */
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
+      .work-filter { padding-left: 16px; padding-right: 16px; }
       .project-list { grid-template-columns: 1fr; gap: 0; padding-left: 0; padding-right: 0; }
       .project-image { aspect-ratio: 4/3; }
       .project-label { padding-left: 16px; padding-right: 16px; }
@@ -542,6 +567,10 @@
   </div>
 
   <main>
+    <div class="work-filter">
+      <button class="filter-btn" data-filter="exterior">Exteriors</button>
+      <button class="filter-btn" data-filter="interior">Interiors</button>
+    </div>
     <div class="project-list" id="project-list"></div>
     <div class="testimonials fade-up">
       <p class="testimonials-label">Client Feedback</p>
@@ -598,32 +627,68 @@
 
     const list = document.getElementById('project-list');
 
-    projects.filter(p => !p.hide).forEach((p, i) => {
-      const item = document.createElement('a');
-      item.className = 'project-item fade-up';
-      item.href = `project.html?id=${p.id}`;
-      item.style.transitionDelay = `${i * 0.07}s`;
-      item.innerHTML = `
-        <div class="project-image">
-          <img src="${p.hero}" alt="${p.name}" loading="${i < 2 ? 'eager' : 'lazy'}" />
-          <div class="project-overlay">
-            <div class="project-overlay-name">${p.name}</div>
-            <div class="project-overlay-type">${p.type}</div>
-          </div>
-        </div>
-        <div class="project-label">
-          <span class="project-name">${p.name}</span>
-          <span class="project-type">${p.type}</span>
-        </div>
-      `;
-      list.appendChild(item);
-    });
-
-    // Scroll fade
+    // Scroll fade observer
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.08 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    let activeFilter = null;
+
+    function renderProjects() {
+      list.innerHTML = '';
+      const visible = projects.filter(p => !p.hide).filter(p => {
+        if (!activeFilter) return true;
+        if (activeFilter === 'exterior') return p.type.includes('Exterior');
+        if (activeFilter === 'interior') return p.type.includes('Interior');
+      });
+      visible.forEach((p, i) => {
+        const item = document.createElement('a');
+        item.className = 'project-item fade-up';
+        item.href = `project.html?id=${p.id}`;
+        item.style.transitionDelay = `${i * 0.06}s`;
+        item.innerHTML = `
+          <div class="project-image">
+            <img src="${p.hero}" alt="${p.name}" loading="${i < 2 ? 'eager' : 'lazy'}" />
+            <div class="project-overlay">
+              <div class="project-overlay-name">${p.name}</div>
+              <div class="project-overlay-type">${p.type}</div>
+            </div>
+          </div>
+          <div class="project-label">
+            <span class="project-name">${p.name}</span>
+            <span class="project-type">${p.type}</span>
+          </div>
+        `;
+        list.appendChild(item);
+        observer.observe(item);
+      });
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.filter;
+        if (activeFilter === f) {
+          activeFilter = null;
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        } else {
+          activeFilter = f;
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+        list.style.opacity = '0';
+        list.style.transition = 'opacity 0.18s ease';
+        setTimeout(() => {
+          renderProjects();
+          list.style.opacity = '1';
+        }, 180);
+      });
+    });
+
+    renderProjects();
+
+    // Static fade-up elements (testimonials etc)
+    document.querySelectorAll('.fade-up:not(.project-item)').forEach(el => observer.observe(el));
 
     // ── Mobile menu ──
     const navHamburger  = document.getElementById('nav-hamburger');
