@@ -226,6 +226,38 @@
     .hero-arrow-next { right: clamp(12px, 2vw, 28px); }
     .hero-arrow svg { display: block; }
 
+    /* ── DS link ── */
+    .hero-ds-link {
+      position: absolute;
+      bottom: clamp(28px, 4vw, 48px);
+      right: clamp(24px, 4vw, 60px);
+      z-index: 3;
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0;
+      animation: infoFade 1.2s ease 1s forwards;
+      transition: opacity 0.2s;
+    }
+    .hero-ds-link:hover { opacity: 0.65; }
+
+    /* ── Hero quote ── */
+    .hero-quote {
+      margin-top: 22px;
+      font-size: 10px;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.7;
+      max-width: 260px;
+      border-left: 1px solid rgba(200,169,110,0.25);
+      padding-left: 12px;
+      letter-spacing: 0.01em;
+    }
+
     /* ── Hamburger ── */
     .nav-hamburger {
       display: none;
@@ -320,6 +352,8 @@
       .hero-sky-meta  { font-size: 11px; }
       .hero-view-btn  { font-size: 13px; padding: 10px 0; display: block; }
       .hero-arrow     { display: none; }
+      .hero-ds-link   { display: none; }
+      .hero-quote     { display: none; }
     }
   </style>
 </head>
@@ -360,10 +394,13 @@
       <span class="hero-sky-meta"  id="sky-meta"></span>
       <span class="hero-sky-meta"  id="sky-arch"></span>
       <a href="#" class="hero-view-btn" id="sky-btn">View Project</a>
+      <blockquote class="hero-quote">"Their 3D stuff is next level. Helped us generate clients."<br>— Chris Austin, Couvaras Architects</blockquote>
     </div>
 
+    <a href="developer-set.html" class="hero-ds-link">Developer Set &nbsp;→</a>
+
     <div class="hero-bottom">
-      <p class="hero-tagline">Architectural Visualisation &nbsp;·&nbsp; Melbourne &nbsp;·&nbsp; 4-Day Turnaround</p>
+      <p class="hero-tagline">Architectural Visualisation &nbsp;·&nbsp; From $1,200 AUD &nbsp;·&nbsp; 4-Day Turnaround</p>
       <div class="hero-dots" id="hero-dots"></div>
     </div>
 
