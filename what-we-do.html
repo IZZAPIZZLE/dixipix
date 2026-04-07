@@ -304,6 +304,8 @@
     .compare-slider {
       position: relative;
       overflow: hidden;
+      touch-action: none;
+      user-select: none;
       cursor: col-resize;
       user-select: none;
       -webkit-user-select: none;
@@ -1082,7 +1084,7 @@
         const rect = slider.getBoundingClientRect();
         const pct  = Math.min(Math.max((x - rect.left) / rect.width * 100, 0), 100);
         overlay.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
-        handle.style.left = pct + '%';
+        handle.style.left = Math.min(Math.max(pct, 2), 98) + '%';
       }
 
       slider.addEventListener('pointerdown', e => {
