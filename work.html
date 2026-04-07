@@ -636,14 +636,10 @@
 
     function renderProjects() {
       list.innerHTML = '';
-      const visible = projects.filter(p => {
-        // When a filter is active, show everything matching (ignore hide)
-        // When no filter, only show non-hidden projects
-        if (activeFilter) {
-          if (activeFilter === 'exterior') return p.type.includes('Exterior');
-          if (activeFilter === 'interior') return p.type.includes('Interior');
-        }
-        return !p.hide;
+      const visible = projects.filter(p => !p.hide).filter(p => {
+        if (!activeFilter) return true;
+        if (activeFilter === 'exterior') return p.type.includes('Exterior');
+        if (activeFilter === 'interior') return p.type.includes('Interior');
       });
       visible.forEach((p, i) => {
         const item = document.createElement('a');
