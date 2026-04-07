@@ -612,7 +612,7 @@
     const projects = [
       { name: 'Jackson Street',       type: 'Exterior',            id: 'serg-jackson',       hero: 'images/serg-jackson/01.jpg' },
       { name: 'Taren Point',          type: 'Exterior',            id: 'taren-point',        hero: 'images/taren-point/01.jpg' },
-      { name: 'Yowie Bay',           type: 'Exterior · Interior', id: 'yowie-bay',          hero: 'images/yowie-bay/02.jpg' },
+      { name: 'Yowie Bay',           type: 'Exterior · Interior', id: 'yowie-bay',          hero: 'images/yowie-bay/01.jpg' },
       { name: 'Sea View Crescent',   type: 'Exterior',            id: 'seaview',            hero: 'images/seaview/02.jpg' },
       { name: 'Seaforth Residence',  type: 'Interior',            id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
       { name: 'The Church, Port Hacking Rd', type: 'Exterior',      id: 'the-church',         hero: 'images/the-church/01.jpg' },
@@ -636,10 +636,14 @@
 
     function renderProjects() {
       list.innerHTML = '';
-      const visible = projects.filter(p => !p.hide).filter(p => {
-        if (!activeFilter) return true;
-        if (activeFilter === 'exterior') return p.type.includes('Exterior');
-        if (activeFilter === 'interior') return p.type.includes('Interior');
+      const visible = projects.filter(p => {
+        // When a filter is active, show everything matching (ignore hide)
+        // When no filter, only show non-hidden projects
+        if (activeFilter) {
+          if (activeFilter === 'exterior') return p.type.includes('Exterior');
+          if (activeFilter === 'interior') return p.type.includes('Interior');
+        }
+        return !p.hide;
       });
       visible.forEach((p, i) => {
         const item = document.createElement('a');
