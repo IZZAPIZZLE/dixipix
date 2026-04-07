@@ -322,6 +322,7 @@
     <div class="hero-sky" id="hero-sky">
       <span class="hero-sky-title" id="sky-title"></span>
       <span class="hero-sky-meta"  id="sky-meta"></span>
+      <span class="hero-sky-meta"  id="sky-arch"></span>
       <a href="#" class="hero-view-btn" id="sky-btn">View Project</a>
     </div>
 
@@ -349,18 +350,21 @@
         image: 'images/_hero/hero-seaview.jpg',
         title: 'Sea View Crescent',
         meta:  'Cronulla, NSW &nbsp;·&nbsp; Multi-Residential &nbsp;·&nbsp; 2026',
+        arch:  'Couvaras Architects',
         link:  'project.html?id=seaview',
       },
       {
         image: 'images/_hero/hero-gymea.jpg',
         title: 'North West Arm Rd',
         meta:  'Gymea, NSW &nbsp;·&nbsp; Multi-Dwelling &nbsp;·&nbsp; 2025',
+        arch:  'Couvaras Architects',
         link:  'project.html?id=gymea',
       },
       {
         image: 'images/_hero/hero-girrilang.jpg',
         title: 'Girrilang Rd',
         meta:  'Cronulla, NSW &nbsp;·&nbsp; Boutique Residential &nbsp;·&nbsp; 2025',
+        arch:  'Couvaras Architects',
         link:  'project.html?id=girrilang',
       },
     ];
@@ -369,6 +373,7 @@
     const sky      = document.getElementById('hero-sky');
     const title    = document.getElementById('sky-title');
     const meta     = document.getElementById('sky-meta');
+    const arch     = document.getElementById('sky-arch');
     const btn      = document.getElementById('sky-btn');
     const prev     = document.getElementById('hero-prev');
     const next     = document.getElementById('hero-next');
@@ -410,12 +415,14 @@
         setTimeout(() => {
           title.textContent  = slides[i].title;
           meta.innerHTML     = slides[i].meta;
+          arch.textContent   = slides[i].arch;
           btn.href           = slides[i].link;
           sky.style.opacity  = '1';
         }, 350);
       } else {
         title.textContent = slides[i].title;
         meta.innerHTML    = slides[i].meta;
+        arch.textContent  = slides[i].arch;
         btn.href          = slides[i].link;
       }
     }
