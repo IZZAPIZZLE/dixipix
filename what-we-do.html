@@ -210,6 +210,11 @@
     }
 
     /* ── Animation section ── */
+    .anim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
     .anim-video {
       display: block;
       width: 100%;
@@ -218,6 +223,7 @@
       object-fit: cover;
     }
     @media (max-width: 640px) {
+      .anim-grid { grid-template-columns: 1fr; }
       .anim-video { width: 100vw; margin-left: calc(-1 * var(--pad)); }
     }
 
@@ -778,13 +784,33 @@
       </div>
     </section>
 
-    <!-- ── EXTERIOR RENDERS ── -->
+    <!-- ── 01 ANIMATION ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">01</p>
+            <h2 class="section-title">Animation</h2>
+          </div>
+          <p class="service-desc">AI-assisted animation for architects and developers who want to feel the space, not just see it. Cinematic, atmospheric, and evolving fast.</p>
+        </div>
+        <div class="anim-grid">
+          <video class="anim-video" autoplay muted loop playsinline preload="none">
+            <source src="videos/animation-01.mp4" type="video/mp4" />
+          </video>
+          <video class="anim-video" autoplay muted loop playsinline preload="none">
+            <source src="videos/animation-02.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </section>
+
     <!-- ── CONTEXT EXTERIORS ── -->
     <section class="section">
       <div class="section-inner fade-up">
       <div class="service-header">
         <div>
-          <p class="section-label">01</p>
+          <p class="section-label">02</p>
           <h2 class="section-title">Context<br />Exteriors</h2>
         </div>
         <p class="service-desc">Multi-residential renders placed within their real environment. Neighbouring buildings, streetscape, and site context — built for DA submissions and development marketing.</p>
@@ -826,7 +852,7 @@
       <div class="section-inner fade-up">
       <div class="service-header">
         <div>
-          <p class="section-label">02</p>
+          <p class="section-label">03</p>
           <h2 class="section-title">Exterior<br />Renders</h2>
         </div>
         <p class="service-desc">Photorealistic facades, landscaping, and context. Day, dusk, or golden hour. Built to sell the project before a brick is laid.</p>
@@ -868,7 +894,7 @@
       <div class="section-inner fade-up">
       <div class="service-header">
         <div>
-          <p class="section-label">03</p>
+          <p class="section-label">04</p>
           <h2 class="section-title">Interior<br />Imagery</h2>
         </div>
         <p class="service-desc">Mood-accurate lighting, materials, and furniture. Every render calibrated to the atmosphere the project demands, from residential to commercial.</p>
@@ -923,7 +949,7 @@
       <div class="section-inner fade-up">
       <div class="service-header">
         <div>
-          <p class="section-label">04</p>
+          <p class="section-label">05</p>
           <h2 class="section-title">Elevations &<br />Floor Plans</h2>
         </div>
         <p class="service-desc">Exploded axos, elevations, and clean 2D floor plans. DA submissions, marketing packs, and print-ready collateral.</p>
@@ -960,22 +986,6 @@
     </section>
 
     <!-- ── OTHER SERVICES ── -->
-
-    <!-- ── 05 ANIMATION ── -->
-    <section class="section">
-      <div class="section-inner fade-up">
-        <div class="service-header">
-          <div>
-            <p class="section-label">05</p>
-            <h2 class="section-title">Animation</h2>
-          </div>
-          <p class="service-desc">AI-assisted animation for architects and developers who want to feel the space, not just see it. Cinematic, atmospheric, and evolving fast.</p>
-        </div>
-        <video class="anim-video" autoplay muted loop playsinline>
-          <source src="videos/animation-01.mp4" type="video/mp4" />
-        </video>
-      </div>
-    </section>
 
     <!-- ── PRICING BAR ── -->
     <div class="pricing-bar">
