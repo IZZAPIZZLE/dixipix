@@ -1052,11 +1052,20 @@
 
       // Touch swipe (skip if on compare slide)
       const vp = car.querySelector('.carousel-viewport');
-      let swipeX = 0, swipeTarget = null;
+      let swipeX = 0, swipeY = 0, swipeTarget = null, swipeLocked = null;
       vp.addEventListener('touchstart', e => {
         swipeX = e.touches[0].clientX;
+        swipeY = e.touches[0].clientY;
         swipeTarget = e.target;
+        swipeLocked = null;
       }, { passive: true });
+      vp.addEventListener('touchmove', e => {
+        if (swipeTarget && swipeTarget.closest('[data-compare]')) return;
+        const dx = Math.abs(e.touches[0].clientX - swipeX);
+        const dy = Math.abs(e.touches[0].clientY - swipeY);
+        if (swipeLocked === null) swipeLocked = dx > dy ? 'h' : 'v';
+        if (swipeLocked === 'h') e.preventDefault();
+      }, { passive: false });
       vp.addEventListener('touchend', e => {
         if (swipeTarget && swipeTarget.closest('[data-compare]')) return;
         const dx = e.changedTouches[0].clientX - swipeX;
