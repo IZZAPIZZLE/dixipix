@@ -291,6 +291,23 @@
     }
     footer a:hover { color: var(--text); }
 
+    /* ── Project video ── */
+    .project-video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      margin-top: 4px;
+    }
+    @media (max-width: 640px) {
+      .project-video {
+        width: 100vw;
+        margin-left: calc(-1 * var(--pad));
+        height: 75vw;
+        aspect-ratio: unset;
+      }
+    }
+
     /* ── CTA ── */
     .project-cta {
       margin-top: 72px;
@@ -501,6 +518,7 @@
         name:     'Forest Rd',
         type:     'Exterior · Interior',
         architect: 'Studio Joan Interiors',
+        video:    'videos/animation-01.mp4',
         location: 'Yowie Bay, NSW',
         date:     '2025',
         description: `A bold residential build on the edge of Yowie Bay. The facade is defined by vertical dark fins that filter light and frame views from inside, creating a dynamic streetscape that shifts with the sun. Inside, the open-plan living area dissolves beneath a full-length skylight, flooding the kitchen and dining space with natural light. Stone, timber, and glass in a composition that is confident without being loud.`,
@@ -693,6 +711,12 @@
         <div class="project-images">
           ${restHTML}
         </div>
+
+        ${p.video ? `
+        <video class="project-video fade-up" autoplay muted loop playsinline preload="auto">
+          <source src="${p.video}" type="video/mp4" />
+        </video>
+        ` : ''}
 
         <div class="project-cta fade-up">
           <p class="cta-text">Like what you see?</p>
