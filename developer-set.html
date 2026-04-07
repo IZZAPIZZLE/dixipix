@@ -954,9 +954,19 @@
 
       // Touch swipe
       const vp = car.querySelector('.carousel-viewport');
-      let swipeX = 0;
-      vp.addEventListener('touchstart', e => { swipeX = e.touches[0].clientX; }, { passive: true });
-      vp.addEventListener('touchend',   e => {
+      let swipeX = 0, swipeY = 0, swipeLocked = null;
+      vp.addEventListener('touchstart', e => {
+        swipeX = e.touches[0].clientX;
+        swipeY = e.touches[0].clientY;
+        swipeLocked = null;
+      }, { passive: true });
+      vp.addEventListener('touchmove', e => {
+        const dx = Math.abs(e.touches[0].clientX - swipeX);
+        const dy = Math.abs(e.touches[0].clientY - swipeY);
+        if (swipeLocked === null) swipeLocked = dx > dy ? 'h' : 'v';
+        if (swipeLocked === 'h') e.preventDefault();
+      }, { passive: false });
+      vp.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - swipeX;
         if (Math.abs(dx) > 50) { dx < 0 ? goTo(current + 1) : goTo(current - 1); }
       }, { passive: true });
