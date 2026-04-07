@@ -275,6 +275,39 @@
     }
     .carousel-cta:hover { color: rgba(255,255,255,1); }
 
+    /* ── Testimonial ── */
+    .ds-testimonial {
+      padding: clamp(48px, 8vw, 96px) var(--pad);
+      border-top: 1px solid var(--border);
+      max-width: 780px;
+    }
+    .ds-testimonial-mark {
+      font-size: 48px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+    .ds-testimonial-quote {
+      font-size: clamp(15px, 1.6vw, 18px);
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 24px;
+    }
+    .ds-testimonial-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .ds-testimonial-role {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
     /* ── Complete package section ── */
     .section-package {
       background: var(--bg-2);
@@ -607,6 +640,7 @@
       <p class="page-hero-label">Developer Set</p>
       <h1 class="page-hero-title">Everything a development needs. Nothing it doesn't.</h1>
       <p class="page-hero-desc">A full visual package built for developers and architects who need renders that sell. Exterior to interior, floor plans to elevations.</p>
+      <p class="package-turnaround" style="margin-top:20px;">⚡ Delivered in 4 days</p>
     </div>
 
     <!-- ── 01 DETAIL IMAGERY ── -->
@@ -898,6 +932,14 @@
       </div>
     </section>
 
+    <!-- ── TESTIMONIAL ── -->
+    <div class="ds-testimonial fade-up">
+      <div class="ds-testimonial-mark">"</div>
+      <p class="ds-testimonial-quote">Working with Dixipix was very easy. It was really exciting to see our CAD model and a brief description of our vision turned into a realistic rendering! Very quick and efficient turn around. Would definitely do more work with them in the future.</p>
+      <div class="ds-testimonial-name">Chris Freeburn</div>
+      <div class="ds-testimonial-role">Ironbark Architects</div>
+    </div>
+
     <!-- ── 08 THE COMPLETE PACKAGE ── -->
     <section class="section-package">
       <div class="package-inner">
@@ -920,6 +962,7 @@
               <li><span class="package-num">04</span> Elevations &amp; Sections</li>
             </ul>
             <div class="package-cta">
+              <p style="font-size:11px;letter-spacing:0.2em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;">From $1,200 AUD per deliverable</p>
               <a href="contact.html" class="cta-btn">Start your project &nbsp;→</a>
             </div>
           </div>
