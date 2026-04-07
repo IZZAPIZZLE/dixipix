@@ -528,6 +528,22 @@
     .filter-btn:hover { color: rgba(255,255,255,0.65); border-color: rgba(255,255,255,0.2); }
     .filter-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(200,169,110,0.05); }
 
+    /* ── Image type tag ── */
+    .img-tag {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 8px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+    }
+    .img-tag.exterior { color: var(--accent); }
+    .img-tag.interior { color: rgba(255,255,255,0.55); }
+
     /* ── Mobile ── */
     @media (max-width: 640px) {
       .nav-links { display: none; }
@@ -609,20 +625,85 @@
   </main>
 
   <script>
+    // ── Default project cards (hero per project) ──
     const projects = [
-      { name: 'Jackson Street',       type: 'Exterior',            id: 'serg-jackson',       hero: 'images/serg-jackson/01.jpg' },
-      { name: 'Taren Point',          type: 'Exterior',            id: 'taren-point',        hero: 'images/taren-point/01.jpg' },
-      { name: 'Yowie Bay',           type: 'Exterior · Interior', id: 'yowie-bay',          hero: 'images/yowie-bay/02.jpg' },
-      { name: 'Sea View Crescent',   type: 'Exterior',            id: 'seaview',            hero: 'images/seaview/02.jpg' },
-      { name: 'Seaforth Residence',  type: 'Interior',            id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
-      { name: 'The Church, Port Hacking Rd', type: 'Exterior',      id: 'the-church',         hero: 'images/the-church/01.jpg' },
-      { name: 'Beacons House',       type: 'Exterior · Interior', id: 'beacons',            hero: 'images/beacons/01.jpg' },
-      { name: 'Meriel St, San Souci', type: 'Exterior',           id: 'sansouci',           hero: 'images/sansouci/02.jpg' },
-      { name: 'North West Arm Rd',   type: 'Exterior',            id: 'gymea',              hero: 'images/gymea/02.jpg' },
-      { name: 'Crescent Street',     type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/01.jpg', hide: true },
-      { name: 'Girrilang Rd',        type: 'Exterior',            id: 'girrilang',          hero: 'images/girrilang/01.jpg' },
-      { name: 'Taren Point Project', type: 'Interior',            id: 'dugs-project',       hero: 'images/dugs/01.jpg',            hide: true },
-      { name: 'Tiny Home',           type: 'Exterior',            id: 'tiny-home',          hero: 'images/tiny-home/01.jpg',       hide: true },
+      { name: 'Jackson Street',             type: 'Exterior',            id: 'serg-jackson',       hero: 'images/serg-jackson/01.jpg' },
+      { name: 'Taren Point',                type: 'Exterior',            id: 'taren-point',        hero: 'images/taren-point/01.jpg' },
+      { name: 'Yowie Bay',                  type: 'Exterior · Interior', id: 'yowie-bay',          hero: 'images/yowie-bay/02.jpg' },
+      { name: 'Sea View Crescent',          type: 'Exterior',            id: 'seaview',            hero: 'images/seaview/02.jpg' },
+      { name: 'Seaforth Residence',         type: 'Interior',            id: 'seaforth-residence', hero: 'images/seaforth/01.jpg' },
+      { name: 'The Church, Port Hacking Rd',type: 'Exterior',            id: 'the-church',         hero: 'images/the-church/01.jpg' },
+      { name: 'Beacons House',              type: 'Exterior · Interior', id: 'beacons',            hero: 'images/beacons/01.jpg' },
+      { name: 'Meriel St, San Souci',       type: 'Exterior',            id: 'sansouci',           hero: 'images/sansouci/02.jpg' },
+      { name: 'North West Arm Rd',          type: 'Exterior',            id: 'gymea',              hero: 'images/gymea/02.jpg' },
+      { name: 'Crescent Street',            type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/01.jpg', hide: true },
+      { name: 'Girrilang Rd',               type: 'Exterior',            id: 'girrilang',          hero: 'images/girrilang/01.jpg' },
+      { name: 'Taren Point Project',        type: 'Interior',            id: 'dugs-project',       hero: 'images/dugs/01.jpg',           hide: true },
+      { name: 'Tiny Home',                  type: 'Exterior',            id: 'tiny-home',          hero: 'images/tiny-home/01.jpg',      hide: true },
+    ];
+
+    // ── Flat image list — every render tagged ──
+    const allImages = [
+      // Jackson Street · MoradDesign
+      { src: 'images/serg-jackson/01.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
+      { src: 'images/serg-jackson/02.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
+      { src: 'images/serg-jackson/03.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
+      // Taren Point · Couvaras Architects
+      { src: 'images/taren-point/01.jpg',  type: 'exterior', address: 'Taren Point, NSW',                 architect: 'Couvaras Architects',  id: 'taren-point' },
+      { src: 'images/taren-point/02.jpg',  type: 'exterior', address: 'Taren Point, NSW',                 architect: 'Couvaras Architects',  id: 'taren-point' },
+      // Yowie Bay · Studio Joan Interiors
+      { src: 'images/yowie-bay/01.jpg',    type: 'exterior', address: 'Yowie Bay, NSW',                   architect: 'Studio Joan Interiors',id: 'yowie-bay' },
+      { src: 'images/yowie-bay/02.jpg',    type: 'interior', address: 'Yowie Bay, NSW',                   architect: 'Studio Joan Interiors',id: 'yowie-bay' },
+      // Sea View Crescent · Couvaras Architects
+      { src: 'images/seaview/01.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
+      { src: 'images/seaview/02.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
+      { src: 'images/seaview/03.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
+      // Seaforth Residence · Mason Projects
+      { src: 'images/seaforth/01.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/02.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/03.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/04.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/05.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      // The Church · Couvaras Architects
+      { src: 'images/the-church/01.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
+      { src: 'images/the-church/02.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
+      { src: 'images/the-church/03.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
+      // Beacons House · Caad Design Architects
+      { src: 'images/beacons/01.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/02.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/03.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/04.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/05.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/06.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      // Meriel St, San Souci · Couvaras Architects
+      { src: 'images/sansouci/01.jpg',     type: 'exterior', address: 'Meriel St, San Souci NSW',         architect: 'Couvaras Architects',  id: 'sansouci' },
+      { src: 'images/sansouci/02.jpg',     type: 'exterior', address: 'Meriel St, San Souci NSW',         architect: 'Couvaras Architects',  id: 'sansouci' },
+      // North West Arm Rd · Couvaras Architects
+      { src: 'images/gymea/01.jpg',        type: 'exterior', address: 'North West Arm Rd, Gymea NSW',     architect: 'Couvaras Architects',  id: 'gymea' },
+      { src: 'images/gymea/02.jpg',        type: 'exterior', address: 'North West Arm Rd, Gymea NSW',     architect: 'Couvaras Architects',  id: 'gymea' },
+      // Girrilang Rd · Couvaras Architects
+      { src: 'images/girrilang/01.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
+      { src: 'images/girrilang/02.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
+      { src: 'images/girrilang/03.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
+      // Crescent Street
+      { src: 'images/crescent-street/01.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
+      { src: 'images/crescent-street/02.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
+      { src: 'images/crescent-street/03.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
+      // Taren Point Project (interiors)
+      { src: 'images/dugs/01.jpg',         type: 'interior', address: 'Taren Point Project, Melbourne VIC', architect: '—', id: 'dugs-project' },
+      { src: 'images/dugs/02.jpg',         type: 'interior', address: 'Taren Point Project, Melbourne VIC', architect: '—', id: 'dugs-project' },
+      { src: 'images/dugs/03.jpg',         type: 'interior', address: 'Taren Point Project, Melbourne VIC', architect: '—', id: 'dugs-project' },
+      { src: 'images/dugs/04.jpg',         type: 'interior', address: 'Taren Point Project, Melbourne VIC', architect: '—', id: 'dugs-project' },
+      { src: 'images/dugs/05.jpg',         type: 'interior', address: 'Taren Point Project, Melbourne VIC', architect: '—', id: 'dugs-project' },
+      { src: 'images/dugs/06.jpg',         type: 'interior', address: 'Taren Point Project, Melbourne VIC', architect: '—', id: 'dugs-project' },
+      { src: 'images/dugs/07.jpg',         type: 'interior', address: 'Taren Point Project, Melbourne VIC', architect: '—', id: 'dugs-project' },
+      // Tiny Home
+      { src: 'images/tiny-home/01.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/02.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/04.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/05.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/06.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/07.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
     ];
 
     const list = document.getElementById('project-list');
@@ -636,32 +717,55 @@
 
     function renderProjects() {
       list.innerHTML = '';
-      const visible = projects.filter(p => !p.hide).filter(p => {
-        if (!activeFilter) return true;
-        if (activeFilter === 'exterior') return p.type.includes('Exterior');
-        if (activeFilter === 'interior') return p.type.includes('Interior');
-      });
-      visible.forEach((p, i) => {
-        const item = document.createElement('a');
-        item.className = 'project-item fade-up';
-        item.href = `project.html?id=${p.id}`;
-        item.style.transitionDelay = `${i * 0.06}s`;
-        item.innerHTML = `
-          <div class="project-image">
-            <img src="${p.hero}" alt="${p.name}" loading="${i < 2 ? 'eager' : 'lazy'}" />
-            <div class="project-overlay">
-              <div class="project-overlay-name">${p.name}</div>
-              <div class="project-overlay-type">${p.type}</div>
+
+      if (!activeFilter) {
+        // Default: project hero cards
+        projects.filter(p => !p.hide).forEach((p, i) => {
+          const item = document.createElement('a');
+          item.className = 'project-item fade-up';
+          item.href = `project.html?id=${p.id}`;
+          item.style.transitionDelay = `${i * 0.06}s`;
+          item.innerHTML = `
+            <div class="project-image">
+              <img src="${p.hero}" alt="${p.name}" loading="${i < 2 ? 'eager' : 'lazy'}" />
+              <div class="project-overlay">
+                <div class="project-overlay-name">${p.name}</div>
+                <div class="project-overlay-type">${p.type}</div>
+              </div>
             </div>
-          </div>
-          <div class="project-label">
-            <span class="project-name">${p.name}</span>
-            <span class="project-type">${p.type}</span>
-          </div>
-        `;
-        list.appendChild(item);
-        observer.observe(item);
-      });
+            <div class="project-label">
+              <span class="project-name">${p.name}</span>
+              <span class="project-type">${p.type}</span>
+            </div>
+          `;
+          list.appendChild(item);
+          observer.observe(item);
+        });
+      } else {
+        // Filtered: flat image cards with address + architect + type tag
+        allImages.filter(img => img.type === activeFilter).forEach((img, i) => {
+          const item = document.createElement('a');
+          item.className = 'project-item fade-up';
+          item.href = `project.html?id=${img.id}`;
+          item.style.transitionDelay = `${i * 0.04}s`;
+          item.innerHTML = `
+            <div class="project-image">
+              <img src="${img.src}" alt="${img.address}" loading="${i < 4 ? 'eager' : 'lazy'}" />
+              <div class="img-tag ${img.type}">${img.type === 'exterior' ? 'Exterior' : 'Interior'}</div>
+              <div class="project-overlay">
+                <div class="project-overlay-name">${img.address}</div>
+                <div class="project-overlay-type">${img.architect}</div>
+              </div>
+            </div>
+            <div class="project-label">
+              <span class="project-name">${img.address}</span>
+              <span class="project-type">${img.architect}</span>
+            </div>
+          `;
+          list.appendChild(item);
+          observer.observe(item);
+        });
+      }
     }
 
     // Filter buttons
