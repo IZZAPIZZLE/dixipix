@@ -199,6 +199,33 @@
       gap: 12px;
     }
 
+    select {
+      background: var(--bg-2);
+      border: 1px solid var(--border-2);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 300;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+
+    select:focus { border-color: var(--accent); }
+
+    select option {
+      background: var(--bg-2);
+      color: var(--text);
+    }
+
     .form-group {
       display: flex;
       flex-direction: column;
@@ -477,16 +504,13 @@
     <div class="contact-info">
       <div>
         <p class="page-label">Get in Touch</p>
-        <h1 class="contact-title">Tell us about<br />your project.</h1>
+        <h1 class="contact-title">Let's talk.</h1>
         <p class="contact-brief">
-          Send us an overview and we'll come back with a pricing quote within 24 hours. The more detail the better.
+          We work with architects, developers and builders across AU and NZ.
         </p>
-        <ul class="contact-checklist">
-          <li>Deadline for the project</li>
-          <li>Quantity and type of images</li>
-          <li>Purpose of the imagery</li>
-          <li>Drawings or screenshots of the project</li>
-        </ul>
+        <p class="contact-brief" style="margin-top:-16px; font-size:12px;">
+          Projects like Sea View Crescent and North West Arm Rd start with a brief. Send yours and we'll have a quote back within 24 hours.
+        </p>
       </div>
       <div class="contact-details">
         <div class="contact-detail-group">
@@ -503,16 +527,12 @@
     <!-- Right -->
     <div class="contact-form-wrap">
 
-      <form id="contact-form" action="https://formspree.io/f/studio@dixipix.nz" method="POST">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="first-name">First Name</label>
-            <input id="first-name" name="first_name" type="text" placeholder="James" required />
-          </div>
-          <div class="form-group">
-            <label for="last-name">Last Name</label>
-            <input id="last-name" name="last_name" type="text" placeholder="Anderson" />
-          </div>
+      <!-- FORMSPREE: Sign up at formspree.io, create a form, then replace REPLACE_WITH_FORM_ID below with your real hash ID -->
+      <form id="contact-form" action="https://formspree.io/f/REPLACE_WITH_FORM_ID" method="POST">
+
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input id="name" name="name" type="text" placeholder="James Anderson" required />
         </div>
 
         <div class="form-group">
@@ -520,13 +540,34 @@
           <input id="email" name="email" type="email" placeholder="james@studio.com.au" required />
         </div>
 
+        <div class="form-row">
+          <div class="form-group">
+            <label for="project-type">Project Type</label>
+            <select id="project-type" name="project_type">
+              <option value="" disabled selected>Select type</option>
+              <option value="Exterior">Exterior</option>
+              <option value="Interior">Interior</option>
+              <option value="Full Package">Full Package</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="budget">Budget Range</label>
+            <select id="budget" name="budget">
+              <option value="" disabled selected>Select range</option>
+              <option value="$1,200–$3,000">$1,200 – $3,000</option>
+              <option value="$3,000–$6,000">$3,000 – $6,000</option>
+              <option value="$6,000+">$6,000+</option>
+            </select>
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="message">Project Overview *</label>
-          <textarea id="message" name="message" placeholder="Tell us about your project: deadline, type of imagery, location, and any drawings or references you can share." required></textarea>
+          <textarea id="message" name="message" placeholder="Location, deadline, type of imagery, drawings or references you can share." required></textarea>
         </div>
 
         <div class="form-submit">
-          <p class="form-note">We respond within 24 hours.<br />AU + NZ projects.</p>
+          <p class="form-note">We respond within 24 hours.</p>
           <button type="submit" class="btn-submit">Send Brief</button>
         </div>
       </form>
@@ -541,8 +582,9 @@
   </main>
 
   <footer>
-    <span class="footer-logo">DIXIPIX</span>
-    <span class="footer-copy">© 2023 DIXIPIX. Melbourne, Australia.</span>
+    <span>DIXIPIX</span>
+    <span>© 2025 DIXIPIX Studio</span>
+    <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
   </footer>
 
   <script>
@@ -564,9 +606,8 @@
           form.style.display = 'none';
           success.style.display = 'block';
         } else {
-          // Fallback — open email client
           window.location.href = `mailto:studio@dixipix.nz?subject=Project Brief&body=${encodeURIComponent(
-            `Name: ${data.get('first_name')} ${data.get('last_name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`
+            `Name: ${data.get('name')}\nEmail: ${data.get('email')}\nType: ${data.get('project_type')}\nBudget: ${data.get('budget')}\n\n${data.get('message')}`
           )}`;
         }
       } catch {
@@ -598,10 +639,6 @@
     });
   </script>
 
-  <footer>
-    <span>© 2023 DIXIPIX Studio</span>
-    <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
-  </footer>
 
 </body>
 </html>
