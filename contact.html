@@ -527,7 +527,10 @@
     <!-- Right -->
     <div class="contact-form-wrap">
 
-      <form id="contact-form" action="https://formsubmit.co/ajax/studio@dixipix.nz" method="POST">
+      <form id="contact-form" action="https://formsubmit.co/studio@dixipix.nz" method="POST">
+        <input type="hidden" name="_subject" value="New Project Brief — DIXIPIX" />
+        <input type="hidden" name="_next" value="https://dixipix.vercel.app/contact.html?sent=1" />
+        <input type="hidden" name="_captcha" value="false" />
 
         <div class="form-group">
           <label for="name">Name *</label>
@@ -587,32 +590,14 @@
   </footer>
 
   <script>
-    // Basic form success swap — works if using Formspree with AJAX
-    // Replace Formspree action URL with your real endpoint once set up
     const form    = document.getElementById('contact-form');
     const success = document.getElementById('form-success');
 
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      const data = new FormData(form);
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          form.style.display = 'none';
-          success.style.display = 'block';
-        } else {
-          window.location.href = `mailto:studio@dixipix.nz?subject=Project Brief&body=${encodeURIComponent(
-            `Name: ${data.get('name')}\nEmail: ${data.get('email')}\nType: ${data.get('project_type')}\nBudget: ${data.get('budget')}\n\n${data.get('message')}`
-          )}`;
-        }
-      } catch {
-        window.location.href = 'mailto:studio@dixipix.nz';
-      }
-    });
+    // Show success state if redirected back after submission
+    if (new URLSearchParams(window.location.search).get('sent') === '1') {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }
   </script>
 
   <script>
