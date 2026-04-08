@@ -300,26 +300,43 @@
     /* success state */
     .form-success {
       display: none;
-      text-align: center;
-      padding: 40px 0;
+      padding: clamp(48px, 8vw, 80px) 0;
     }
 
-    .form-success-icon {
-      font-size: 32px;
-      margin-bottom: 16px;
+    .form-success-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 36px;
     }
 
     .form-success-title {
-      font-size: 20px;
+      font-size: clamp(28px, 3.5vw, 42px);
       font-weight: 300;
-      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
     }
 
     .form-success-sub {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--text-muted);
+      margin-bottom: 40px;
     }
+
+    .form-success-link {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      transition: opacity 0.2s;
+    }
+
+    .form-success-link:hover { opacity: 0.7; }
 
     /* ── Footer ── */
     footer {
@@ -575,9 +592,10 @@
       </form>
 
       <div class="form-success" id="form-success">
-        <div class="form-success-icon">✓</div>
+        <div class="form-success-rule"></div>
         <div class="form-success-title">Brief received.</div>
         <div class="form-success-sub">We'll be in touch within 24 hours.</div>
+        <a class="form-success-link" href="work.html">View our work →</a>
       </div>
 
     </div>
