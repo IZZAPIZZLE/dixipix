@@ -244,6 +244,38 @@
       margin-top: 4px;
     }
 
+    /* ── Pricing bar ── */
+    .pricing-bar {
+      padding: clamp(28px, 4vw, 44px) var(--pad);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      gap: clamp(32px, 6vw, 80px);
+      flex-wrap: wrap;
+    }
+    .pricing-item { text-align: center; }
+    .pricing-value {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .pricing-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .pricing-footnote {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--text-muted);
+      padding: 14px var(--pad) 0;
+    }
+
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
@@ -617,6 +649,23 @@
         </div>
       </div>
     </div>
+
+    <!-- ── PRICING BAR ── -->
+    <div class="pricing-bar fade-up">
+      <div class="pricing-item">
+        <div class="pricing-value">$1k – $2.5k</div>
+        <div class="pricing-label">Per deliverable · AUD</div>
+      </div>
+      <div class="pricing-item">
+        <div class="pricing-value">4 days*</div>
+        <div class="pricing-label">Per deliverable · first review</div>
+      </div>
+      <div class="pricing-item">
+        <div class="pricing-value">AU + NZ</div>
+        <div class="pricing-label">Market</div>
+      </div>
+    </div>
+    <p class="pricing-footnote fade-up">* Timeline begins once payment is cleared, all project information has been received, a model or drawings have been provided, and angle selected.</p>
 
     <footer>
       <span>© 2023 DIXIPIX Studio</span>
