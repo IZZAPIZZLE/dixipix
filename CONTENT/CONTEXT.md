@@ -6,7 +6,7 @@ One folder per project. That's it.
 
 ## What lives here
 - `[project-name]/` — one folder per client job
-  - Final cleaned images
+  - Raw assets as received from client or render output
   - Video file(s)
   - Nothing else
 
