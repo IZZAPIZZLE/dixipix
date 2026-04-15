@@ -578,9 +578,12 @@
     .img-tag.interior { color: rgba(255,255,255,0.55); }
 
     /* ── Mobile ── */
-    @media (max-width: 640px) {
+    @media (max-width: 960px) {
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
+    }
+
+    @media (max-width: 640px) {
       .work-filter { padding-left: 16px; padding-right: 16px; }
       .project-list { grid-template-columns: 1fr; gap: 0; padding-left: 0; padding-right: 0; }
       .project-image { aspect-ratio: 4/3; }
