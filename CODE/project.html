@@ -576,6 +576,7 @@
         architect: 'Caad Design Architects',
         location: 'Country Australia',
         date:     '2024',
+        heroVideo: 'videos/Beacons.mp4',
         description: `Beacons sits at the edge of the bush like it grew there. Three gabled timber forms cluster together, their vertical batten skins ageing to silver against a misty mountain backdrop. Inside, the copper bathroom is the centrepiece, a warm sculptural space where every surface is intentional. The pool terrace connects the building to the landscape with a single clean gesture. Organic in material, precise in form.`,
         images: [
           'images/beacons/exterior-01.jpg',
@@ -688,8 +689,8 @@
       const [firstImage, ...restImages] = p.images;
       const allImages = p.images;
 
-      const restHTML = restImages.map((src, i) => `
-        <div class="project-img-wrap fade-up" data-index="${i + 1}">
+      const restHTML = (p.heroVideo ? p.images : restImages).map((src, i) => `
+        <div class="project-img-wrap fade-up" data-index="${p.heroVideo ? i : i + 1}">
           <img src="${src}" alt="${p.name}" loading="lazy" />
         </div>
       `).join('');
@@ -702,9 +703,15 @@
           <h1 class="project-title">${p.name}</h1>
         </div>
 
+        ${p.heroVideo ? `
+        <video class="project-video fade-up" autoplay muted loop playsinline preload="auto" style="will-change:transform;margin-top:0;">
+          <source src="${p.heroVideo}" type="video/mp4" />
+        </video>
+        ` : `
         <div class="project-img-wrap project-hero-img fade-up" data-index="0">
           <img src="${firstImage}" alt="${p.name}" loading="eager" />
         </div>
+        `}
 
         <div class="project-info fade-up">
           <div class="project-meta">
