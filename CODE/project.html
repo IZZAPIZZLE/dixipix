@@ -689,11 +689,16 @@
       const [firstImage, ...restImages] = p.images;
       const allImages = p.images;
 
-      const restHTML = (p.heroVideo ? p.images : restImages).map((src, i) => `
-        <div class="project-img-wrap fade-up" data-index="${p.heroVideo ? i : i + 1}">
-          <img src="${src}" alt="${p.name}" loading="lazy" />
-        </div>
-      `).join('');
+      const heroHTML = p.heroVideo
+        ? '<video class="project-video fade-up" autoplay muted loop playsinline preload="auto" style="will-change:transform;margin-top:0;"><source src="' + p.heroVideo + '" type="video/mp4" /></video>'
+        : '<div class="project-img-wrap project-hero-img fade-up" data-index="0"><img src="' + firstImage + '" alt="' + p.name + '" loading="eager" /></div>';
+
+      const galleryImages = p.heroVideo ? p.images : restImages;
+      const indexOffset   = p.heroVideo ? 0 : 1;
+
+      const restHTML = galleryImages.map((src, i) =>
+        '<div class="project-img-wrap fade-up" data-index="' + (i + indexOffset) + '"><img src="' + src + '" alt="' + p.name + '" loading="lazy" /></div>'
+      ).join('');
 
       main.innerHTML = `
         <a class="back fade-up" href="work.html">← Back to Work</a>
@@ -703,15 +708,7 @@
           <h1 class="project-title">${p.name}</h1>
         </div>
 
-        ${p.heroVideo ? `
-        <video class="project-video fade-up" autoplay muted loop playsinline preload="auto" style="will-change:transform;margin-top:0;">
-          <source src="${p.heroVideo}" type="video/mp4" />
-        </video>
-        ` : `
-        <div class="project-img-wrap project-hero-img fade-up" data-index="0">
-          <img src="${firstImage}" alt="${p.name}" loading="eager" />
-        </div>
-        `}
+        ${heroHTML}
 
         <div class="project-info fade-up">
           <div class="project-meta">
