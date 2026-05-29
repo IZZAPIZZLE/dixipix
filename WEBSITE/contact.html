@@ -613,8 +613,12 @@
     const form    = document.getElementById('contact-form');
     const success = document.getElementById('form-success');
 
+    const btn = form.querySelector('.btn-submit');
+
     form.addEventListener('submit', async e => {
       e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
       const data = new FormData(form);
       try {
         const res  = await fetch(form.action, {
@@ -623,13 +627,20 @@
           headers: { 'Accept': 'application/json' }
         });
         const json = await res.json();
+        console.log('[formsubmit response]', json);
         if (json.success === 'true' || json.success === true) {
           form.style.display = 'none';
           success.style.display = 'block';
         } else {
+          console.error('[formsubmit] unexpected response:', json);
+          btn.disabled = false;
+          btn.textContent = 'Send Brief';
           alert('Something went wrong. Please email us at studio@dixipix.nz');
         }
-      } catch {
+      } catch (err) {
+        console.error('[formsubmit] fetch error:', err);
+        btn.disabled = false;
+        btn.textContent = 'Send Brief';
         alert('Something went wrong. Please email us at studio@dixipix.nz');
       }
     });
