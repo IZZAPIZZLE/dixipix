@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="../ASSETS/images/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What We Do — DIXIPIX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    /* ── Page shell ── */
+    main { padding-top: 80px; }
+
+    /* ── Section shared ── */
+    .section {
+      padding: clamp(64px, 10vw, 120px) var(--pad);
+      border-top: 1px solid var(--border);
+    }
+
+    .section-inner {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0;
+      color: var(--text);
+    }
+
+    /* ── Testimonials ── */
+    #testimonials {
+      border-top: none;
+      padding-top: clamp(64px, 10vw, 110px);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .testimonial {
+      padding: 44px 36px;
+      background: var(--bg-2);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .testimonial-mark {
+      font-size: 28px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.5;
+    }
+
+    .testimonial-quote {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.7);
+      flex: 1;
+    }
+
+    .testimonial-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .testimonial-role {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    /* ── Service section layout ── */
+    .service-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    /* ── Animation section ── */
+    .anim-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    @media (max-width: 640px) {
+      .anim-video { width: 100vw; margin-left: calc(-1 * var(--pad)); }
+    }
+
+    /* ── Carousel dots (mobile) ── */
+    .carousel-dots { display: none; }
+
+    /* ── Compare slider ── */
+    .compare-slider {
+      position: relative;
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      cursor: col-resize;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      line-height: 0;
+    }
+    .compare-slider img {
+      pointer-events: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+    }
+    .compare-base {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .compare-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      clip-path: inset(0 50% 0 0);
+      transition: clip-path 0s;
+    }
+    .compare-overlay img {
+      display: block;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .compare-handle {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: rgba(255,255,255,0.7);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .compare-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(20,20,20,0.45);
+      border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      gap: 4px;
+    }
+    .compare-btn svg {
+      width: 10px; height: 10px;
+      stroke: rgba(255,255,255,0.9);
+      stroke-width: 1.5;
+      fill: none;
+    }
+    .compare-label {
+      position: absolute;
+      bottom: clamp(14px, 2vw, 22px);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .compare-label--left  { left:  clamp(14px, 2vw, 22px); }
+    .compare-label--right { right: clamp(14px, 2vw, 22px); }
+
+    /* ── Other services ── */
+    #other-services {
+      padding-top: clamp(48px, 8vw, 80px);
+    }
+
+    .other-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 680px;
+    }
+
+    .other-item {
+      padding: 32px 28px;
+      background: var(--bg-2);
+    }
+
+    .other-num {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    .other-name {
+      font-size: 15px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .other-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Pricing ── */
+    .pricing-bar {
+      margin-top: clamp(64px, 10vw, 110px);
+      padding: clamp(28px, 4vw, 44px) var(--pad);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      gap: clamp(32px, 6vw, 80px);
+      flex-wrap: wrap;
+    }
+
+    .pricing-item {
+      text-align: center;
+    }
+
+    .pricing-value {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-label {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .pricing-footnote {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--text-muted);
+      padding: 16px var(--pad) 48px;
+      opacity: 0.6;
+    }
+
+    /* cursor hint on slides */
+    .carousel-slide { cursor: zoom-in; }
+
+    /* ── Featured render ── */
+    .featured-render {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    .featured-render img {
+      display: block;
+      width: 100%;
+      height: 80vh;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .featured-label {
+      position: absolute;
+      bottom: 36px;
+      left: clamp(24px, 4vw, 60px);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .featured-tag {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .featured-title {
+      font-size: clamp(20px, 3vw, 34px);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 860px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .service-header { flex-direction: column; gap: 12px; }
+      .section-inner { max-width: 100%; }
+    }
+
+    @media (max-width: 640px) {
+      .compare-btn { top: 75%; }
+      .other-grid { grid-template-columns: 1fr; }
+      .featured-render img { height: 70vw; min-height: 260px; }
+      .section { padding-top: 48px; padding-bottom: 48px; }
+      .carousel { width: 100vw; margin-left: calc(-1 * var(--pad)); margin-right: 0; }
+      .carousel-slide img { height: 72vw; object-fit: cover; }
+      .carousel-nav { display: none; }
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 16px 0 0;
+      }
+      .carousel-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.25);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+      .carousel-dot.active { background: rgba(255,255,255,0.85); transform: scale(1.3); }
+      .pricing-bar { flex-direction: column; gap: 0; }
+      .pricing-item { border-right: none; border-bottom: 1px solid var(--border); padding: 20px 24px; }
+      .pricing-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body data-custom-carousel>
+
+  <nav>
+    <a href="/"><img class="nav-mark" src="../ASSETS/images/logo.png" alt="DIXIPIX" /></a>
+    <a class="nav-logo" href="/">DIXIPIX</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="what-we-do.html" class="active">What We Do</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="developer-set.html" class="nav-featured">Developer Set</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="work.html"><span class="mob-num">01</span>Work</a>
+    <a href="what-we-do.html"><span class="mob-num">02</span>What We Do</a>
+    <a href="contact.html"><span class="mob-num">03</span>Contact</a>
+    <a href="developer-set.html" class="mob-featured"><span class="mob-num">04</span>Developer Set</a>
+    <span class="nav-mobile-footer">Architectural Visualisation</span>
+  </div>
+
+  <main>
+
+    <!-- ── FEATURED: COPPER BATHROOM ── -->
+    <section class="featured-render">
+      <img src="../ASSETS/images/seaforth/interior-01.jpg" alt="Seaforth Residence" loading="eager" />
+      <div class="featured-label">
+        <span class="featured-tag">Featured Interior</span>
+        <span class="featured-title">Seaforth Residence</span>
+      </div>
+    </section>
+
+    <!-- ── TESTIMONIALS ── -->
+    <section id="testimonials" class="section">
+      <div class="testimonials-grid">
+
+        <div class="testimonial fade-up">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">Been working with dixipix team for about 3 years now, their 3D stuff is next level. Helped us generate clients and they're just a breeze to work with. If you're looking for quality, these guys are great.</p>
+          <div>
+            <div class="testimonial-name">Chris Austin</div>
+            <div class="testimonial-role">Couvaras Architects</div>
+          </div>
+        </div>
+
+        <div class="testimonial fade-up" style="transition-delay:0.1s">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">Working with Dixipix was very easy. It was really exciting to see our CAD model and a brief description of our vision turned into a realistic rendering! Very quick and efficient turn around. Would definitely do more work with them in the future.</p>
+          <div>
+            <div class="testimonial-name">Chris Freeburn</div>
+            <div class="testimonial-role">Ironbark Architects</div>
+          </div>
+        </div>
+
+        <div class="testimonial fade-up" style="transition-delay:0.2s">
+          <div class="testimonial-mark">"</div>
+          <p class="testimonial-quote">I was looking for someone to cater for my style. I found dixipix and worked with the team back and forth to achieve my desired outcome. Been very happy using them since.</p>
+          <div>
+            <div class="testimonial-name">Sargiz Morad</div>
+            <div class="testimonial-role">Morad Design</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── CONTEXT EXTERIORS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+      <div class="service-header">
+        <div>
+          <p class="section-label">01</p>
+          <h2 class="section-title">Context<br />Exteriors</h2>
+        </div>
+        <p class="service-desc">Multi-residential renders placed within their real environment. Neighbouring buildings, streetscape, and site context — built for DA submissions and development marketing.</p>
+      </div>
+      <div class="carousel" data-total="3">
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="../ASSETS/images/_context/03.jpg" alt="Context exterior" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="../ASSETS/images/_context/02.jpg" alt="Context exterior" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="../ASSETS/images/_context/01.jpg" alt="Context exterior" loading="lazy" /></div>
+          </div>
+        </div>
+        <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
+        <div class="carousel-nav">
+          <button class="carousel-btn prev">
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+              <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Prev
+          </button>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <span class="carousel-counter">1 / 3</span>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <button class="carousel-btn next">
+            Next
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+              <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ── EXTERIOR RENDERS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+      <div class="service-header">
+        <div>
+          <p class="section-label">02</p>
+          <h2 class="section-title">Exterior<br />Renders</h2>
+        </div>
+        <p class="service-desc">Photorealistic facades, landscaping, and context. Day, dusk, or golden hour. Built to sell the project before a brick is laid.</p>
+      </div>
+      <div class="carousel" data-total="3">
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="../ASSETS/images/_exterior/01.jpg" alt="Exterior render" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="../ASSETS/images/_exterior/02.jpg" alt="Exterior render" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="../ASSETS/images/_exterior/03.jpg" alt="Exterior render" loading="lazy" /></div>
+          </div>
+        </div>
+        <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
+        <div class="carousel-nav">
+          <button class="carousel-btn prev">
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+              <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Prev
+          </button>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <span class="carousel-counter">1 / 3</span>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <button class="carousel-btn next">
+            Next
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+              <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ── INTERIOR IMAGERY ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+      <div class="service-header">
+        <div>
+          <p class="section-label">03</p>
+          <h2 class="section-title">Interior<br />Imagery</h2>
+        </div>
+        <p class="service-desc">Mood-accurate lighting, materials, and furniture. Every render calibrated to the atmosphere the project demands, from residential to commercial.</p>
+      </div>
+      <div class="carousel" data-total="3">
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="compare-slider" data-compare>
+                <img class="compare-base" src="../ASSETS/images/_interior/02.jpg" alt="Kitchen light" loading="lazy" draggable="false" />
+                <div class="compare-overlay">
+                  <img src="../ASSETS/images/_interior/01.jpg" alt="Kitchen dark" loading="lazy" draggable="false" />
+                </div>
+                <div class="compare-handle">
+                  <div class="compare-btn">
+                    <svg viewBox="0 0 10 10"><polyline points="4,2 1,5 4,8"/></svg>
+                    <svg viewBox="0 0 10 10"><polyline points="6,2 9,5 6,8"/></svg>
+                  </div>
+                </div>
+                <span class="compare-label compare-label--left">Night</span>
+                <span class="compare-label compare-label--right">Day</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="work.html" class="carousel-cta">View Projects &nbsp;→</a>
+        <div class="carousel-nav">
+          <button class="carousel-btn prev">
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+              <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Prev
+          </button>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <span class="carousel-counter">1 / 3</span>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <button class="carousel-btn next">
+            Next
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+              <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ── ELEVATIONS & FLOOR PLANS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+      <div class="service-header">
+        <div>
+          <p class="section-label">04</p>
+          <h2 class="section-title">Elevations &<br />Floor Plans</h2>
+        </div>
+        <p class="service-desc">Exploded axos, elevations, and clean 2D floor plans. DA submissions, marketing packs, and print-ready collateral.</p>
+      </div>
+      <div class="carousel" data-total="3">
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="../ASSETS/images/_elevations/01.jpg" alt="Axonometric" loading="lazy" /></div>
+            <div class="carousel-slide"><img class="img-bordered" src="../ASSETS/images/developer-set/sp-floorplan.jpg" alt="Floor Plan" loading="lazy" /></div>
+            <div class="carousel-slide"><img class="img-bordered" src="../ASSETS/images/tiny-home/catalogue.jpg" alt="Catalogue Sheet" loading="lazy" /></div>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn prev">
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+              <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Prev
+          </button>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <span class="carousel-counter">1 / 3</span>
+          <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+          <button class="carousel-btn next">
+            Next
+            <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+              <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ── OTHER SERVICES ── -->
+
+    <!-- ── 05 ANIMATION ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">05</p>
+            <h2 class="section-title">Animation</h2>
+          </div>
+          <p class="service-desc">AI-assisted animation for architects and developers who want to feel the space, not just see it. Cinematic, atmospheric, and evolving fast.</p>
+        </div>
+        <video class="anim-video" id="anim-player" autoplay muted playsinline preload="auto">
+          <source src="../ASSETS/videos/yowie-bay-interior.mp4" type="video/mp4" />
+        </video>
+        <script>
+          (function() {
+            const clips = ['../ASSETS/videos/yowie-bay-interior.mp4', '../ASSETS/videos/seaforth-interior.mp4'];
+            let idx = 0;
+            const v = document.getElementById('anim-player');
+            v.addEventListener('ended', function() {
+              idx = (idx + 1) % clips.length;
+              v.src = clips[idx];
+              v.play();
+            });
+          })();
+        </script>
+      </div>
+    </section>
+
+    <!-- ── PRICING BAR ── -->
+    <div class="pricing-bar">
+      <div class="pricing-item">
+        <div class="pricing-value">$1.2k – $2.5k</div>
+        <div class="pricing-label">Per deliverable · AUD</div>
+      </div>
+      <div class="pricing-item">
+        <div class="pricing-value">4 days*</div>
+        <div class="pricing-label">Per deliverable · first review</div>
+      </div>
+      <div class="pricing-item">
+        <div class="pricing-value">AU + NZ</div>
+        <div class="pricing-label">Market</div>
+      </div>
+    </div>
+    <p class="pricing-footnote">* Timeline begins once payment is cleared, all project information has been received, a model or drawings have been provided, and angle selected.</p>
+
+  </main>
+
+  <footer>
+    <span>© 2023 DIXIPIX Studio</span>
+    <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
+  </footer>
+
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="" />
+    <button class="lightbox-close" id="lightbox-close">&#x2715;</button>
+  </div>
+
+  <script src="shared.js"></script>
+  <script>
+    // ── Carousels (with dots) ──
+    document.querySelectorAll('.carousel').forEach(car => {
+      const track    = car.querySelector('.carousel-track');
+      const slides   = car.querySelectorAll('.carousel-slide');
+      const counter  = car.querySelector('.carousel-counter');
+      const fills    = car.querySelectorAll('.carousel-progress-fill');
+      const prevBtn  = car.querySelector('.carousel-btn.prev');
+      const nextBtn  = car.querySelector('.carousel-btn.next');
+      const total    = slides.length;
+      let current    = 0;
+
+      const dotsWrap = document.createElement('div');
+      dotsWrap.className = 'carousel-dots';
+      car.appendChild(dotsWrap);
+      const dotEls = Array.from({length: total}).map((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      function goTo(n) {
+        current = (n + total) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        if (counter) counter.textContent = `${current + 1} / ${total}`;
+        const pct = ((current + 1) / total * 100) + '%';
+        fills.forEach(f => f.style.width = pct);
+        dotEls.forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      goTo(0);
+      dotEls.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+      if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+
+      slides.forEach(slide => {
+        if (slide.querySelector('[data-compare]')) return;
+        slide.addEventListener('click', () => {
+          const img = slide.querySelector('img');
+          if (img && window.openLightbox) openLightbox(img.src, img.alt);
+        });
+      });
+
+      car.setAttribute('tabindex', '0');
+      car.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+
+      const vp = car.querySelector('.carousel-viewport');
+      if (!vp) return;
+      let swipeX = 0, swipeY = 0, swipeTarget = null, swipeLocked = null;
+      vp.addEventListener('touchstart', e => {
+        swipeX = e.touches[0].clientX;
+        swipeY = e.touches[0].clientY;
+        swipeTarget = e.target;
+        swipeLocked = null;
+      }, { passive: true });
+      vp.addEventListener('touchmove', e => {
+        if (swipeTarget && swipeTarget.closest('[data-compare]')) return;
+        const dx = Math.abs(e.touches[0].clientX - swipeX);
+        const dy = Math.abs(e.touches[0].clientY - swipeY);
+        if (swipeLocked === null) swipeLocked = dx > dy ? 'h' : 'v';
+        if (swipeLocked === 'h') e.preventDefault();
+      }, { passive: false });
+      vp.addEventListener('touchend', e => {
+        if (swipeTarget && swipeTarget.closest('[data-compare]')) return;
+        const dx = e.changedTouches[0].clientX - swipeX;
+        if (Math.abs(dx) > 50) { dx < 0 ? goTo(current + 1) : goTo(current - 1); }
+      }, { passive: true });
+    });
+
+    // ── Compare sliders ──
+    document.querySelectorAll('[data-compare]').forEach(slider => {
+      const overlay = slider.querySelector('.compare-overlay');
+      const handle  = slider.querySelector('.compare-handle');
+
+      function setPos(x) {
+        const rect = slider.getBoundingClientRect();
+        const pct  = Math.min(Math.max((x - rect.left) / rect.width * 100, 0), 100);
+        overlay.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+        handle.style.left = Math.min(Math.max(pct, 2), 98) + '%';
+      }
+
+      slider.addEventListener('pointerdown', e => {
+        e.stopPropagation();
+        slider.setPointerCapture(e.pointerId);
+        setPos(e.clientX);
+      });
+      slider.addEventListener('pointermove', e => {
+        if (!slider.hasPointerCapture(e.pointerId)) return;
+        setPos(e.clientX);
+      });
+      slider.addEventListener('pointerup',    e => slider.releasePointerCapture(e.pointerId));
+      slider.addEventListener('pointercancel',e => slider.releasePointerCapture(e.pointerId));
+      slider.addEventListener('click',        e => e.stopPropagation());
+    });
+  </script>
+</body>
+</html>

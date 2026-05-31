@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="../ASSETS/images/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project — DIXIPIX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+
+  <style>
+    :root { --pad: clamp(24px, 6vw, 96px); }
+
+    /* ── Page ── */
+    main {
+      padding-top: 80px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: var(--pad);
+      padding-right: var(--pad);
+      padding-bottom: 100px;
+    }
+
+    /* ── Back link ── */
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 48px;
+      margin-bottom: 52px;
+      transition: color 0.2s;
+    }
+
+    .back:hover { color: var(--text); }
+
+    /* ── Header ── */
+    .project-header {
+      margin-bottom: 28px;
+    }
+
+    .project-info {
+      padding: 36px 0 48px;
+    }
+
+    .project-type {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .project-title {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      margin-bottom: 36px;
+    }
+
+    .meta-item {}
+
+    .meta-key {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .meta-val {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .project-description {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.6);
+      max-width: 620px;
+    }
+
+    /* ── Page fade ── */
+    body { opacity: 0; animation: pageFade 0.6s ease 0.05s forwards; }
+    @keyframes pageFade { to { opacity: 1; } }
+
+    /* ── Scroll fade ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Images ── */
+    .project-images {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .project-img-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: #161616;
+      cursor: zoom-in;
+    }
+
+    .project-img-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-img-wrap:hover img { transform: scale(1.02); }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      display: block;
+      transform: scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .lightbox.open .lightbox-img { transform: scale(1); }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px; right: 32px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 22px; cursor: pointer;
+      transition: color 0.2s; padding: 8px;
+    }
+    .lightbox-close:hover { color: #fff; }
+
+    .lightbox-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 20px 28px;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lightbox-btn:hover { color: #fff; }
+    .lightbox-btn.prev { left: 0; }
+    .lightbox-btn.next { right: 0; }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px clamp(20px, 6vw, 96px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer span, footer a {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    footer a:hover { color: var(--text); }
+
+    /* ── Project video ── */
+    .project-video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      margin-top: 4px;
+    }
+    @media (max-width: 640px) {
+      .project-video {
+        width: 100vw;
+        margin-left: calc(-1 * var(--pad));
+        height: 75vw;
+        aspect-ratio: unset;
+      }
+    }
+
+    /* ── CTA ── */
+    .project-cta {
+      margin-top: 72px;
+      padding-top: 52px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .cta-text {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover { background: #d9ba7e; }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      .project-img-wrap {
+        width: 100vw;
+        margin-left: calc(-1 * var(--pad));
+      }
+      .project-img-wrap img {
+        height: 75vw;
+        object-fit: cover;
+      }
+      .project-meta { gap: 20px; }
+      .project-description { max-width: 100%; }
+      .project-cta { flex-direction: column; align-items: flex-start; }
+      .cta-btn { width: 100%; text-align: center; }
+      .lightbox-btn { padding: 16px 14px; }
+      .lightbox-btn span { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/"><img class="nav-mark" src="../ASSETS/images/logo.png" alt="DIXIPIX" /></a>
+    <a class="nav-logo" href="/">DIXIPIX</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="what-we-do.html">What We Do</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="developer-set.html" class="nav-featured">Developer Set</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="work.html"><span class="mob-num">01</span>Work</a>
+    <a href="what-we-do.html"><span class="mob-num">02</span>What We Do</a>
+    <a href="contact.html"><span class="mob-num">03</span>Contact</a>
+    <a href="developer-set.html" class="mob-featured"><span class="mob-num">04</span>Developer Set</a>
+    <span class="nav-mobile-footer">Architectural Visualisation</span>
+  </div>
+
+  <main id="project-main">
+    <!-- injected by JS -->
+  </main>
+
+  <!-- Lightbox (must be before script so elements exist in DOM) -->
+  <div class="lightbox" id="lightbox">
+    <img class="lightbox-img" id="lb-img" src="" alt="" />
+    <button class="lightbox-close" id="lb-close">&#x2715;</button>
+    <button class="lightbox-btn prev" id="lb-prev"><span>Prev</span></button>
+    <button class="lightbox-btn next" id="lb-next"><span>Next</span></button>
+    <span class="lightbox-counter" id="lb-counter"></span>
+  </div>
+
+  <footer>
+    <span>© 2023 DIXIPIX Studio</span>
+    <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
+  </footer>
+
+  <script>
+    const projects = {
+      'girrilang': {
+        name:     'Girrilang Rd',
+        type:     'Exterior',
+        architect: 'Couvaras Architects',
+        location: 'Cronulla, NSW',
+        date:     '2025',
+        description: `Girrilang Road is a study in restraint. A clean white rendered form steps back from the street, framed by mature landscaping and a calm, considered palette. The building reads quietly from the outside — precise proportions, considered openings, and a materiality that sits comfortably in the neighbourhood without disappearing into it.`,
+        images: [
+          '../ASSETS/images/girrilang/exterior-01.jpg',
+          '../ASSETS/images/girrilang/exterior-02.jpg',
+          '../ASSETS/images/girrilang/exterior-03.jpg',
+        ],
+      },
+      'seaview': {
+        name:     'Sea View Crescent',
+        type:     'Exterior',
+        architect: 'Couvaras Architects',
+        location: 'Cronulla, NSW',
+        date:     '2026',
+        description: `Sea View Crescent is multi-residential done without compromise. The building reads as a single bold object — layered levels of white render and dark glass stepping back from the street, each floor claiming its own outlook toward the coast. Clean lines, generous balconies, and a materiality that ages with the neighbourhood. Architecture that earns its address.`,
+        images: [
+          '../ASSETS/images/seaview/exterior-01.jpg',
+          '../ASSETS/images/seaview/exterior-02.jpg',
+          '../ASSETS/images/seaview/exterior-03.jpg',
+        ],
+      },
+      'yowie-bay': {
+        name:     'Yowie Bay',
+        type:     'Exterior · Interior',
+        architect: 'Studio Joan Interiors',
+        video:    '../ASSETS/videos/yowie-bay-interior.mp4',
+        location: 'Yowie Bay, NSW',
+        date:     '2023',
+        description: `A bold residential build on the edge of Yowie Bay. The facade is defined by vertical dark fins that filter light and frame views from inside, creating a dynamic streetscape that shifts with the sun. Inside, the open-plan living area dissolves beneath a full-length skylight, flooding the kitchen and dining space with natural light. Stone, timber, and glass in a composition that is confident without being loud.`,
+        images: [
+          '../ASSETS/images/yowie-bay/exterior-01.jpg',
+          '../ASSETS/images/yowie-bay/interior-01.jpg',
+        ],
+      },
+      'gymea': {
+        name:     'North West Arm Rd',
+        type:     'Exterior',
+        architect: 'Couvaras Architects',
+        location: 'Gymea, NSW',
+        date:     '2025',
+        description: `A considered multi-dwelling development on Gymea's quiet suburban edge. Stone base, dark corrugated upper cladding, and deep-set glazing give the building a grounded, material-led character. Generous landscaping softens the street edge and connects the structure to its leafy context. The result is a building that sits comfortably in the neighbourhood while clearly elevating its standard.`,
+        images: [
+          '../ASSETS/images/north-west-arm/exterior-01.jpg',
+          '../ASSETS/images/north-west-arm/exterior-02.jpg',
+        ],
+      },
+      'tiny-home': {
+        name:     'Tiny Home — Westport NZ',
+        type:     'Exterior · Interior',
+        architect: '—',
+        location: 'Westport, NZ',
+        date:     '2023',
+        description: `A compact residential concept set against the rugged West Coast landscape of Westport, New Zealand. The brief was simple: maximum liveability in minimum footprint. The result is a tight, considered floor plan with a bedroom that opens to the bush, a single-volume living and kitchen space, and an exterior designed to hold its own in snow. Dark cladding, clean lines, and a catalogue of views that shows exactly how far a small build can reach.`,
+        images: [
+          '../ASSETS/images/tiny-home/catalogue.jpg',
+          '../ASSETS/images/tiny-home/exterior-01.jpg',
+          '../ASSETS/images/tiny-home/exterior-02.jpg',
+          '../ASSETS/images/tiny-home/exterior-03.jpg',
+          '../ASSETS/images/tiny-home/interior-01.jpg',
+          '../ASSETS/images/tiny-home/floor-plan.jpg',
+        ],
+      },
+      'taren-point': {
+        name:     'Taren Point',
+        type:     'Exterior',
+        architect: 'Couvaras Architects',
+        location: 'Taren Point, NSW',
+        date:     '2024',
+        description: `Taren Point commands attention from the street. The building's curved balconies wrap each level in a continuous sweep of white render, contrasted by a vertical band of dark textured stone at its core. The proportions are generous, five storeys that feel considered rather than imposed. Mature trees frame the elevation and soften the street edge, while golden-hour light brings warmth to a palette that could easily read cold. A building that earns its place.`,
+        images: [
+          '../ASSETS/images/taren-point/exterior-02.jpg',
+          '../ASSETS/images/taren-point/exterior-01.jpg',
+        ],
+      },
+      'beacons': {
+        name:     'Beacons House',
+        type:     'Exterior · Interior',
+        architect: 'Caad Design Architects',
+        location: 'Country Australia',
+        date:     '2024',
+        heroVideo: '../ASSETS/videos/Beacons.mp4',
+        description: `Beacons sits at the edge of the bush like it grew there. Three gabled timber forms cluster together, their vertical batten skins ageing to silver against a misty mountain backdrop. Inside, the copper bathroom is the centrepiece, a warm sculptural space where every surface is intentional. The pool terrace connects the building to the landscape with a single clean gesture. Organic in material, precise in form.`,
+        images: [
+          '../ASSETS/images/beacons/exterior-01.jpg',
+          '../ASSETS/images/beacons/interior-01.jpg',
+          '../ASSETS/images/beacons/exterior-02.jpg',
+          '../ASSETS/images/beacons/interior-02.jpg',
+          '../ASSETS/images/beacons/interior-03.jpg',
+          '../ASSETS/images/beacons/exterior-03.jpg',
+        ],
+      },
+      'the-church': {
+        name:     'The Church, Port Hacking Rd',
+        type:     'Exterior',
+        architect: 'Couvaras Architects',
+        location: 'Sydney, NSW',
+        date:     '2017',
+        description: `The Church is an exercise in contrast: raw concrete panels meet large-format glazing across a low, horizontal form that reads as both civic and residential. The façade is deliberate in its restraint: no ornament, no excess, just material doing the work. Uplighting at night shifts the mood entirely, turning a daytime monument into something more intimate. A building that references its heritage without being defined by it.`,
+        images: [
+          '../ASSETS/images/the-church/exterior-01.jpg',
+          '../ASSETS/images/the-church/exterior-02.jpg',
+          '../ASSETS/images/the-church/exterior-03.jpg',
+        ],
+      },
+      'seaforth-residence': {
+        name:     'Seaforth Residence',
+        type:     'Interior',
+        architect: 'Mason Projects',
+        location: 'Seaforth, NSW',
+        date:     '2019',
+        description: `The Seaforth kitchen is the kind of space that makes you want to stay. A fluted island bench in deep charcoal anchors the room, flanked by floor-to-ceiling cabinetry in a matching dark oak. Three hand-blown pendants drop at precise intervals overhead. The material palette is tight: black, charcoal, grey terrazzo — with every detail resolved. Living and bedroom spaces carry the same discipline: calm, high-contrast, built to last.`,
+        images: [
+          '../ASSETS/images/seaforth/interior-01.jpg',
+          '../ASSETS/images/seaforth/interior-02.jpg',
+          '../ASSETS/images/seaforth/interior-03.jpg',
+          '../ASSETS/images/seaforth/interior-04.jpg',
+          '../ASSETS/images/seaforth/interior-05.jpg',
+        ],
+      },
+      'dugs-project': {
+        name:     'Port Hacking, Sydney NSW',
+        type:     'Interior',
+        architect: 'Caad Design',
+        location: 'Port Hacking, Sydney NSW',
+        date:     '2023',
+        description: `A Port Hacking residence defined by its openness. A double-height living space dissolves into a north-facing kitchen and dining zone, with the garden pulled right to the threshold through steel-framed glazing. Timber is the constant — warm American oak on the cabinetry, raw timber on the shelving, pale stone underfoot. The architecture works with the light, not against it. Every room feels connected to the next without losing its own identity.`,
+        images: [
+          '../ASSETS/images/port-hacking/interior-01.jpg',
+          '../ASSETS/images/port-hacking/interior-02.jpg',
+          '../ASSETS/images/port-hacking/interior-03.jpg',
+          '../ASSETS/images/port-hacking/interior-04.jpg',
+          '../ASSETS/images/port-hacking/interior-05.jpg',
+          '../ASSETS/images/port-hacking/interior-06.jpg',
+          '../ASSETS/images/port-hacking/interior-07.jpg',
+        ],
+      },
+      'crescent-street': {
+        name:     'Crescent Street',
+        type:     'Exterior',
+        architect: '—',
+        location: 'Melbourne, VIC',
+        date:     '2022',
+        description: `Crescent Street delivers two homes with a shared architectural language that never feels repetitive. The upper levels curve outward, clad in vertical timber battens that filter light and add rhythm to the façade. Below, a solid concrete base grounds the structure and provides contrast. Front gardens are planted generously, softening the street edge. These are houses that add to their neighbourhood rather than simply occupying it.`,
+        images: [
+          '../ASSETS/images/crescent-street/exterior-01.jpg',
+          '../ASSETS/images/crescent-street/exterior-02.jpg',
+          '../ASSETS/images/crescent-street/exterior-03.jpg',
+        ],
+      },
+      'serg-jackson': {
+        name:     'Jackson Street',
+        type:     'Exterior',
+        architect: 'MoradDesign',
+        location: 'NSW',
+        date:     '2019',
+        description: `A confident multi-level residence carved into a sloped and landscaped site. Exposed concrete panels and deep-set glazing define the facade, punctuated by warm timber battens and overflowing planted terraces that blur the line between structure and garden. Stone retaining walls anchor the building to its slope with conviction, while trailing vines and generous planting soften a palette that earns its boldness. Architecture that holds its ground without demanding your attention.`,
+        images: [
+          '../ASSETS/images/jackson-street/exterior-01.jpg',
+          '../ASSETS/images/jackson-street/exterior-02.jpg',
+          '../ASSETS/images/jackson-street/exterior-03.jpg',
+        ],
+      },
+      'sansouci': {
+        name:     'Meriel St, San Souci',
+        type:     'Exterior',
+        architect: 'Couvaras Architects',
+        location: 'San Souci, NSW',
+        date:     '2020',
+        description: `Sansouci is bold and unapologetic. Black vertical cladding wraps the upper level in a continuous skin, broken only by deep-set window reveals and louvred screens. The lower level sits in white render — the contrast is sharp and intentional. Curved forms at the building's edges soften what could be a hard composition, giving the massing a sense of movement. By night, warm interior light bleeds through the screens and the building becomes something else entirely.`,
+        images: [
+          '../ASSETS/images/sansouci/exterior-01.jpg',
+          '../ASSETS/images/sansouci/exterior-02.jpg',
+        ],
+      },
+    };
+
+    // Read project ID from URL: project.html?id=sansouci
+    const params = new URLSearchParams(window.location.search);
+    const id     = params.get('id');
+    const p      = projects[id];
+    const main   = document.getElementById('project-main');
+
+    if (!p) {
+      main.innerHTML = `
+        <a class="back" href="work.html">← Back to Work</a>
+        <p style="color:var(--text-muted);padding-top:40px;">Project not found.</p>
+      `;
+    } else {
+      document.title = `${p.name} — DIXIPIX`;
+
+      const [firstImage, ...restImages] = p.images;
+      const allImages = p.images;
+
+      const heroHTML = p.heroVideo
+        ? '<video class="project-video fade-up" autoplay muted loop playsinline preload="auto" style="will-change:transform;margin-top:0;"><source src="' + p.heroVideo + '" type="video/mp4" /></video>'
+        : '<div class="project-img-wrap project-hero-img fade-up" data-index="0"><img src="' + firstImage + '" alt="' + p.name + '" loading="eager" /></div>';
+
+      const galleryImages = p.heroVideo ? p.images : restImages;
+      const indexOffset   = p.heroVideo ? 0 : 1;
+
+      const restHTML = galleryImages.map((src, i) =>
+        '<div class="project-img-wrap fade-up" data-index="' + (i + indexOffset) + '"><img src="' + src + '" alt="' + p.name + '" loading="lazy" /></div>'
+      ).join('');
+
+      main.innerHTML = `
+        <a class="back fade-up" href="work.html">← Back to Work</a>
+
+        <div class="project-header fade-up">
+          <p class="project-type">${p.type}</p>
+          <h1 class="project-title">${p.name}</h1>
+        </div>
+
+        ${heroHTML}
+
+        <div class="project-info fade-up">
+          <div class="project-meta">
+            <div class="meta-item">
+              <div class="meta-key">Location</div>
+              <div class="meta-val">${p.location}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key">Year</div>
+              <div class="meta-val">${p.date}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key">Architect / Designer</div>
+              <div class="meta-val">${p.architect}</div>
+            </div>
+          </div>
+          <p class="project-description">${p.description}</p>
+        </div>
+
+        <div class="project-images">
+          ${restHTML}
+        </div>
+
+        ${p.video ? `
+        <video class="project-video fade-up" autoplay muted loop playsinline preload="auto">
+          <source src="${p.video}" type="video/mp4" />
+        </video>
+        ` : ''}
+
+        <div class="project-cta fade-up">
+          <p class="cta-text">Like what you see?</p>
+          <a href="contact.html" class="cta-btn">Start a project</a>
+        </div>
+      `;
+
+      // ── Lightbox (elements are static in DOM, safe to grab here) ──
+      const lightbox  = document.getElementById('lightbox');
+      const lbImg     = document.getElementById('lb-img');
+      const lbClose   = document.getElementById('lb-close');
+      const lbPrev    = document.getElementById('lb-prev');
+      const lbNext    = document.getElementById('lb-next');
+      const lbCounter = document.getElementById('lb-counter');
+      let lbIndex = 0;
+
+      function openLightbox(idx) {
+        lbIndex = idx;
+        lbImg.src = allImages[lbIndex];
+        lbCounter.textContent = `${lbIndex + 1} / ${allImages.length}`;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function lbNav(dir) {
+        lbIndex = (lbIndex + dir + allImages.length) % allImages.length;
+        lbImg.style.opacity = '0';
+        setTimeout(() => {
+          lbImg.src = allImages[lbIndex];
+          lbImg.style.opacity = '1';
+          lbCounter.textContent = `${lbIndex + 1} / ${allImages.length}`;
+        }, 150);
+      }
+
+      lbImg.style.transition = 'opacity 0.2s ease';
+
+      document.querySelectorAll('.project-img-wrap').forEach(wrap => {
+        wrap.addEventListener('click', () => openLightbox(+wrap.dataset.index));
+      });
+
+      lbClose.addEventListener('click', closeLightbox);
+      lbPrev.addEventListener('click',  () => lbNav(-1));
+      lbNext.addEventListener('click',  () => lbNav(1));
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === 'ArrowLeft')  lbNav(-1);
+        if (e.key === 'ArrowRight') lbNav(1);
+      });
+
+      // ── Scroll fade ──
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+      // ── Lightbox touch swipe ──
+      let lbTouchX = 0;
+      lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+      lightbox.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - lbTouchX;
+        if (Math.abs(dx) > 50) { dx < 0 ? lbNav(1) : lbNav(-1); }
+      }, { passive: true });
+    }
+
+  </script>
+  <script src="shared.js"></script>
+
+
+</body>
+</html>

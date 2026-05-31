@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Set — DIXIPIX</title>
+  <link rel="icon" type="image/png" href="../ASSETS/images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+
+  <style>
+    /* ── Page shell ── */
+    main { padding-top: 80px; }
+
+    /* ── DS Hero ── */
+    .ds-hero {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 80px);
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .ds-hero-video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+    .ds-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--pad);
+    }
+    .ds-hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 580px;
+      margin-bottom: 18px;
+    }
+    .ds-hero-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .ds-hero-title {
+      font-size: clamp(26px, 3.8vw, 54px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #fff;
+    }
+    .ds-hero-desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.55);
+      max-width: 460px;
+    }
+    .ds-hero-badge {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .ds-hero-attr {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    @media (max-width: 640px) {
+      .ds-hero { height: 75vw; min-height: 320px; }
+    }
+
+    /* ── Section shared ── */
+    .section {
+      padding: clamp(64px, 10vw, 120px) var(--pad);
+      border-top: 1px solid var(--border);
+    }
+
+    .section-inner {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .service-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    /* ── Testimonial ── */
+    .ds-testimonial {
+      padding: clamp(28px, 4vw, 48px) var(--pad);
+      border-top: 1px solid var(--border);
+      max-width: 60%;
+      margin: 0 auto;
+    }
+    .ds-testimonial-mark {
+      font-size: 48px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+    .ds-testimonial-quote {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 24px;
+    }
+    .ds-testimonial-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .ds-testimonial-role {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    /* ── Complete package section ── */
+    .section-package {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: clamp(64px, 10vw, 120px) var(--pad);
+    }
+    .package-inner {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+    .package-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 36px;
+    }
+    .package-image {
+      overflow: hidden;
+      background: var(--bg-3);
+      line-height: 0;
+    }
+    .package-image img {
+      display: block;
+      width: 100%;
+      height: clamp(280px, 40vw, 560px);
+      object-fit: cover;
+    }
+    .package-detail {
+      background: var(--bg-3);
+      padding: clamp(36px, 5vw, 64px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .package-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .package-items li {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+    .package-items li:last-child { border-bottom: none; padding-bottom: 0; }
+    .package-num {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .package-cta {
+      margin-top: 48px;
+    }
+    .package-turnaround {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* ── Featured image ── */
+    .featured-render {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    .featured-render img {
+      display: block;
+      width: 100%;
+      height: 80vh;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .featured-label {
+      position: absolute;
+      bottom: 36px;
+      left: clamp(24px, 4vw, 60px);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .featured-tag {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .featured-title {
+      font-size: clamp(20px, 3vw, 34px);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 860px) {
+      .section-inner { max-width: 100%; }
+      .package-inner { max-width: 100%; }
+      .service-header { flex-direction: column; gap: 12px; }
+    }
+    @media (max-width: 640px) {
+      .featured-render img { height: 65vw; min-height: 240px; }
+      .section { padding-top: 48px; padding-bottom: 48px; }
+      .package-grid { grid-template-columns: 1fr; }
+      .package-detail { padding: clamp(24px, 6vw, 40px); }
+      .section-package { padding-top: 48px; padding-bottom: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/"><img class="nav-mark" src="../ASSETS/images/logo.png" alt="DIXIPIX" /></a>
+    <a class="nav-logo" href="/">DIXIPIX</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="what-we-do.html">What We Do</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="developer-set.html" class="nav-featured">Developer Set</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="work.html"><span class="mob-num">01</span>Work</a>
+    <a href="what-we-do.html"><span class="mob-num">02</span>What We Do</a>
+    <a href="contact.html"><span class="mob-num">03</span>Contact</a>
+    <a href="developer-set.html" class="mob-featured"><span class="mob-num">04</span>Developer Set</a>
+    <span class="nav-mobile-footer">Architectural Visualisation</span>
+  </div>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <div class="ds-hero">
+      <video class="ds-hero-video" autoplay muted loop playsinline preload="auto">
+        <source src="../ASSETS/videos/yowie-bay-interior.mp4" type="video/mp4" />
+      </video>
+      <div class="ds-hero-overlay">
+        <div class="ds-hero-text">
+          <p class="ds-hero-label">Developer Set</p>
+          <h1 class="ds-hero-title">Everything a development<br>needs. Nothing it doesn't.</h1>
+          <p class="ds-hero-desc">A full visual package built for developers and architects who need renders that sell. Exterior to interior, floor plans to elevations.</p>
+          <p class="ds-hero-badge">⚡ 4-day turnaround per deliverable</p>
+          <p class="ds-hero-badge" style="margin-top:8px; color:var(--accent);">From $1,200 AUD per image</p>
+        </div>
+        <div class="ds-hero-attr">
+          <span class="slide-overlay-address">Yowie Bay, NSW</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 02 EXTERIOR ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">02</p>
+            <h2 class="section-title">The Hero<br />Shot</h2>
+          </div>
+          <p class="service-desc">Your best angle. Day or dusk. 4-day turnaround per deliverable.</p>
+        </div>
+        <div class="carousel" data-total="1">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide">
+                <img src="../ASSETS/images/seaview/exterior-01.jpg" alt="Exterior Render" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Sea View Crescent, Cronulla NSW</span>
+                  <span class="slide-overlay-arch">Couvaras Architects</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 1</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 03 INTERIORS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">03</p>
+            <h2 class="section-title">Interiors That<br />Sell the Lifestyle</h2>
+          </div>
+          <p class="service-desc">Buyers don't buy floor space. They buy a life. We render both.</p>
+        </div>
+        <div class="carousel" data-total="3">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide">
+                <img src="../ASSETS/images/developer-set/room-03.jpg" alt="Kitchen & Deck" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Port Hacking, Sydney NSW</span>
+                  <span class="slide-overlay-arch">Caad Design</span>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <img src="../ASSETS/images/developer-set/room-01.jpg" alt="Open Living" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Port Hacking, Sydney NSW</span>
+                  <span class="slide-overlay-arch">Caad Design</span>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <img src="../ASSETS/images/developer-set/room-02.jpg" alt="Kitchen & BBQ" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Port Hacking, Sydney NSW</span>
+                  <span class="slide-overlay-arch">Caad Design</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 3</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 04 MULTI-RESIDENTIAL ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">04</p>
+            <h2 class="section-title">Apartment<br />Designs</h2>
+          </div>
+          <p class="service-desc">Multi-residential renders that communicate scale, material, and lifestyle. Built for developers who need to move units before construction begins.</p>
+        </div>
+        <div class="carousel" data-total="1">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide">
+                <img src="../ASSETS/images/seaview/exterior-02.jpg" alt="Sea View Crescent" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Sea View Crescent, Cronulla NSW</span>
+                  <span class="slide-overlay-arch">Couvaras Architects</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 1</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 05 FLOOR PLANS & ELEVATIONS ── -->
+    <section class="section">
+      <div class="section-inner fade-up">
+        <div class="service-header">
+          <div>
+            <p class="section-label">05</p>
+            <h2 class="section-title">Floor Plans &<br />Elevations</h2>
+          </div>
+          <p class="service-desc">Clean 2D floor plans, elevations, and catalogue sheets. DA submissions, marketing packs, and print-ready collateral.</p>
+        </div>
+        <div class="carousel" data-total="3">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <div class="carousel-slide">
+                <img class="img-bordered" src="../ASSETS/images/tiny-home/catalogue.jpg" alt="Tiny Home Catalogue" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Tiny Home, Westport NZ</span>
+                  <span class="slide-overlay-arch">Catalogue Sheet</span>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <img class="img-bordered" src="../ASSETS/images/tiny-home/floor-plan.jpg" alt="Tiny Home Floor Plan" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Tiny Home, Westport NZ</span>
+                  <span class="slide-overlay-arch">Floor Plan</span>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <img class="img-bordered" src="../ASSETS/images/developer-set/sp-floorplan.jpg" alt="Floor Plan" loading="lazy" />
+                <div class="slide-overlay">
+                  <span class="slide-overlay-address">Versatile Floor Plans</span>
+                  <span class="slide-overlay-arch">Floor Plan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <button class="carousel-btn prev">
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="32" y1="0.5" x2="8" y2="0.5" stroke="currentColor"/>
+                <polyline points="14,−6 6,0.5 14,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+              Prev
+            </button>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <span class="carousel-counter">1 / 3</span>
+            <div class="carousel-progress"><div class="carousel-progress-fill"></div></div>
+            <button class="carousel-btn next">
+              Next
+              <svg viewBox="0 0 32 1" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="0" y1="0.5" x2="24" y2="0.5" stroke="currentColor"/>
+                <polyline points="18,−6 26,0.5 18,7" fill="none" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TESTIMONIAL ── -->
+    <div class="ds-testimonial fade-up">
+      <div class="ds-testimonial-mark">"</div>
+      <p class="ds-testimonial-quote">Working with Dixipix was very easy. It was really exciting to see our CAD model and a brief description of our vision turned into a realistic rendering! Very quick and efficient turn around. Would definitely do more work with them in the future.</p>
+      <div class="ds-testimonial-name">Chris Freeburn</div>
+      <div class="ds-testimonial-role">Ironbark Architects</div>
+    </div>
+
+    <!-- ── 08 THE COMPLETE PACKAGE ── -->
+    <section class="section-package">
+      <div class="package-inner">
+        <div class="service-header fade-up">
+          <div>
+            <p class="section-label">06</p>
+            <h2 class="section-title">The Complete<br />Package</h2>
+          </div>
+          <p class="service-desc">Everything above. One brief, one point of contact, one set of files. Built for developers who move fast and need visuals that work as hard as they do.</p>
+        </div>
+        <div class="package-grid fade-up">
+          <div class="package-image">
+            <img src="../ASSETS/images/taren-point/exterior-01.jpg" alt="Complete Package" loading="lazy" />
+          </div>
+          <div class="package-detail">
+            <ul class="package-items">
+              <li><span class="package-num">01</span> Context Exteriors</li>
+              <li><span class="package-num">02</span> Interior Renders</li>
+              <li><span class="package-num">03</span> Floor Plans</li>
+            </ul>
+            <div class="package-cta">
+              <p style="font-size:11px;letter-spacing:0.2em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;">From $1,200 AUD per image</p>
+              <a href="contact.html" class="cta-btn">Start your project &nbsp;→</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2023 DIXIPIX Studio</span>
+      <a href="mailto:studio@dixipix.nz">studio@dixipix.nz</a>
+    </footer>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="" />
+    <button class="lightbox-close" id="lightbox-close">&#x2715;</button>
+  </div>
+
+  <script src="shared.js"></script>
+
+</body>
+</html>
