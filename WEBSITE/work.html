@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="../ASSETS/images/favicon.png" />
+  <link rel="icon" type="image/png" href="images/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Work — DIXIPIX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -431,7 +431,7 @@
 <body>
 
   <nav>
-    <a href="/"><img class="nav-mark" src="../ASSETS/images/logo.png" alt="DIXIPIX" /></a>
+    <a href="/"><img class="nav-mark" src="images/logo.png" alt="DIXIPIX" /></a>
     <a class="nav-logo" href="/">DIXIPIX</a>
     <ul class="nav-links">
       <li><a href="work.html" class="active">Work</a></li>
@@ -495,7 +495,7 @@
         <div class="pricing-label">Per deliverable · AUD</div>
       </div>
       <div class="pricing-item">
-        <div class="pricing-value">4 days*</div>
+        <div class="pricing-value">7 days*</div>
         <div class="pricing-label">Per deliverable · first review</div>
       </div>
       <div class="pricing-item">
@@ -514,81 +514,81 @@
   <script>
     // ── Default project cards (hero per project) ──
     const projects = [
-      { name: 'Taren Point',                type: 'Exterior',            id: 'taren-point',        hero: '../ASSETS/images/taren-point/exterior-01.jpg' },
-      { name: 'Yowie Bay',                  type: 'Exterior · Interior', id: 'yowie-bay',          hero: '../ASSETS/images/yowie-bay/interior-01.jpg' },
-      { name: 'Sea View Crescent',          type: 'Exterior',            id: 'seaview',            hero: '../ASSETS/images/seaview/exterior-02.jpg' },
-      { name: 'Seaforth Residence',         type: 'Interior',            id: 'seaforth-residence', hero: '../ASSETS/images/seaforth/interior-01.jpg' },
-      { name: 'Jackson Street',             type: 'Exterior',            id: 'serg-jackson',       hero: '../ASSETS/images/jackson-street/exterior-01.jpg' },
-      { name: 'The Church, Port Hacking Rd',type: 'Exterior',            id: 'the-church',         hero: '../ASSETS/images/the-church/exterior-01.jpg' },
-      { name: 'Beacons House',              type: 'Exterior · Interior', id: 'beacons',            hero: '../ASSETS/images/beacons/exterior-01.jpg' },
-      { name: 'Meriel St, San Souci',       type: 'Exterior',            id: 'sansouci',           hero: '../ASSETS/images/sansouci/exterior-02.jpg' },
-      { name: 'North West Arm Rd',          type: 'Exterior',            id: 'gymea',              hero: '../ASSETS/images/north-west-arm/exterior-02.jpg' },
-      { name: 'Crescent Street',            type: 'Exterior',            id: 'crescent-street',    hero: '../ASSETS/images/crescent-street/exterior-01.jpg', hide: true },
-      { name: 'Girrilang Rd',               type: 'Exterior',            id: 'girrilang',          hero: '../ASSETS/images/girrilang/exterior-01.jpg' },
-      { name: 'Port Hacking, Sydney NSW',    type: 'Interior',            id: 'dugs-project',       hero: '../ASSETS/images/port-hacking/interior-04.jpg' },
-      { name: 'Tiny Home — Westport NZ',     type: 'Exterior · Interior', id: 'tiny-home',          hero: '../ASSETS/images/tiny-home/catalogue.jpg' },
+      { name: 'Taren Point',                type: 'Exterior',            id: 'taren-point',        hero: 'images/taren-point/exterior-01.jpg' },
+      { name: 'Yowie Bay',                  type: 'Exterior · Interior', id: 'yowie-bay',          hero: 'images/yowie-bay/interior-01.jpg' },
+      { name: 'Sea View Crescent',          type: 'Exterior',            id: 'seaview',            hero: 'images/seaview/exterior-02.jpg' },
+      { name: 'Seaforth Residence',         type: 'Interior',            id: 'seaforth-residence', hero: 'images/seaforth/interior-01.jpg' },
+      { name: 'Jackson Street',             type: 'Exterior',            id: 'serg-jackson',       hero: 'images/jackson-street/exterior-01.jpg' },
+      { name: 'The Church, Port Hacking Rd',type: 'Exterior',            id: 'the-church',         hero: 'images/the-church/exterior-04.jpg' },
+      { name: 'Beacons House',              type: 'Exterior · Interior', id: 'beacons',            hero: 'images/beacons/exterior-01.jpg' },
+      { name: 'Meriel St, San Souci',       type: 'Exterior',            id: 'sansouci',           hero: 'images/sansouci/exterior-02.jpg' },
+      { name: 'North West Arm Rd',          type: 'Exterior',            id: 'gymea',              hero: 'images/north-west-arm/exterior-02.jpg' },
+      { name: 'Crescent Street',            type: 'Exterior',            id: 'crescent-street',    hero: 'images/crescent-street/exterior-01.jpg', hide: true },
+      { name: 'Girrilang Rd',               type: 'Exterior',            id: 'girrilang',          hero: 'images/girrilang/exterior-01.jpg' },
+      { name: 'Port Hacking, Sydney NSW',    type: 'Interior',            id: 'dugs-project',       hero: 'images/port-hacking/interior-04.jpg' },
+      { name: 'Tiny Home — Westport NZ',     type: 'Exterior · Interior', id: 'tiny-home',          hero: 'images/tiny-home/catalogue.jpg' },
     ];
 
     // ── Flat image list — every render tagged ──
     const allImages = [
       // Jackson Street · MoradDesign
-      { src: '../ASSETS/images/jackson-street/exterior-01.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
-      { src: '../ASSETS/images/jackson-street/exterior-02.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
-      { src: '../ASSETS/images/jackson-street/exterior-03.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
+      { src: 'images/jackson-street/exterior-01.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
+      { src: 'images/jackson-street/exterior-02.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
+      { src: 'images/jackson-street/exterior-03.jpg', type: 'exterior', address: 'Jackson Street, NSW',              architect: 'MoradDesign',          id: 'serg-jackson' },
       // Taren Point · Couvaras Architects
-      { src: '../ASSETS/images/taren-point/exterior-01.jpg',  type: 'exterior', address: 'Taren Point, NSW',                 architect: 'Couvaras Architects',  id: 'taren-point' },
-      { src: '../ASSETS/images/taren-point/exterior-02.jpg',  type: 'exterior', address: 'Taren Point, NSW',                 architect: 'Couvaras Architects',  id: 'taren-point' },
+      { src: 'images/taren-point/exterior-01.jpg',  type: 'exterior', address: 'Taren Point, NSW',                 architect: 'Couvaras Architects',  id: 'taren-point' },
+      { src: 'images/taren-point/exterior-02.jpg',  type: 'exterior', address: 'Taren Point, NSW',                 architect: 'Couvaras Architects',  id: 'taren-point' },
       // Yowie Bay · Studio Joan Interiors
-      { src: '../ASSETS/images/yowie-bay/exterior-01.jpg',    type: 'exterior', address: 'Yowie Bay, NSW',                   architect: 'Studio Joan Interiors',id: 'yowie-bay' },
-      { src: '../ASSETS/images/yowie-bay/interior-01.jpg',    type: 'interior', address: 'Yowie Bay, NSW',                   architect: 'Studio Joan Interiors',id: 'yowie-bay' },
+      { src: 'images/yowie-bay/exterior-01.jpg',    type: 'exterior', address: 'Yowie Bay, NSW',                   architect: 'Studio Joan Interiors',id: 'yowie-bay' },
+      { src: 'images/yowie-bay/interior-01.jpg',    type: 'interior', address: 'Yowie Bay, NSW',                   architect: 'Studio Joan Interiors',id: 'yowie-bay' },
       // Sea View Crescent · Couvaras Architects
-      { src: '../ASSETS/images/seaview/exterior-01.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
-      { src: '../ASSETS/images/seaview/exterior-02.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
-      { src: '../ASSETS/images/seaview/exterior-03.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
+      { src: 'images/seaview/exterior-01.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
+      { src: 'images/seaview/exterior-02.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
+      { src: 'images/seaview/exterior-03.jpg',      type: 'exterior', address: 'Sea View Crescent, Cronulla NSW',  architect: 'Couvaras Architects',  id: 'seaview' },
       // Seaforth Residence · Mason Projects
-      { src: '../ASSETS/images/seaforth/interior-01.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
-      { src: '../ASSETS/images/seaforth/interior-02.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
-      { src: '../ASSETS/images/seaforth/interior-03.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
-      { src: '../ASSETS/images/seaforth/interior-04.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
-      { src: '../ASSETS/images/seaforth/interior-05.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/interior-01.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/interior-02.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/interior-03.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/interior-04.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
+      { src: 'images/seaforth/interior-05.jpg',     type: 'interior', address: 'Seaforth Residence, Woolooware NSW', architect: 'Mason Projects',     id: 'seaforth-residence' },
       // The Church · Couvaras Architects
-      { src: '../ASSETS/images/the-church/exterior-01.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
-      { src: '../ASSETS/images/the-church/exterior-02.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
-      { src: '../ASSETS/images/the-church/exterior-03.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
+      { src: 'images/the-church/exterior-04.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
+      { src: 'images/the-church/exterior-05.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
+      { src: 'images/the-church/exterior-06.jpg',   type: 'exterior', address: 'The Church, Port Hacking Rd, Sydney NSW', architect: 'Couvaras Architects', id: 'the-church' },
       // Beacons House · Caad Design Architects
-      { src: '../ASSETS/images/beacons/exterior-01.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
-      { src: '../ASSETS/images/beacons/exterior-02.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
-      { src: '../ASSETS/images/beacons/interior-01.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
-      { src: '../ASSETS/images/beacons/interior-02.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
-      { src: '../ASSETS/images/beacons/interior-03.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
-      { src: '../ASSETS/images/beacons/exterior-03.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/exterior-01.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/exterior-02.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/interior-01.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/interior-02.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/interior-03.jpg',      type: 'interior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
+      { src: 'images/beacons/exterior-03.jpg',      type: 'exterior', address: 'Beacons House, Country Australia', architect: 'Caad Design Architects', id: 'beacons' },
       // Meriel St, San Souci · Couvaras Architects
-      { src: '../ASSETS/images/sansouci/exterior-01.jpg',     type: 'exterior', address: 'Meriel St, San Souci NSW',         architect: 'Couvaras Architects',  id: 'sansouci' },
-      { src: '../ASSETS/images/sansouci/exterior-02.jpg',     type: 'exterior', address: 'Meriel St, San Souci NSW',         architect: 'Couvaras Architects',  id: 'sansouci' },
+      { src: 'images/sansouci/exterior-01.jpg',     type: 'exterior', address: 'Meriel St, San Souci NSW',         architect: 'Couvaras Architects',  id: 'sansouci' },
+      { src: 'images/sansouci/exterior-02.jpg',     type: 'exterior', address: 'Meriel St, San Souci NSW',         architect: 'Couvaras Architects',  id: 'sansouci' },
       // North West Arm Rd · Couvaras Architects
-      { src: '../ASSETS/images/north-west-arm/exterior-01.jpg',        type: 'exterior', address: 'North West Arm Rd, Gymea NSW',     architect: 'Couvaras Architects',  id: 'gymea' },
-      { src: '../ASSETS/images/north-west-arm/exterior-02.jpg',        type: 'exterior', address: 'North West Arm Rd, Gymea NSW',     architect: 'Couvaras Architects',  id: 'gymea' },
+      { src: 'images/north-west-arm/exterior-01.jpg',        type: 'exterior', address: 'North West Arm Rd, Gymea NSW',     architect: 'Couvaras Architects',  id: 'gymea' },
+      { src: 'images/north-west-arm/exterior-02.jpg',        type: 'exterior', address: 'North West Arm Rd, Gymea NSW',     architect: 'Couvaras Architects',  id: 'gymea' },
       // Girrilang Rd · Couvaras Architects
-      { src: '../ASSETS/images/girrilang/exterior-01.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
-      { src: '../ASSETS/images/girrilang/exterior-02.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
-      { src: '../ASSETS/images/girrilang/exterior-03.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
+      { src: 'images/girrilang/exterior-01.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
+      { src: 'images/girrilang/exterior-02.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
+      { src: 'images/girrilang/exterior-03.jpg',    type: 'exterior', address: 'Girrilang Rd, Cronulla NSW',       architect: 'Couvaras Architects',  id: 'girrilang' },
       // Crescent Street
-      { src: '../ASSETS/images/crescent-street/exterior-01.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
-      { src: '../ASSETS/images/crescent-street/exterior-02.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
-      { src: '../ASSETS/images/crescent-street/exterior-03.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
+      { src: 'images/crescent-street/exterior-01.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
+      { src: 'images/crescent-street/exterior-02.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
+      { src: 'images/crescent-street/exterior-03.jpg', type: 'exterior', address: 'Crescent Street, Melbourne VIC', architect: '—', id: 'crescent-street' },
       // Taren Point Project (interiors)
-      { src: '../ASSETS/images/port-hacking/interior-01.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
-      { src: '../ASSETS/images/port-hacking/interior-02.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
-      { src: '../ASSETS/images/port-hacking/interior-03.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
-      { src: '../ASSETS/images/port-hacking/interior-04.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
-      { src: '../ASSETS/images/port-hacking/interior-05.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
-      { src: '../ASSETS/images/port-hacking/interior-06.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
-      { src: '../ASSETS/images/port-hacking/interior-07.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
+      { src: 'images/port-hacking/interior-01.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
+      { src: 'images/port-hacking/interior-02.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
+      { src: 'images/port-hacking/interior-03.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
+      { src: 'images/port-hacking/interior-04.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
+      { src: 'images/port-hacking/interior-05.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
+      { src: 'images/port-hacking/interior-06.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
+      { src: 'images/port-hacking/interior-07.jpg',         type: 'interior', address: 'Port Hacking, Sydney NSW',         architect: 'Caad Design', id: 'dugs-project' },
       // Tiny Home — Westport NZ
-      { src: '../ASSETS/images/tiny-home/exterior-01.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
-      { src: '../ASSETS/images/tiny-home/exterior-02.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
-      { src: '../ASSETS/images/tiny-home/exterior-03.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
-      { src: '../ASSETS/images/tiny-home/interior-01.jpg',    type: 'interior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/exterior-01.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/exterior-02.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/exterior-03.jpg',    type: 'exterior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
+      { src: 'images/tiny-home/interior-01.jpg',    type: 'interior', address: 'Tiny Home, Westport NZ',           architect: '—', id: 'tiny-home' },
     ];
 
     const list = document.getElementById('project-list');

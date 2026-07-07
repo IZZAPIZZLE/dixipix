@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="../ASSETS/images/favicon.png" />
+  <link rel="icon" type="image/png" href="images/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — DIXIPIX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -313,7 +313,7 @@
 <body>
 
   <nav>
-    <a href="/"><img class="nav-mark" src="../ASSETS/images/logo.png" alt="DIXIPIX" /></a>
+    <a href="/"><img class="nav-mark" src="images/logo.png" alt="DIXIPIX" /></a>
     <a class="nav-logo" href="/">DIXIPIX</a>
     <ul class="nav-links">
       <li><a href="work.html">Work</a></li>
@@ -443,18 +443,15 @@
           headers: { 'Accept': 'application/json' }
         });
         const json = await res.json();
-        console.log('[formsubmit response]', json);
         if (json.success === 'true' || json.success === true) {
           form.style.display = 'none';
           success.style.display = 'block';
         } else {
-          console.error('[formsubmit] unexpected response:', json);
           btn.disabled = false;
           btn.textContent = 'Send Brief';
           alert('Something went wrong. Please email us at studio@dixipix.nz');
         }
       } catch (err) {
-        console.error('[formsubmit] fetch error:', err);
         btn.disabled = false;
         btn.textContent = 'Send Brief';
         alert('Something went wrong. Please email us at studio@dixipix.nz');

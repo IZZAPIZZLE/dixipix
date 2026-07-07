@@ -4,3 +4,13 @@
 Desktop.ini
 node_modules/
 agents/NOVA/DRAFTS/
+
+# Workspace docs — local only, not needed for deployment
+CLIENT-INFO/
+ASSETS/
+_saves/
+*.md
+
+# local workspace only
+agents/
+.claude/
