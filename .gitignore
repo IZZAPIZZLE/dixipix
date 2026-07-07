@@ -14,3 +14,7 @@ _saves/
 # local workspace only
 agents/
 .claude/
+
+.vercel
+.env*
+CODE/
